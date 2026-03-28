@@ -7,7 +7,6 @@
     box-sizing: border-box;
 }
 
-
 body {
     font-family: "Open Sans", sans-serif;
     background-color: #FFFF;
@@ -26,11 +25,9 @@ header {
     gap: 16px;
     background-color: white;
 }
-
 img {
     width: 120px;
 }
-
 .navbar a {
     color: #888888;
     text-decoration: none;
@@ -69,55 +66,7 @@ img {
     font-size: large;
     font-family: 'Montserrat', sans-serif;
 }
- 
-.hero {
-    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('../assets/img/fundohome.jpg');
-    background-size: cover;
-    background-position: center;
-    padding: 140px 40px;
-    color: white;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-}
-.cards {
-    display: flex;
-    gap: 24px;
-    padding: 40px;
-    background-color: #f5f5f5;
-    align-items: stretch;
-}
 
-.card {
-    background-color: #206F4A;
-    color: white;
-    border-radius: 12px;
-    padding: 24px;
-    flex: 1;
-    text-align: center;
-}
-
-.card-icon {
-    background-color: #1a5c3a;
-    border-radius: 8px;
-    padding: 6px 12px;
-    padding-top: 6px;
-    display: inline-block;
-    margin-bottom: 12px;
-}
-.card i {
-    font-size: 32px;
-    margin-bottom: 12px;
-    color: #90EE90;
-}
-
-.card h3 {
-    font-weight: bold;
-    margin-bottom: 8px;
-}
-
-.card p {
-    font-size: 14px;
-}
 footer {
     background-color: #206F4A;
     color: #FFFF;
