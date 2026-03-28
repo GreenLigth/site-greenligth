@@ -1,2 +1,2 @@
 # site-greenlight
-Site institucional, com cadastro e login. Para acesso a Dashboard
+Site institucional,com cadastro e login, acesso a dashboard, calculadora financeira e tela home/sobre nós/contatos
