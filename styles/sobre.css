@@ -73,3 +73,93 @@ footer {
     text-align: center;
     padding: 16px;
 }
+
+/*1. CONFIGURAÇÃO GERAL DA PÁGINA */
+.sobre-conteudo {
+    width: 100%; /* Faz o conteúdo principal ocupar toda a largura da tela */
+    margin: 0; /* Garante que não tenha espaços sobrando por fora */
+    padding: 0; /* Garante que não tenha espaços sobrando por dentro */
+}
+
+/*2. SEÇÃO DO BANNER (PARTE VERDE COM IMAGEM E TEXTO)*/
+.sobre-banner {
+    background: linear-gradient(to right, #004214, #43cc25); 
+    padding: 50px 0; /* Dá um "respiro" de 80px em cima/baixo e 0px nas laterais */
+}
+
+.sobre-banner-container {
+    display: flex; /* Faz a imagem e o texto ficarem um ao lado do outro */
+    align-items: center; /* Garante que a foto e o texto fiquem na mesma altura */
+    justify-content: flex-start; /* Alinha a imagem no início (esquerda) */
+    gap: 60px; /* Cria um espaço de 60px entre a imagem e o bloco de texto */
+    width: 100%; /* Faz o container ocupar o espaço disponível */
+}
+
+/* Estilizando a Imagem da Estufa */
+.sobre-banner-container img {
+    width: 600px; /* Define o tamanho da largura da imagem */
+    height: 400px; /* Deixa a altura automática para não "amassar" a foto */
+    border-radius: 0 20px 20px 0; /* Arredonda apenas os cantos da direita (superior e inferior) */
+    box-shadow: 15px 15px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Bloco de Texto que fica ao lado da imagem */
+.sobre-banner-texto {
+    color: white; /* Deixa todo o texto na cor branca */
+    max-width: 800px; /* Diminuindo aqui, o texto quebra em mais linhas */
+}
+
+.sobre-banner-texto span {
+    font-size: 1.2rem; /* Tamanho da fonte do "Sobre Nós" */
+    font-weight: 600; /* Deixa o texto um pouco mais "gordinho" (negrito leve) */
+    display: block; /* Faz o span se comportar como um bloco, jogando o H1 para baixo */
+    margin-bottom: 10px; /* Dá um espaço entre o "Sobre Nós" e o título principal */
+}
+
+.sobre-banner-texto h1 {
+    font-size: 3rem; /* Tamanho do título grande */
+    line-height: 1.1; /* Diminui o espaço entre as linhas do título para ficar mais bonito */
+    margin-bottom: 25px; /* Espaço entre o título e o parágrafo debaixo */
+    font-weight: 800; /* Deixa o título bem destacado e grosso */
+    max-width: 700px; /* Garante que o título também quebre como no design */
+}
+
+.sobre-banner-texto p {
+    font-size: 1.1rem; /* Tamanho do texto de leitura */
+    line-height: 1.6; /* Aumenta o espaço entre as linhas para facilitar a leitura */
+    margin-bottom: 15px; /* Espaço entre um parágrafo e outro */
+    text-align: justify; /* Opcional: deixa as bordas do texto retinhas igual livro */
+}
+
+/*3. SEÇÃO DOS CARDS (MISSÃO, VISÃO E VALORES)*/
+.sobre-mvv {
+    display: flex; /* Coloca os 3 cards um ao lado do outro */
+    justify-content: center; /* Centraliza os 3 cards no meio da página */
+    gap: 30px; /* Dá um espaço de 30px entre cada card */
+    padding: 60px 20px; /* Espaço em cima e embaixo dessa seção */
+    background-color: #f9f9f9; /* Define um fundo cinza bem clarinho para destacar os cards brancos */
+}
+
+/* Estilo que vale para os 3 cards ao mesmo tempo (Missão, Visão e Valores) */
+.card-padrao {
+    background-color: white; /* Fundo do card na cor branca */
+    border: 2px solid #206f4a; /* Borda fina com o verde escuro da marca */
+    border-radius: 25px; /* Arredonda as bordas dos cards */
+    padding: 30px; /* Espaço interno para o texto não encostar na borda verde */
+    width: 500px; /* Define a largura fixa de cada card */
+    text-align: center; /* Centraliza o texto (H3 e P) dentro do card */
+}
+
+.card-padrao h3 {
+    color: #000; /* Título do card (Missão, etc) em preto */
+    font-size: 1.8rem; /* Tamanho do título do card */
+    margin-bottom: 15px; /* Espaço entre o título e o texto de descrição */
+    font-weight: 700; /* Negrito no título do card */
+}
+
+.card-padrao p {
+    color: #000000; /* Texto de descrição em um cinza escuro */
+    font-size: 1rem; /* Tamanho da fonte do texto do card */
+    line-height: 1.5; /* Espaçamento entre linhas dentro do card */
+   
+}
