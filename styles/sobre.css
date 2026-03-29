@@ -83,7 +83,7 @@ footer {
 
 /*2. SEÇÃO DO BANNER (PARTE VERDE COM IMAGEM E TEXTO)*/
 .sobre-banner {
-    background: linear-gradient(to right, #004214, #43cc25); 
+    background-color: #206F4A; 
     padding: 50px 0; /* Dá um "respiro" de 80px em cima/baixo e 0px nas laterais */
 }
 

@@ -99,10 +99,12 @@ img {
 .card-icon {
     background-color: #1a5c3a;
     border-radius: 8px;
-    padding: 6px 12px;
-    padding-top: 6px;
-    display: inline-block;
-    margin-bottom: 12px;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 12px auto;
 }
 .card i {
     font-size: 32px;
