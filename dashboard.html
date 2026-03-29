@@ -1,38 +1,160 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="./styles/dashboard.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <link rel="icon" href="./assets/logo/logosite.png">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="styles/dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body>
-        <header>
-        <nav class="navbar">
-            <a href="./home.html" class="titulo">
-                <div class="logo-nav">
-                    <img class="image-nav" src="./assets/logo/logosite.png" alt="">
-                    <b>GreenLight</b>
+    <div class="menu">
+        <img class="logo" src="assets/logo/logo-branca.png" alt="">
+
+        <div class="item">
+            <img class="icons" src="assets/img/icons/dashboard-icon.png" alt="">
+            <a href="#" class="ativo">Dashboard</a>
+        </div>
+
+        <div class="item">
+            <img class="icons" src="assets/img/icons/perfil-icon.png" alt="">
+            <a href="#">Perfil</a>
+        </div>
+
+        <div class="item">
+            <img class="icons" src="assets/img/icons/ajuda-icon.png" alt="">
+            <a href="#">Ajuda</a>
+        </div>
+
+        <div class="item">
+            <img class="icons" src="assets/img/icons/seguranca-icon.png" alt="">
+            <a href="#">Segurança</a>
+        </div>
+
+        <div class="item logout-container">
+            <a href="home.html" class="logout">Sair</a>
+        </div>
+    </div>
+    <div class="conteudo">
+
+        <div class="topo">
+            <span>ADM ESTHER</span>
+        </div>
+
+        <h1>DASHBOARD</h1>
+
+
+        <div class="linha-topo">
+
+            <div class="grafico-barras">
+                <h3>Gráfico Sensores</h3>
+                <canvas id="graficoBarra"></canvas>
+            </div>
+
+            <div class="coluna-direita">
+
+                <div class="cards">
+                    <div class="card">Adm cadastrados<br><strong>5</strong></div>
+                    <div class="card">Sensores ativos<br><strong>255</strong></div>
+                    <div class="card">Total de estufas<br><strong>104</strong></div>
                 </div>
-            </a>
-            <a href="./home.html">Inicio</a>
-            <a href="./sobre.html">Sobre nos</a>
-            <a href="./contato.html">Contato</a>
-            <a href="./calculadora.html">Calculadora Financeira</a>
-            <a href="./dashboard.html"class="ativo">Dashboard</a>
-            <a href="./login.html" class="button_entrar"></i><b>Entrar</b> <i
-                    class="fa-solid fa-right-to-bracket"></i></a>
-        </nav>
-    </header>
-     <footer>
-        <p>© 2026 GrennLight</p>
-    </footer>
-     <footer>
+
+                <div class="grafico-linha">
+                    <h3>Evolução instalação por ano</h3>
+                    <canvas id="graficoLinha"></canvas>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="linha">
+            <div class="box">
+                <h3>Empresas</h3>
+
+                <table>
+                    <tr>
+                        <th>Empresa</th>
+                        <th>Representante</th>
+                        <th>Região</th>
+                    </tr>
+                    <tr>
+                        <td>AgroFace</td>
+                        <td>Julia</td>
+                        <td>Nordeste</td>
+                    </tr>
+                    <tr>
+                        <td>AlVerde</td>
+                        <td>Esther</td>
+                        <td>Sudeste</td>
+                    </tr>
+                    <tr>
+                        <td>BioFolhas</td>
+                        <td>Luiza</td>
+                        <td>Sul</td>
+                    </tr>
+                    <tr>
+                        <td>TerraFresca</td>
+                        <td>Max</td>
+                        <td>Centro-Oeste</td>
+                    </tr>
+                    <tr>
+                        <td>HortaViva</td>
+                        <td>Thamys</td>
+                        <td>Norte</td>
+                    </tr>
+                    <tr>
+                        <td>EcoAlface</td>
+                        <td>Nicole</td>
+                        <td>Sudeste</td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+
 </body>
+
+<script>
+    const ctxBarra = document.getElementById('graficoBarra').getContext('2d');
+    new Chart(ctxBarra, {
+        type: 'bar',
+        data: {
+            labels: ['Ativos', 'Alerta', 'Inativos'],
+            datasets: [{
+                data: [265, 235, 115],
+                backgroundColor: '#206F4A'
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false }
+            }
+        }
+    });
+
+    const ctxLinha = document.getElementById('graficoLinha').getContext('2d');
+    new Chart(ctxLinha, {
+        type: 'line',
+        data: {
+            labels: ['2025', '2026', '2027'],
+            datasets: [{
+                data: [20, 22, 32],
+                borderColor: '#ffffff',
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false }
+            }
+        }
+    });
+</script>
+
 </html>

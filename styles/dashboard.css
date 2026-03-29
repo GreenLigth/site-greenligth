@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap');
 
 * {
     margin: 0;
@@ -7,68 +7,213 @@
 }
 
 body {
-    font-family: "Open Sans", sans-serif;
-    background-color: #FFFF;
-    font-size: small;
-}
-
-header {
-    background-color: #FFFF;
-    padding: 18px 16px;
-}
-
-.navbar {
+    font-family: "Exo 2", sans-serif;
     display: flex;
-    justify-content: space-between;
+    background-color: #eef3ee;
+}
+.menu {
+    display: flex;
+    width: 200px;
+    background-color: #1a4a32;
+    gap: 30px;
+    color: #ffffff;
+    height: 100vh;
+    padding: 24px 20px;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+}
+
+.menu .logo {
+    width: 150px;
+    margin-bottom: 36px;
+}
+
+.item {
+    display: flex;
     align-items: center;
-    gap: 16px;
-    background-color: white;
+    gap: 10px;
 }
-img {
-    width: 120px;
+
+.menu .icons {
+    width: 20px;
 }
-.navbar a {
-    color: #888888;
+
+.menu a {
+    flex: 1;
+    color: #d5f1e0;
     text-decoration: none;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    border-left: 3px solid transparent;
 }
 
-.navbar .button_entrar {
+.menu a:hover, .menu a.ativo {
     background-color: #206F4A;
-    color: white;
-    border-radius: 6px;
-
-    padding: 5px 10px;
-
-    font-size: smaller;
-
+    color: #ffffff;
+    border-left-color: #4ade80;
 }
 
-.navbar .ativo {
-    color: #206F4A;
-    font-weight: bold;
+.logout-container {
+    margin-top: auto;
 }
 
-.navbar .titulo .logo-nav{
+.logout {
+    color: #7aab90 !important;
+}
+.conteudo {
+    margin-left: 200px;
+    flex: 1;
+    padding: 28px 30px;
+    background-color: #eef3ee;
+    min-height: 100vh;
+}
+
+.topo {
+    text-align: right;
+    background-color: #1a4a32;
+    margin: -28px -30px 28px -30px;
+    padding: 14px 30px;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+h1 {
+    font-size: 44px;
+    font-weight: 900;
+    color: #1a2e22;
+    margin-bottom: 20px;
+}
+
+.linha-topo {
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+    gap: 18px;
+    margin-bottom: 18px;
+    align-items: stretch;
 }
 
-.navbar .titulo .logo-nav img{
-    width: 36px;
+.grafico-barras {
+  
+    border-radius: 14px;
+    padding: 22px;
+    flex: 1;
 }
 
-.titulo .logo-nav{
-    color: #1EC118;
-    font-weight: bold;
-    font-size: large;
-    font-family: 'Montserrat', sans-serif;
+.grafico-barras h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a2e22;
+    margin-bottom: 14px;
 }
 
-footer {
+.grafico-barras canvas {
+    width: 100% !important;
+    height: 240px !important;
+}
+
+.coluna-direita {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.cards {
+    display: flex;
+    gap: 14px;
+}
+
+.card {
+    background-color: #004230;
+    color: #dcf5e7;
+    padding: 18px 20px;
+    border-radius: 14px;
+    flex: 1;
+    font-size: 12px;
+}
+
+.card strong {
+    display: block;
+    font-size: 38px;
+    font-weight: 800;
+    color: #ffffff;
+    margin-top: 8px;
+    line-height: 1;
+}
+
+.grafico-linha {
+    background-color: #1a4a32;
+    border-radius: 14px;
+    padding: 18px 20px;
+    flex: 1;
+}
+
+.grafico-linha h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+
+.grafico-linha canvas {
+    width: 100% !important;
+    height: 140px !important;
+}
+
+.linha {
+    display: flex;
+    gap: 18px;
+    margin-bottom: 18px;
+    align-items: stretch;
+}
+
+.box {
+    background-color: #c4d8c3;
+    padding: 22px;
+    flex: 1;
+    border-radius: 14px;
+}
+
+.box h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a2e22;
+    margin-bottom: 14px;
+}
+
+.box p {
+    font-size: 14px;
+    color: #2d4a38;
+    margin-bottom: 8px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 6px;
+    font-size: 13px;
+}
+
+table th {
     background-color: #206F4A;
-    color: #FFFF;
-    text-align: center;
-    padding: 16px;
+    color: #ffffff;
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 600;
+}
+
+table td {
+    padding: 10px 14px;
+    color: #2d4a38;
+    border-bottom: 1px solid #e6f0ea;
+}
+
+table tr:last-child td {
+    border-bottom: none;
+}
+
+table tr:hover td {
+    background-color: #f0f8f3;
 }
