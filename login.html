@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,17 +13,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="icon" href="./assets/logo/logosite.png">
 </head>
+
 <body>
-<div class="main-container">
+    <div class="main-container">
         <section class="banner-side">
-    <div class="banner-content">
-        <div class="logo">
-            <img src="./assets/logo/logo-branca.png" alt="Logo Greenlight" class="logo-img"> 
-        </div>
-        <h1>Monitoramento Inteligente para suas Estufas</h1>
-        <p class="legenda-verde">Greenlight transforma natureza e tecnologia em uma parceria que impulsiona evolução e resultados.</p>
-    </div>
-</section>
+            <div class="banner-content">
+                <div class="logo">
+                    <img src="./assets/logo/logo-branca.png" alt="Logo Greenlight" class="logo-img">
+                </div>
+                <h1>Monitoramento Inteligente para suas Estufas</h1>
+                <p class="legenda-verde">Greenlight transforma natureza e tecnologia em uma parceria que impulsiona
+                    evolução e resultados.</p>
+            </div>
+        </section>
 
         <section class="form-side">
             <div class="form-box">
@@ -32,15 +35,15 @@
                 <form>
                     <div class="input-group">
                         <label>E-mail</label>
-                        <input type="email" placeholder="Seu @email.com">
+                        <input type="email" id="input_email" placeholder="Seu @email.com">
                     </div>
 
                     <div class="input-group">
                         <label>Senha</label>
-                        <input type="password" placeholder="Sua senha">
+                        <input type="password" id="input_senha" placeholder="Sua senha">
                     </div>
 
-                    <button type="submit" class="btn-login">Entrar</button>
+                    <button type="button" class="btn-login" onclick="login()">Entrar</button>
                 </form>
 
                 <p class="signup-text">Não tem uma conta? <a href="cadastro.html">Cadastre-se</a></p>
@@ -49,4 +52,20 @@
     </div>
 
 </body>
+
 </html>
+<script>
+    function login() {
+        let emailDigitado = input_email.value
+        let senhaDigitada = input_senha.value
+        let email = 'fernando.brandao@greenlight.com'
+        let senha = 'Clara#PI04'
+
+
+        if (senha == senhaDigitada && email == emailDigitado) {
+            window.location.assign("./dashboard.html")
+        } else {
+            alert('Email/Senha inválido!')
+        }
+    }
+</script>
