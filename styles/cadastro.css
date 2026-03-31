@@ -1,0 +1,201 @@
+:root {
+    --verde-principal: #1a5c3d;
+    --verde-escuro: #064e3b;
+    --verde-claro-legenda: #dbe9c0;
+    --cinza-texto: #6b7280;
+    --cinza-input: #f9fafb;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.main-container {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+}
+
+/* Inverte a ordem das colunas */
+.main-container.reversed {
+    flex-direction: row-reverse;
+}
+
+/* LADO DO FORMULÁRIO (ESQUERDA AGORA) */
+.form-side {
+    flex: 0.8;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 6% 40px; /* Aumentei o padding vertical para acomodar o form mais longo */
+    overflow-y: auto; /* Adiciona scroll se a tela for pequena */
+}
+
+.form-box {
+    width: 100%;
+    max-width: 420px;
+}
+
+.form-box h2 {
+    color: var(--verde-escuro);
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.subtitle {
+    color: var(--cinza-texto);
+    font-size: 16px;
+    margin-bottom: 30px;
+}
+
+.input-group {
+    margin-bottom: 18px; /* Espaçamento ligeiramente menor para o form caber melhor */
+}
+
+.input-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+input {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    background-color: var(--cinza-input);
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+input:focus {
+    border-color: var(--verde-principal);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(26, 92, 61, 0.1);
+}
+
+/* Container para alinhar input e ícone do olho */
+.password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-wrapper .toggle-password {
+    position: absolute;
+    right: 15px;
+    color: var(--cinza-texto);
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 16px;
+    background-color: var(--verde-principal);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: 700;
+    margin-top: 25px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    transition: 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: var(--verde-escuro);
+}
+
+.signup-text {
+    margin-top: 25px;
+    text-align: center;
+    color: var(--cinza-texto);
+    font-size: 14px;
+}
+
+.signup-text a {
+    color: var(--verde-principal);
+    text-decoration: none;
+    font-weight: 700;
+}
+
+/* LADO DA IMAGEM (DIREITA AGORA) */
+.banner-side {
+    flex: 1.2;
+    background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.6)), 
+                      url('../assets/img/icons/Estufa-para-Alface.webp');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    align-items: flex-end; 
+    padding: 8% 10%;
+    color: white;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.logo-img {
+    width: 120px; /* Mantive o tamanho que você gostou */
+    height: auto;
+}
+
+.logo span {
+    font-size: 40px; /* Um pouco menor para equilibrar com o título menor */
+    font-weight: 900;
+    color: white;
+    font-family: 'League Spartan', sans-serif;
+}
+
+.banner-content h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 38px; /* Título ligeiramente menor para manter a harmonia visual */
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 20px;
+}
+
+.banner-content p {
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--verde-claro-legenda); /* Cor #dbe9c0 */
+    max-width: 480px;
+}
+
+/* Responsividade Mobile */
+@media (max-width: 900px) {
+    .main-container.reversed {
+        flex-direction: column-reverse; /* Stack vertical para celular */
+    }
+    .form-side, .banner-side {
+        flex: 1;
+        padding: 40px 20px;
+    }
+    .banner-side {
+        height: 50vh;
+        align-items: center;
+        text-align: center;
+    }
+    .logo, .banner-content p {
+        justify-content: center;
+        margin: 0 auto 20px;
+    }
+}

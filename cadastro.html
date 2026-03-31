@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greenlight - Criar Conta</title>
+    <link rel="stylesheet" href="cadastro.css">
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@700;900&family=Montserrat:wght@400;700;800&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="main-container reversed">
+        
+        <section class="form-side">
+            <div class="form-box">
+                <h2>Criar Conta</h2>
+                <p class="subtitle">Cadastre-se para acessar o painel de monitoramento</p>
+
+                <form>
+                    <div class="input-group">
+                        <label>Nome Completo</label>
+                        <input type="text" placeholder="Nome">
+                    </div>
+
+                    <div class="input-group">
+                        <label>E-mail</label>
+                        <input type="email" placeholder="nome@email.com">
+                    </div>
+
+                    <div class="input-group">
+                        <label>Nome da Estufa</label>
+                        <input type="text" placeholder="Ex: Estufa Principal">
+                    </div>
+
+                    <div class="input-group">
+                        <label>Senha</label>
+                        <div class="password-wrapper">
+                            <input type="password" placeholder="Mínimo 8 caracteres">
+                            <i class="far fa-eye toggle-password"></i>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Confirmar Senha</label>
+                        <div class="password-wrapper">
+                            <input type="password" placeholder="Repita a senha">
+                            <i class="far fa-eye toggle-password"></i>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-primary">
+                        <img src="./assets/icons/folha-branca.svg" alt="" width="20">
+                        Criar Conta
+                    </button>
+                </form>
+
+                <p class="signup-text">Já tem uma conta? <a href="login.html">Entrar</a></p>
+            </div>
+        </section>
+
+        <section class="banner-side">
+            <div class="overlay"></div>
+            <div class="banner-content">
+                <div class="logo">
+                    <img src="./assets/logo/logo-branca.png" alt="Logo Greenlight" class="logo-img"> 
+                    <span>Greenlight</span>
+                </div>
+                <h1>Sistema Inteligente de Monitoramento de Luminosidade</h1>
+                <p>Monitore as condições de iluminação das suas estufas em tempo real.</p>
+            </div>
+        </section>
+        
+    </div>
+
+</body>
+</html>
