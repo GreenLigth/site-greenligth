@@ -20,7 +20,7 @@
 .banner-side {
     flex: 1.2;
     background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.7)), 
-                      url('../assets/img/icons/Estufa-para-Alface.webp');
+    url('../assets/img/icons/Estufa-para-Alface.webp');
     background-size: cover;
     background-position: center;
     display: flex;
@@ -35,6 +35,11 @@
     gap: 12px;
     margin-bottom: 25px;
 }
+
+.logo img{
+    width: 200px;
+}
+
 
 .brand-name {
     font-family: 'League Spartan', sans-serif;
@@ -132,6 +137,17 @@ input {
     color: white;
     font-family: 'League Spartan', sans-serif;
     letter-spacing: -1px;
+}
+.signup-text {
+    margin-top: 20px;
+    text-align: center;
+    color: var(--cinza-texto);
+    font-size: 14px;
+}
+.signup-text a {
+    color: var(--verde-principal);
+    text-decoration: none;
+    font-weight: 700;
 }
 
 
