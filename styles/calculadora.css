@@ -69,6 +69,170 @@ img {
     font-family: 'Montserrat', sans-serif;
 }
 
+
+.body {
+
+  background: #206F4A;
+   background-image:  linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.7)), /*deixa a imagem mais escurinha*/
+   url('../assets/img/pe-de-alface.jpg');
+   background-position: center;
+
+}
+
+.mover {
+  display: flex;
+  gap: 16px;
+}
+
+section, div {
+  flex: 1; 
+}
+
+.banner {
+
+  display: flex;
+  background-color: white;
+  width: 100%;
+  max-width: 700px;
+  border-radius: 58px;
+  padding : 2rem 2.5rem;
+  margin-top:70px;    /* afasta da navbar */
+  margin-bottom: 40px; /* afasta do que vem abaixo */
+  margin-left: 80px;   /* } pra deixar no canto */
+  margin-right: 80px;
+  height: 700px;
+
+} 
+.diagnostic {
+
+    display: flex;
+    position: relative ;
+    top: -305px;
+    margin-left: 90px;
+
+
+}
+
+
+
+.linha {
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  position: relative;
+  left: 15px;
+
+}
+
+.card {
+
+    display: flex;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    
+}
+
+
+.container {
+
+    display: flex;
+    padding: 0.3rem 1,5rem;
+    font-weight: 700;
+    gap: 1.2rem;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.titulo h1 {
+
+  color: #000000;
+  font-size: 2rem;/*tamanho da fonte*/
+  font-weight: 400;/*negrito*/
+  line-height: 1.4;/*aumenta o espaço entre as linhas pra ler melhor*/
+  max-width: 380px;/*largura máxima pra não estourar o layout*/
+  font: 'Open Sans', sans-serif;
+
+}
+
+.paragrafo {
+
+  display: flex;
+  position: relative;
+  left: 10px;
+  text-shadow: 1px 1px 8px rgba(121, 118, 118, 0.8);
+  font-size: 1.3rem;
+
+}
+
+.simulador {
+
+  display: flex;
+  margin-bottom: 20px;
+  position: relative;
+  top: 1px;
+  left: 130px;
+  
+
+}
+
+.indicador {
+    
+    font-size: 1.2rem;
+    text-shadow: 1px 1px 7px rgb(175, 172, 172);
+}
+
+.pegaDado {
+
+  width: 300px;
+  padding: 0.6rem 1rem;
+  border: 2px solid #2ed69e;
+  border-radius: 6px;
+  background-color: #ffffff;
+  font-size: 1.1rem;
+  
+
+}
+
+.selecao {
+
+    width: 300px;
+  padding: 0.6rem 1rem;
+  border: 2px solid #2ed69e;
+  border-radius: 6px;
+  background-color: #ffffff;
+  font-size: 1.1rem;
+  
+
+}
+
+.butao {
+
+    background-color: #67d6a2;
+    font-size: 0.8rem;
+    width: 200px;
+    height: 60px;
+    border-radius: 30px;
+    margin-left: 170px;
+    font-weight: bold
+}
+
+.mensagem {
+
+    color: #000000;
+    font-size: 1.2rem;
+    
+}
+
+
+.perder {
+     color: red; 
+     font-weight: bold;
+}
+
+
 footer {
     background-color: #206F4A;
     color: #FFFF;
