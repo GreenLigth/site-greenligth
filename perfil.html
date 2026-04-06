@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Dashboard - Perfil</title>
+     <link rel="stylesheet" href="styles/perfil.css">
     <link rel="stylesheet" href="styles/dashboard.css">
-    <link rel="stylesheet" href="styles/perfil.css">
 </head>
 
 <body>
@@ -32,12 +32,61 @@
         </div>
     </div>
 
-     <div class="conteudo">
+    <div class="conteudo">
+
         <div class="topo">
             <span>ADM ESTHER</span>
+
         </div>
 
         <h1>PERFIL</h1>
+
+        <div class="container-perfil">
+
+            <div class="foto-sessao">
+                <img src="assets/logo/logosite.png" alt="Foto de Perfil" class="foto-usuario">
+                <span class="link-mudar-foto">Mudar foto</span> 
+                </div>
+
+            <form class="form-perfil">
+                <div class="campo">
+                    <label>Nome Completo</label>
+                    <input type="text" placeholder="Nome">
+                </div>
+
+                <div class="campo">
+                    <label>E-mail</label>
+                    <input type="email" placeholder="nome@email.com">
+                </div>
+
+                <div class="campo">
+                    <label>Nome da Estufa</label>
+                    <input type="text" placeholder="Ex: Estufa Principal">
+                </div>
+
+                <div class="campo-senha-container">
+                    <div class="campo">
+                        <label>Senha</label>
+                        <div class="input-com-icone">
+                            <input type="password" placeholder="Mínimo 8 caracteres">
+                            <img src="olho.png" class="icone-olho">
+                        </div>
+                    </div>
+                    <span class="link-mudar-senha">Mudar senha</span>
+                </div>
+
+                <div class="campo">
+                    <label>Confirmar Senha</label>
+                    <div class="input-com-icone">
+                        <input type="password" placeholder="Repita a senha">
+                        <img src="assets/img/icons/seguranca-icon.png" class="icone-olho" alt="Ver senha">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-salvar">Salvar alterações</button>
+            </form>
+        </div>
+
     </div>
 
 </body>
