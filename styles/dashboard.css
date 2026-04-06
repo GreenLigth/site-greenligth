@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 
 * {
     margin: 0;
@@ -7,21 +7,21 @@
 }
 
 body {
-    font-family: "Exo 2", sans-serif;
+    font-family: "Open Sans", sans-serif;
     display: flex;
     background-color: #eef3ee;
 }
+
+/*Menu lateral*/
 .menu {
-    display: flex;
     width: 200px;
     background-color: #1a4a32;
-    gap: 30px;
-    color: #ffffff;
     height: 100vh;
     padding: 24px 20px;
     position: fixed;
     display: flex;
     flex-direction: column;
+    gap: 30px;
 }
 
 .menu .logo {
@@ -49,7 +49,8 @@ body {
     border-left: 3px solid transparent;
 }
 
-.menu a:hover, .menu a.ativo {
+.menu a:hover,
+.menu a.ativo {
     background-color: #206F4A;
     color: #ffffff;
     border-left-color: #4ade80;
@@ -62,11 +63,11 @@ body {
 .logout {
     color: #7aab90 !important;
 }
+
 .conteudo {
     margin-left: 200px;
     flex: 1;
     padding: 28px 30px;
-    background-color: #eef3ee;
     min-height: 100vh;
 }
 
@@ -92,15 +93,20 @@ h1 {
     gap: 18px;
     margin-bottom: 18px;
     align-items: stretch;
+    min-height: 500px;
 }
 
 .grafico-barras {
-  
     border-radius: 14px;
     padding: 22px;
-    flex: 1;
+    flex: 1.4;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
 }
 
+
+/*Gráfico barra*/
 .grafico-barras h3 {
     font-size: 14px;
     font-weight: 700;
@@ -108,12 +114,14 @@ h1 {
     margin-bottom: 14px;
 }
 
-.grafico-barras canvas {
-    width: 100% !important;
-    height: 240px !important;
+.grafico-barras .chart-wrap {
+    flex: 1;
+    position: relative;
+    min-height: 300px;
 }
 
-.coluna-direita {
+/*Parte central*/
+.coluna-meio {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -123,6 +131,10 @@ h1 {
 .cards {
     display: flex;
     gap: 14px;
+}
+
+.card.atencao {
+    background-color: #75030e;
 }
 
 .card {
@@ -144,33 +156,100 @@ h1 {
 }
 
 .grafico-linha {
-    background-color: #1a4a32;
+    background-color: #0569356a;
     border-radius: 14px;
     padding: 18px 20px;
     flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .grafico-linha h3 {
     font-size: 14px;
     font-weight: 700;
-    color: #ffffff;
-    margin-bottom: 10px;
+    color: #004230;
+    margin-bottom: 15px; 
 }
 
-.grafico-linha canvas {
-    width: 100% !important;
-    height: 140px !important;
+.grafico-linha .chart-wrap {
+    position: relative;
+    height: 200px; 
+    width: 100%;
+}
+
+.lumi-box {
+    background-color: #ffffff;
+    border-radius: 14px;
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.lumi-box h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #206F4A;
+    margin-bottom: 4px;
+}
+
+.lumi-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1a2e22;
+}
+
+.lumi-item span.emoji {
+    font-size: 26px;
+}
+
+/*Gráfico rosca e tabelas*/
+.coluna-direita {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.grafico-rosca h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a2e22;
+    margin-bottom: 14px;
+}
+
+.grafico-rosca {
+    background-color: #ffffff;
+    border-radius: 14px;
+    padding: 18px 20px;
+    flex: 1;
+    height: fit-content; 
+}
+
+.grafico-rosca .chart-wrap {
+    position: relative;
+    height: 300px; 
+}
+
+.box-empresas {
+    background-color: #ffffff;
+    border-radius: 14px;
+    overflow: hidden;
+    flex-shrink: 0;
 }
 
 .linha {
     display: flex;
     gap: 18px;
     margin-bottom: 18px;
-    align-items: stretch;
 }
 
 .box {
-    background-color: #c4d8c3;
+    background-color: #ffffff;
     padding: 22px;
     flex: 1;
     border-radius: 14px;
@@ -183,16 +262,9 @@ h1 {
     margin-bottom: 14px;
 }
 
-.box p {
-    font-size: 14px;
-    color: #2d4a38;
-    margin-bottom: 8px;
-}
-
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 6px;
     font-size: 13px;
 }
 
@@ -210,10 +282,32 @@ table td {
     border-bottom: 1px solid #e6f0ea;
 }
 
-table tr:last-child td {
-    border-bottom: none;
-}
 
 table tr:hover td {
     background-color: #f0f8f3;
+}
+
+.status {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.status.ideal { 
+    background-color: #d1fae5; color: #065f46; 
+}
+
+.status.alta{ 
+    background-color: #fef3c7; color: #92400e; 
+}
+
+
+.status.muito-alta { 
+    background-color: #fee2e2; color: #991b1b; 
+}
+
+.status.baixa { 
+    background-color: #e0e7ff; color: #3097a3; 
 }

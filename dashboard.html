@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <title>Dashboard</title>
@@ -10,146 +9,305 @@
 
 <body>
     <div class="menu">
-        <img class="logo" src="assets/logo/logo-branca.png" alt="">
-
+        <img class="logo" src="assets/logo/logo-branca.png" alt="Greenlight">
         <div class="item">
             <img class="icons" src="assets/img/icons/dashboard-icon.png" alt="">
             <a href="dashboard.html" class="ativo">Dashboard</a>
         </div>
-
         <div class="item">
             <img class="icons" src="assets/img/icons/perfil-icon.png" alt="">
             <a href="perfil.html">Perfil</a>
         </div>
-
         <div class="item">
             <img class="icons" src="assets/img/icons/ajuda-icon.png" alt="">
             <a href="ajuda.html">Ajuda</a>
         </div>
-
         <div class="item logout-container">
             <a href="home.html" class="logout">Sair</a>
         </div>
     </div>
+
     <div class="conteudo">
-
-        <div class="topo">
-            <span>ADM ESTHER</span>
-        </div>
-
+        <div class="topo"><span>ADM ESTHER</span></div>
         <h1>DASHBOARD</h1>
-
 
         <div class="linha-topo">
 
             <div class="grafico-barras">
-                <h3>Gráfico Sensores</h3>
-                <canvas id="graficoBarra"></canvas>
+                <h3>Quantidade por estado dos sensores</h3>
+                <div class="chart-wrap">
+                    <canvas id="graficoBarra"></canvas>
+                </div>
+            </div>
+
+            <div class="coluna-meio">
+                <div class="cards">
+                    <div class="card">
+                        Média de Luz (Geral)
+                        <strong>20.740</strong>
+                        <p style="font-size: 10px; margin-top: 5px; opacity: 0.8;">
+                            O nível de luz está dentro do esperado para um crescimento saudável.
+                        </p>
+                    </div>
+
+                    <div class="card atencao">
+                        Pico de Luz: BioFolhas
+                        <strong>42.000</strong>
+                        <p style="font-size: 10px; margin-top: 5px; opacity: 0.8;">
+                            Atenção! Esta estufa está recebendo luz acima do limite máximo.
+                        </p>
+                    </div>
+                </div>
+                <div class="grafico-linha">
+                    <h3>Crescimento do investimento</h3>
+                    <div class="chart-wrap">
+                        <canvas id="graficoLinha"></canvas>
+                    </div>
+                </div>
+                <div class="lumi-box">
+                    <h3>Luminosidades mais atingidas</h3>
+                    <div class="lumi-item">
+                        <span class="emoji">☀️</span> >30.000
+                    </div>
+                    <div class="lumi-item">
+                        <span class="emoji">☁️</span> 15.000
+                    </div>
+                    <div class="lumi-item">
+                        <span class="emoji">🌙</span>
+                        8.000
+                    </div>
+                </div>
+
             </div>
 
             <div class="coluna-direita">
-
-                <div class="cards">
-                    <div class="card">Adm cadastrados<br><strong>5</strong></div>
-                    <div class="card">Sensores ativos<br><strong>255</strong></div>
-                    <div class="card">Total de estufas<br><strong>104</strong></div>
+                <div class="grafico-rosca">
+                    <h3>Quantidade de sensores por estufa</h3>
+                    <div class="chart-wrap">
+                        <canvas id="graficoRosca"></canvas>
+                    </div>
                 </div>
-
-                <div class="grafico-linha">
-                    <h3>Evolução instalação por ano</h3>
-                    <canvas id="graficoLinha"></canvas>
+                <div class="box-empresas">
+                    <table>
+                        <tr>
+                            <th>Empresa</th>
+                            <th>Representante</th>
+                            <th>Região</th>
+                        </tr>
+                        <tr>
+                            <td>AgroFace</td>
+                            <td>Julia</td>
+                            <td>Nordeste</td>
+                        </tr>
+                        <tr>
+                            <td>AlVerde</td>
+                            <td>Esther</td>
+                            <td>Sudeste</td>
+                        </tr>
+                        <tr>
+                            <td>BioFolhas</td>
+                            <td>Luiza</td>
+                            <td>Sul</td>
+                        </tr>
+                    </table>
                 </div>
-
             </div>
 
         </div>
-
         <div class="linha">
             <div class="box">
-                <h3>Empresas</h3>
-
+                <h3>Registros de Luminosidade — Estufas da AlVerde</h3>
                 <table>
                     <tr>
-                        <th>Empresa</th>
-                        <th>Representante</th>
-                        <th>Região</th>
+                        <th>ID</th>
+                        <th>Data / Hora</th>
+                        <th>Valor (Lux)</th>
+                        <th>Status</th>
+                        <th>Estufa</th>
+                        <th>Limite Mín</th>
+                        <th>Limite Máx</th>
                     </tr>
                     <tr>
+                        <td>1</td>
+                        <td>01/01/2026 08:00</td>
+                        <td>15.000</td>
+                        <td><span class="status ideal">Ideal</span></td>
                         <td>AgroFace</td>
-                        <td>Julia</td>
-                        <td>Nordeste</td>
+                        <td>8.000</td>
+                        <td>30.000</td>
                     </tr>
                     <tr>
+                        <td>2</td>
+                        <td>01/01/2026 08:00</td>
+                        <td>5.400</td>
+                        <td><span class="status baixa">Baixa</span></td>
                         <td>AlVerde</td>
-                        <td>Esther</td>
-                        <td>Sudeste</td>
+                        <td>8.000</td>
+                        <td>30.000</td>
                     </tr>
                     <tr>
+                        <td>3</td>
+                        <td>01/01/2026 08:01</td>
+                        <td>42.000</td>
+                        <td><span class="status muito-alta">Muito Alta</span></td>
                         <td>BioFolhas</td>
-                        <td>Luiza</td>
-                        <td>Sul</td>
+                        <td>8.000</td>
+                        <td>30.000</td>
                     </tr>
                     <tr>
-                        <td>TerraFresca</td>
-                        <td>Max</td>
-                        <td>Centro-Oeste</td>
+                        <td>4</td>
+                        <td>01/01/2024 08:01</td>
+                        <td>32.000</td>
+                        <td><span class="status alta">Alta</span></td>
+                        <td>AgroFace</td>
+                        <td>8.000</td>
+                        <td>30.000</td>
                     </tr>
                     <tr>
-                        <td>HortaViva</td>
-                        <td>Thamys</td>
-                        <td>Norte</td>
+                        <td>5</td>
+                        <td>01/01/2024 08:02</td>
+                        <td>10.500</td>
+                        <td><span class="status ideal">Ideal</span></td>
+                        <td>AlVerde</td>
+                        <td>8.000</td>
+                        <td>30.000</td>
                     </tr>
                     <tr>
-                        <td>EcoAlface</td>
-                        <td>Nicole</td>
-                        <td>Sudeste</td>
+                        <td>6</td>
+                        <td>01/01/2024 08:02</td>
+                        <td>6.200</td>
+                        <td><span class="status baixa">Baixa</span></td>
+                        <td>BioFolhas</td>
+                        <td>8.000</td>
+                        <td>30.000</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>01/01/2024 08:03</td>
+                        <td>38.500</td>
+                        <td><span class="status muito-alta">Muito Alta</span></td>
+                        <td>AgroFace</td>
+                        <td>8.000</td>
+                        <td>30.000</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>01/01/2024 08:03</td>
+                        <td>22.000</td>
+                        <td><span class="status ideal">Ideal</span></td>
+                        <td>AlVerde</td>
+                        <td>8.000</td>
+                        <td>30.000</td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td>01/01/2024 08:04</td>
+                        <td>31.000</td>
+                        <td><span class="status alta">Alta</span></td>
+                        <td>BioFolhas</td>
+                        <td>8.000</td>
+                        <td>30.000</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>01/01/2024 08:04</td>
+                        <td>4.800</td>
+                        <td><span class="status baixa">Baixa</span></td>
+                        <td>AgroFace</td>
+                        <td>8.000</td>
+                        <td>30.000</td>
                     </tr>
                 </table>
             </div>
-
         </div>
-
     </div>
-
 </body>
 
 <script>
+    // gráfico barras
     const ctxBarra = document.getElementById('graficoBarra').getContext('2d');
     new Chart(ctxBarra, {
         type: 'bar',
         data: {
-            labels: ['Ativos', 'Alerta', 'Inativos'],
+            labels: ['Alta', 'Baixa', 'Ideal', 'Muito Alta'],
             datasets: [{
-                data: [265, 235, 115],
-                backgroundColor: '#206F4A'
+                label: 'Total',
+                data: [2, 3, 3, 2],
+                backgroundColor: '#004230',
+                barPercentage: 0.5
             }]
         },
         options: {
             responsive: true,
+            maintainAspectRatio: false,
             plugins: {
-                legend: { display: false }
+                legend: { position: 'bottom' }
+            },
+            scales: {
+                x: { grid: { display: false } },
+                y: { beginAtZero: true }
             }
         }
     });
 
+    // gráfico linha
     const ctxLinha = document.getElementById('graficoLinha').getContext('2d');
     new Chart(ctxLinha, {
         type: 'line',
         data: {
-            labels: ['2025', '2026', '2027'],
+            labels: ['1', '2', '3', '4', '5'], // IDs dos sensores
+            datasets: [
+                {
+                    label: 'Valor Real',
+                    data: [15000, 5400, 42000, 32000, 10500],
+                    borderColor: 'white'
+                },
+                { // âncora 1
+                    label: 'Limite Máximo',
+                    data: [30000, 30000, 30000, 30000, 30000],
+                    borderColor: 'green',
+                    pointRadius: 0
+                },
+                { // âncora 2
+                    label: 'Limite Mínimo',
+                    data: [8000, 8000, 8000, 8000, 8000],
+                    borderColor: 'red',
+                    pointRadius: 0
+                }
+            ]
+        },
+        options: {
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+
+    // gráfico rosca
+    const ctxRosca = document.getElementById('graficoRosca').getContext('2d');
+    new Chart(ctxRosca, {
+        type: 'doughnut',
+        data: {
+            labels: ['AgroFace', 'AlVerde', 'BioFolhas', 'TerraFresca'],
             datasets: [{
-                data: [20, 22, 32],
-                borderColor: '#ffffff',
-                tension: 0.4
+                data: [55, 25, 15, 5],
+                backgroundColor: ['#206F4A', '#4ade80', '#a3a3a3', '#1a4a32']
             }]
         },
         options: {
             responsive: true,
+            maintainAspectRatio: false,
             plugins: {
-                legend: { display: false }
+                legend: {
+                    position: 'bottom', // Move a legenda para baixo
+                    labels: {
+                        font: { size: 11 },
+                        boxWidth: 12,
+                        padding: 20 // Adiciona um espaço entre o gráfico e a legenda
+                    }
+                }
             }
         }
     });
 </script>
-
 </html>
