@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,8 +13,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="icon" href="./assets/logo/logosite.png">
 </head>
+
 <body class="body">
-     <header>
+    <header>
         <nav class="navbar">
             <a href="#" class="titulo">
                 <div class="logo-nav">
@@ -23,65 +25,61 @@
             </a>
             <a href="./home.html">Inicio</a>
             <a href="./sobre.html">Sobre nos</a>
-            <a href="./contato.html">Contato</a>
-            <a href="./calculadora.html"class="ativo">Calculadora Financeira</a>
+            <a href="./contato-futter.html">Contato</a>
+            <a href="./calculadora.html" class="ativo">Calculadora Financeira</a>
             <a href="./dashboard.html">Dashboard</a>
             <a href="./login.html" class="button_entrar"></i><b>Entrar</b> <i
                     class="fa-solid fa-right-to-bracket"></i></a>
         </nav>
     </header>
     <div class="mover" id="div">
-    <section class="container banner">
+        <section class="container banner">
 
-          <div class=" card linha">
+            <div class=" card linha">
 
-        <h1 class="simulador titulo">Simulador Inteligente</h1>
-        <p class="paragrafo">Entenda o impacto da iluminação no seu faturamento</p>
-        <span class="indicador">Área da estufa (m²):</span>
-        <input class="pegaDado" type="text" id="ipt_area">
-         <span class="indicador"> Quantidade de plantas por m²:</span>
-        <input class="pegaDado" type="text" id="ipt_plantas">
-        <span class="indicador">Preço de venda por saca (R$):</span>
-        <input class="pegaDado" type="text" id="ipt_preco">
+                <h1 class="simulador titulo">Simulador Inteligente</h1>
+                <p class="paragrafo">Entenda o impacto da iluminação no seu faturamento</p>
+                <span class="indicador">Área da estufa (m²):</span>
+                <input class="pegaDado" type="text" id="ipt_area">
+                <span class="indicador"> Quantidade de plantas por m²:</span>
+                <input class="pegaDado" type="text" id="ipt_plantas">
+                <span class="indicador">Preço de venda por saca (R$):</span>
+                <input class="pegaDado" type="text" id="ipt_preco">
 
-        <h3>
-            <span class="indicador">Qual o nível de iluminação da sua estufa?</span>
-            <br><br>
-        <select  class="selecao"  id="sel_luz">
-            <option value="0" selected disabled>Parâmetro de iluminação</option>
-            <option value="baixa">Baixa (pouca luz)</option>
-            <option value="ideal">Ideal </option>
-            <option value="alta">Alta (excesso de luz)</option>
-        </select>
-        
-        </h3>
+                <h3>
+                     <span class="indicador">Custo mensal da produção (R$):</span> <br><br>
+                    <input class="pegaDado" type="text" id="ipt_custo">
 
-        <h4>
-        <span class="indicador">Custo mensal da produção (R$):</span>
-        <input class="pegaDado" type="text" id="ipt_custo">
-        <br><br>
+                </h3>
 
-        </h4>
+                <h4>
 
-        <button  class="butao" onclick="calcular()">Analisar Produção</button>
+                    <span class="indicador">Qual o nível de iluminação da sua estufa?</span>
+                    <br><br>
+                    <select class="selecao" id="sel_luz">
+                        <option value="0" selected disabled>Parâmetro de iluminação</option>
+                        <option value="baixa">Baixa (pouca luz)</option>
+                        <option value="ideal">Ideal </option>
+                        <option value="alta">Alta (excesso de luz)</option>
+                    </select>
+                   
+                </h4>
 
-        
-    </section>
-
-    <section class=" banner container">
-
-        <div class="linha card">
-        
-        <h1 class=" titulo"> Diagnóstico da sua produção </h1> 
-        
-        
-
-        <p class=" mensagem" id="resultado">
+                <button class="butao" onclick="calcular()">Analisar Produção</button>
 
 
-        </p>
-        
-    </div>
+        </section>
+
+        <section class=" banner container">
+
+            <div class="linha card">
+
+                <h1 class=" titulo">Diagnóstico da sua produção </h1> 
+
+                <p class=" mensagem" id="resultado">
+                </p>
+
+            </div>
 
 
 
@@ -89,10 +87,11 @@
 
     </section>
 
-     <footer>
+    <footer>
         <p>© 2026 GrennLight</p>
     </footer>
 </body>
+
 </html>
 
 <script>
@@ -112,17 +111,17 @@
         if (luz == "baixa") {
             perda = 0.15; // abaixo de 100
         } else if (luz == "ideal") { // entre 150 e 250
-            perda = 0.05; 
+            perda = 0.05;
         } else { // acima de 500 
-            perda = 0.40; 
+            perda = 0.40;
         }
 
         // Cálculos Financeiros
 
         let perdaProducao = densidade - (densidade * perda);
 
-        let receitaAtual = perdaProducao * preco - custo ;
-        
+        let receitaAtual = perdaProducao * preco - custo;
+
 
         // Cálculos com o nosso sensor
 
@@ -130,19 +129,19 @@
 
         let novoFaturamento = aumentoProducao * preco - custo;
 
-        let Porcentagem = ( (receitaAtual - custo ) * 100 ) /  aumentoProducao ;
-        
+        let Porcentagem = ((receitaAtual - custo) * 100) / aumentoProducao;
+
 
         resultado.innerHTML = `
         Produção estimada: <b>${perdaProducao.toFixed(0)} unidades</b> <br><br>
         Sua produção está com um défict de <span class = "perder">${(perda * 100)}%</span> devido à luminosidade.<br><br>
         Receita atual: <b>R$ ${receitaAtual.toFixed(2)}</b><br><br>
         <h3>Com o auxílio do nosso monitoramento</h3>
-        Reduziremos as perdas em até <span style="color: green; font-weight: bold;"> 30% </span><br>
-        Estimativa do aumento na produção: <b>${ aumentoProducao} unidades</b><br>
+        Reduziremos as perdas em até <span class = "ganhar"> 30% </span><br>
+        Estimativa do aumento na produção: <b>${aumentoProducao} unidades</b><br>
 
         Aumento do faturamento:<br><br>
-        <span style="color: green; font-weight: bold;">R$ ${novoFaturamento.toFixed(2)} (${Porcentagem.toFixed(2)}%)</span><br><br>
+        <span class ="ganhar">R$ ${novoFaturamento.toFixed(2)} (${Porcentagem.toFixed(2)}%)</span><br><br>
 
         O sistema monitora a luminosidade em tempo real e possui alertas automáticos,
         auxiliando na implantação de prevenção de danos no crescimento da plantação.

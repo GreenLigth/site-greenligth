@@ -103,16 +103,6 @@ section, div {
   height: 700px;
 
 } 
-.diagnostic {
-
-    display: flex;
-    position: relative ;
-    top: -305px;
-    margin-left: 90px;
-
-
-}
-
 
 
 .linha {
@@ -146,7 +136,7 @@ section, div {
 }
 
 
-.titulo h1 {
+.simulador .titulo h1 {
 
   color: #000000;
   font-size: 2rem;/*tamanho da fonte*/
@@ -154,15 +144,14 @@ section, div {
   line-height: 1.4;/*aumenta o espaço entre as linhas pra ler melhor*/
   max-width: 380px;/*largura máxima pra não estourar o layout*/
   font: 'Open Sans', sans-serif;
-
 }
+
 
 .paragrafo {
 
   display: flex;
   position: relative;
   left: 10px;
-  text-shadow: 1px 1px 8px rgba(121, 118, 118, 0.8);
   font-size: 1.3rem;
 
 }
@@ -181,12 +170,14 @@ section, div {
 .indicador {
     
     font-size: 1.2rem;
-    text-shadow: 1px 1px 7px rgb(175, 172, 172);
+    margin-bottom: 2px;
+    
+    
 }
 
 .pegaDado {
 
-  width: 300px;
+  width: 500px;
   padding: 0.6rem 1rem;
   border: 2px solid #2ed69e;
   border-radius: 6px;
@@ -198,7 +189,7 @@ section, div {
 
 .selecao {
 
-    width: 300px;
+  width: 300px;
   padding: 0.6rem 1rem;
   border: 2px solid #2ed69e;
   border-radius: 6px;
@@ -208,15 +199,27 @@ section, div {
 
 }
 
+
+
 .butao {
 
-    background-color: #67d6a2;
-    font-size: 0.8rem;
-    width: 200px;
-    height: 60px;
-    border-radius: 30px;
-    margin-left: 170px;
-    font-weight: bold
+
+
+    width: 80%; /* Ocupa os mesmos 800px das caixas de texto */
+    background-color: #165c45;
+    color: white;
+    padding: 15px; 
+    border: none;
+    border-radius: 15px;
+    font-weight: bold;
+    font-size: 20px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.3s;
+    margin-left: 35px;
+    margin-bottom: 20px;
+
+
 }
 
 .mensagem {
@@ -230,6 +233,11 @@ section, div {
 .perder {
      color: red; 
      font-weight: bold;
+}
+
+.ganhar {
+    color: green; 
+    font-weight: bold
 }
 
 
