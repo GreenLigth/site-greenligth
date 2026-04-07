@@ -68,8 +68,6 @@ img {
     font-family: 'Montserrat', sans-serif;
 }
  
-
-/* ==================== MAIN CONTENT ==================== */
 .full {
     max-width: 1200px;
     margin: 60px auto;
@@ -82,7 +80,6 @@ img {
     min-height: 520px;
 }
 
-/* Painel esquerdo - Informações de contato (CENTRALIZADO) */
 .contato {
     background-color: #c0e1cc;
     padding: 60px 50px;
