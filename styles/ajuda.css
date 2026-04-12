@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Open Sans", sans-serif;
+    display: flex;
+    background-color: #eef3ee;
+}
+
+/*Menu lateral*/
+.menu {
+    width: 200px;
+    background-color: #1a4a32;
+    height: 100vh;
+    padding: 24px 20px;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.menu .logo {
+    width: 150px;
+    margin-bottom: 36px;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.menu .icons {
+    width: 20px;
+}
+
+.menu a {
+    flex: 1;
+    color: #d5f1e0;
+    text-decoration: none;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    border-left: 3px solid transparent;
+}
+
+.menu a:hover,
+.menu a.ativo {
+    background-color: #206F4A;
+    color: #ffffff;
+    border-left-color: #4ade80;
+}
+
+.logout-container {
+    margin-top: auto;
+}
+
+.logout {
+    color: #7aab90 !important;
+}
+
+.conteudo {
+    margin-left: 200px;
+    flex: 1;
+    padding: 28px 30px;
+    min-height: 100vh;
+}
+
+.topo {
+    text-align: right;
+    background-color: #1a4a32;
+    margin: -28px -30px 28px -30px;
+    padding: 14px 30px;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+h1 {
+    font-size: 44px;
+    font-weight: 900;
+    color: #1a2e22;
+    margin-bottom: 20px;
+}
+
+.linha-topo {
+    display: flex;
+    gap: 18px;
+    margin-bottom: 18px;
+    align-items: stretch;
+    min-height: 500px;
+}

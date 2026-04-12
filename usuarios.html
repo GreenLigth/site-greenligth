@@ -3,14 +3,15 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard - Ajuda</title>
+    <title>Dashboard - Usuários</title>
     <link rel="stylesheet" href="styles/dashboard.css">
-    <link rel="stylesheet" href="styles/ajuda.css">
+    <link rel="stylesheet" href="styles/usuario.css">
+    <link rel="icon" href="./assets/logo/logosite.png">
 </head>
 
 <body>
     <div class="menu">
-        <img class="logo" src="assets/logo/logo-branca.png" alt="">
+        <img class="logo" src="assets/logo/logo-branca.png" alt="Greenlight">
 
         <div class="item">
             <img class="icons" src="assets/img/icons/dashboard-icon.png" alt="">
@@ -21,9 +22,10 @@
             <img class="icons" src="assets/img/icons/perfil-icon.png" alt="">
             <a href="perfil.html">Perfil</a>
         </div>
-         <div class="item">
+
+        <div class="item">
             <img class="icons" src="assets/img/icons/ajuda-icon.png" alt="">
-            <a href="usuarios.html"  class="ativo">Usuários</a>
+            <a href="usuarios.html" class="ativo">Usuários</a>
         </div>
 
         <div class="item">
@@ -41,9 +43,91 @@
             <span>ADMINISTRADOR</span>
         </div>
 
-        <h1>USUÁRIOS</h1>
-    </div>
+        <h1>USUÁRIO</h1>
 
+        <!-- CABEÇALHO: subtítulo + botão -->
+        <div class="usuarios-header">
+            <p class="usuarios-subtitulo">Gerencie os usuários vinculados às estufas.</p>
+            <a href="cadastroUsuario.html">
+                <button class="btn-novo-usuario">+ Novo usuário</button>
+            </a>
+        </div>
+
+        <!-- CARDS DE ESTATÍSTICAS -->
+ <div class="usuarios-cards">
+            <div class="stat-card total">
+                <span class="stat-label">Total de usuários</span>
+                <span class="stat-valor">3</span>
+            </div>
+            <div class="stat-card ativos">
+                <span class="stat-label">Ativos</span>
+                <span class="stat-valor">2</span>
+            </div>
+            <div class="stat-card inativos">
+                <span class="stat-label">Inativos</span>
+                <span class="stat-valor">1</span>
+            </div>
+        </div>
+        <!-- TABELA -->
+        <div class="linha">
+            <div class="box">
+
+                <!-- FILTROS -->
+                <div class="usuarios-filtros">
+                    <select class="filtro-select">
+                        <option selected>Todos os perfis</option>
+                        <option>Adm</option>
+                        <option>Gerente</option>
+                        <option>Operador</option>
+                    </select>
+
+                    <select class="filtro-select">
+                        <option selected>Status do perfil</option>
+                        <option>Ativo</option>
+                        <option>Inativo</option>
+                    </select>
+
+                    <select class="filtro-select">
+                        <option selected>Todas as estufas</option>
+                        <option>A1</option>
+                        <option>A2</option>
+                    </select>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Nível de acesso</th>
+                            <th>Status</th>
+                            <th>Estufa vinculada</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Esther</td>
+                            <td>Adm</td>
+                            <td><span class="status ideal">Ativo</span></td>
+                            <td>A1</td>
+                        </tr>
+                        <tr>
+                            <td>Max</td>
+                            <td>Gerente</td>
+                            <td><span class="status ideal">Ativo</span></td>
+                            <td>A1</td>
+                        </tr>
+                        <tr>
+                            <td>Nicole</td>
+                            <td>Operador</td>
+                            <td><span class="status muito-alta">Inativo</span></td>
+                            <td>A2</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
 </body>
 
 </html>
