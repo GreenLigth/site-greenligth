@@ -64,11 +64,14 @@ body {
     color: #7aab90 !important;
 }
 
+
+/* CONTEÚDO */
 .conteudo {
-    margin-left: 200px;
+    margin-left: 100px;
     flex: 1;
     padding: 28px 30px;
     min-height: 100vh;
+    width: calc(100% - 200px); /* garante espaço */
 }
 
 .topo {
@@ -79,6 +82,9 @@ body {
     color: #ffffff;
     font-size: 15px;
     font-weight: 700;
+    position: relative;
+    z-index: 10;
+
 }
 
 h1 {
@@ -88,10 +94,60 @@ h1 {
     margin-bottom: 20px;
 }
 
-.linha-topo {
+/* ================= AJUDA ================= */
+.conteudo{
+    margin-left: 200px;
+}
+
+.ajuda-container {
     display: flex;
-    gap: 18px;
-    margin-bottom: 18px;
-    align-items: stretch;
-    min-height: 500px;
+    gap: 60px;
+    margin-top: 20px;
+    align-items: flex-start;
+}
+
+/* ESQUERDA */
+.ajuda-esquerda {
+    width: 280px;
+    margin-top: 20px;    
+}
+
+.ajuda-esquerda h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.ajuda-esquerda p {
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.btn-suporte {
+    background-color: #206F4A;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+/* DIREITA */
+.ajuda-direita {
+    flex: 1;
+}
+
+.faq-item {
+    width: 100%;
+    padding: 18px;
+    border-bottom: 2px solid #4ade80;
+    margin-bottom: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.plus {
+    font-size: 20px;
+    color: #4ade80;
+    cursor: pointer;
 }

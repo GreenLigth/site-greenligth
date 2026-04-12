@@ -69,7 +69,7 @@ img {
 }
  
 .full {
-    max-width: 1200px;
+    max-width: 900px;
     margin: 60px auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -77,12 +77,12 @@ img {
     overflow: hidden;
     border-radius: 12px;
     box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-    min-height: 520px;
+    max-height: 350px;
 }
 
 .contato {
     background-color: #c0e1cc;
-    padding: 60px 50px;
+    padding: 50px 50px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -90,25 +90,20 @@ img {
     text-align: center;
 }
 
-#div_titulo {
-    color: #206f4a;
-    font-size: 2.2rem;
-    font-weight: 600;
-    margin-bottom: 50px;
+#div_titulocontato {
+    margin-bottom: 2px;
+    font-size: 15px;
+    align-items: center;
     text-align: center;
-    width: 100%;
 }
 
 /* Itens com ícones - Centralizados */
 #numero, #endereco, #email {
     display: flex;
-    align-items: center;
-    gap: 18px;
-    margin-bottom: 38px;
+    gap: 5px;
+    margin-bottom: 20px;
     font-size: 1.1rem;
-    justify-content: center;
     width: 100%;
-    max-width: 320px;
 }
 
 #numero:last-child, #endereco:last-child, #email:last-child {
@@ -135,46 +130,40 @@ img {
 /* Painel direito - Formulário */
 .campos {
     background-color: #206f4a;
-    padding: 60px 50px;
+    padding: 10px 30px;
     color: white;
     display: flex;
     flex-direction: column;
 }
 
-.campos #div_titulo {
-    color: white;
-    margin-bottom: 40px;
-    text-align: center;
-}
-
 #div_nome, #div_email, #div_mensagem {
-    margin-bottom: 24px;
+    margin-bottom: 5px;
     color: #ddd;
 }
 
 #nome_ipt, #email_ipt, #mensagem_ipt {
+    align-items: center;
     width: 100%;
+    height: 7px;
     padding: 14px 16px;
-    margin-top: 8px;
+    margin-top: 0px;
     border: 2px solid #c0e1cc;
     border-radius: 8px;
     background-color: rgba(255,255,255,0.1);
     color: white;
     font-size: 1rem;
+
 }
 
 #mensagem_ipt {
-    height: 160px;
+    height: 100px;
     resize: vertical;
 }
 
-#div_botao {
-    margin-top: 30px;
-}
 
 #enviar_btn {
     width: 100%;
-    height: 56px;
+    height: 30px;
     background-color: #c0e1cc;
     color: #206f4a;
     border: none;
