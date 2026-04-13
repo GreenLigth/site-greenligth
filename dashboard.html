@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <title>Dashboard</title>
@@ -119,126 +120,90 @@
             </div>
 
         </div>
+
         <div class="linha">
             <div class="box">
-                <h3>Registros de Luminosidade — Estufas da AlVerde</h3>
+                <h3>Registros de Luminosidade — Estufas</h3>
+
+                <div class="filtros">
+                    <input type="text" id="campoBusca" placeholder="Buscar por estufa..." oninput="filtrar()">
+                    <select id="filtroGravidade" onchange="filtrar()">
+                        <option value="">Todas as gravidades</option>
+                        <option value="muito-alta">Muito Alta</option>
+                        <option value="alta">Alta</option>
+                        <option value="ideal">Ideal</option>
+                        <option value="baixa">Baixa</option>
+                    </select>
+                </div>
+
                 <table>
-                    <tr>
-                        <th>ID</th>
-                        <th>Data / Hora</th>
-                        <th>Valor (Lux)</th>
-                        <th>Status</th>
-                        <th>Estufa</th>
-                        <th>Limite Mín</th>
-                        <th>Limite Máx</th>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>01/01/2026 08:00</td>
-                        <td>15.000</td>
-                        <td><span class="status ideal">Ideal</span></td>
-                        <td>AgroFace</td>
-                        <td>8.000</td>
-                        <td>30.000</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>01/01/2026 08:00</td>
-                        <td>5.400</td>
-                        <td><span class="status baixa">Baixa</span></td>
-                        <td>AlVerde</td>
-                        <td>8.000</td>
-                        <td>30.000</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>01/01/2026 08:01</td>
-                        <td>42.000</td>
-                        <td><span class="status muito-alta">Muito Alta</span></td>
-                        <td>BioFolhas</td>
-                        <td>8.000</td>
-                        <td>30.000</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>01/01/2024 08:01</td>
-                        <td>32.000</td>
-                        <td><span class="status alta">Alta</span></td>
-                        <td>AgroFace</td>
-                        <td>8.000</td>
-                        <td>30.000</td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>01/01/2024 08:02</td>
-                        <td>10.500</td>
-                        <td><span class="status ideal">Ideal</span></td>
-                        <td>AlVerde</td>
-                        <td>8.000</td>
-                        <td>30.000</td>
-                    </tr>
-                    <tr>
-                        <td>6</td>
-                        <td>01/01/2024 08:02</td>
-                        <td>6.200</td>
-                        <td><span class="status baixa">Baixa</span></td>
-                        <td>BioFolhas</td>
-                        <td>8.000</td>
-                        <td>30.000</td>
-                    </tr>
-                    <tr>
-                        <td>7</td>
-                        <td>01/01/2024 08:03</td>
-                        <td>38.500</td>
-                        <td><span class="status muito-alta">Muito Alta</span></td>
-                        <td>AgroFace</td>
-                        <td>8.000</td>
-                        <td>30.000</td>
-                    </tr>
-                    <tr>
-                        <td>8</td>
-                        <td>01/01/2024 08:03</td>
-                        <td>22.000</td>
-                        <td><span class="status ideal">Ideal</span></td>
-                        <td>AlVerde</td>
-                        <td>8.000</td>
-                        <td>30.000</td>
-                    </tr>
-                    <tr>
-                        <td>9</td>
-                        <td>01/01/2024 08:04</td>
-                        <td>31.000</td>
-                        <td><span class="status alta">Alta</span></td>
-                        <td>BioFolhas</td>
-                        <td>8.000</td>
-                        <td>30.000</td>
-                    </tr>
-                    <tr>
-                        <td>10</td>
-                        <td>01/01/2024 08:04</td>
-                        <td>4.800</td>
-                        <td><span class="status baixa">Baixa</span></td>
-                        <td>AgroFace</td>
-                        <td>8.000</td>
-                        <td>30.000</td>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th>Data / Hora</th>
+                            <th>Valor (Lux)</th>
+                            <th>Status</th>
+                            <th>Estufa</th>
+                            <th>Limite Mín</th>
+                            <th>Limite Máx</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela"></tbody>
                 </table>
             </div>
         </div>
+
     </div>
 </body>
 
 <script>
+    let datas = ["01/01/2026 08:00", "01/01/2024 08:01", "01/01/2024 08:01", "01/01/2024 08:04", "01/01/2026 08:00", "01/01/2024 08:03", "01/01/2024 08:02", "01/01/2026 08:00", "01/01/2024 08:02", "01/01/2024 08:04"]
+    let valores = [42000, 38500, 32000, 31000, 15000, 22000, 10500, 5400, 6200, 4800]
+    let status = ["muito-alta", "muito-alta", "alta", "alta", "ideal", "ideal", "ideal", "baixa", "baixa", "baixa"]
+    let estufas = ["BioFolhas", "AgroFace", "AgroFace", "BioFolhas", "AgroFace", "AlVerde", "AlVerde", "AlVerde", "BioFolhas", "AgroFace"]
+
+    function filtrar() {
+        let busca = campoBusca.value.toLowerCase()
+        let gravidade = filtroGravidade.value
+        let html = ""
+
+        let i = 0
+        while (i < datas.length) {
+            let passouBusca = busca == "" || estufas[i].toLowerCase().includes(busca)
+            let passouGravidade = gravidade == "" || status[i] == gravidade
+
+            if (passouBusca && passouGravidade) {
+                html += montarLinha(i)
+            }
+            i++
+        }
+        tabela.innerHTML = html
+    }
+
+    function montarLinha(i) {
+        let labelStatus = status[i].replace("-", " ")
+
+        return `<tr>
+        <td>${datas[i]}</td>
+        <td>${valores[i].toLocaleString("pt-BR")}</td>
+        <td><span class="status ${status[i]}">${labelStatus}</span></td>
+        <td>${estufas[i]}</td>
+        <td>8.000</td>
+        <td>30.000</td>
+    </tr>`
+    }
+
+    filtrar()
+
     // gráfico barras
-    const ctxBarra = document.getElementById('graficoBarra').getContext('2d');
+    let ctxBarra = document.getElementById("graficoBarra").getContext("2d")
     new Chart(ctxBarra, {
-        type: 'bar',
+        type: "bar",
         data: {
-            labels: ['Alta', 'Baixa', 'Ideal', 'Muito Alta'],
+            labels: ["Baixa",  "Ideal", "Alta", "Muito Alta"],
             datasets: [{
-                label: 'Total',
-                data: [2, 3, 3, 2],
-                backgroundColor: '#004230',
+                label: "Total",
+                data: [3, 3, 2, 2],
+                backgroundColor: ["#3097a3", "#065f46", "#92400e", "#991b1b"],
                 barPercentage: 0.5
             }]
         },
@@ -246,37 +211,37 @@
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
-                legend: { position: 'bottom' }
+                legend: { position: "bottom" }
             },
             scales: {
                 x: { grid: { display: false } },
                 y: { beginAtZero: true }
             }
         }
-    });
+    })
 
     // gráfico linha
-    const ctxLinha = document.getElementById('graficoLinha').getContext('2d');
+    let ctxLinha = document.getElementById("graficoLinha").getContext("2d")
     new Chart(ctxLinha, {
-        type: 'line',
+        type: "line",
         data: {
-            labels: ['1', '2', '3', '4', '5'], // IDs dos sensores
+            labels: ["AgroFace", "AlVerde", "BioFolhas", "AgroFace", "AlVerde"],
             datasets: [
                 {
-                    label: 'Valor Real',
+                    label: "Valor Real",
                     data: [15000, 5400, 42000, 32000, 10500],
-                    borderColor: 'white'
+                    borderColor: "white"
                 },
-                { // âncora 1
-                    label: 'Limite Máximo',
+                {
+                    label: "Limite Máximo",
                     data: [30000, 30000, 30000, 30000, 30000],
-                    borderColor: 'green',
+                    borderColor: "green",
                     pointRadius: 0
                 },
-                { // âncora 2
-                    label: 'Limite Mínimo',
+                {
+                    label: "Limite Mínimo",
                     data: [8000, 8000, 8000, 8000, 8000],
-                    borderColor: 'red',
+                    borderColor: "red",
                     pointRadius: 0
                 }
             ]
@@ -286,17 +251,17 @@
                 y: { beginAtZero: true }
             }
         }
-    });
+    })
 
     // gráfico rosca
-    const ctxRosca = document.getElementById('graficoRosca').getContext('2d');
+    let ctxRosca = document.getElementById("graficoRosca").getContext("2d")
     new Chart(ctxRosca, {
-        type: 'doughnut',
+        type: "doughnut",
         data: {
-            labels: ['AgroFace', 'AlVerde', 'BioFolhas', 'TerraFresca'],
+            labels: ["AgroFace", "AlVerde", "BioFolhas", "TerraFresca"],
             datasets: [{
                 data: [55, 25, 15, 5],
-                backgroundColor: ['#206F4A', '#4ade80', '#a3a3a3', '#1a4a32']
+                backgroundColor: ["#206F4A", "#4ade80", "#a3a3a3", "#1a4a32"]
             }]
         },
         options: {
@@ -304,15 +269,16 @@
             maintainAspectRatio: false,
             plugins: {
                 legend: {
-                    position: 'bottom', // Move a legenda para baixo
+                    position: "bottom",
                     labels: {
                         font: { size: 11 },
                         boxWidth: 12,
-                        padding: 20 // Adiciona um espaço entre o gráfico e a legenda
+                        padding: 20
                     }
                 }
             }
         }
-    });
+    })
 </script>
+
 </html>
