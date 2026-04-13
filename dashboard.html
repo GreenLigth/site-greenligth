@@ -164,32 +164,33 @@
     function filtrar() {
         let busca = campoBusca.value.toLowerCase()
         let gravidade = filtroGravidade.value
-        let html = ""
+        let html = "" // vai acumular as linhas da tabela
 
         let i = 0
         while (i < datas.length) {
+            // verifica se o registro passa em cada filtro
             let passouBusca = busca == "" || estufas[i].toLowerCase().includes(busca)
             let passouGravidade = gravidade == "" || status[i] == gravidade
 
+            // só adiciona na tabela se passou em todos os filtros
             if (passouBusca && passouGravidade) {
-                html += montarLinha(i)
+                let labelStatus = status[i].replace("-", " ")
+
+                // monta a linha e acumula no html
+                html += `<tr>
+                <td>${datas[i]}</td>
+                <td>${valores[i].toLocaleString("pt-BR")}</td>
+                <td><span class="status ${status[i]}">${labelStatus}</span></td>
+                <td>${estufas[i]}</td>
+                <td>8.000</td>
+                <td>30.000</td>
+            </tr>`
             }
             i++
         }
+
+        // atualiza a tabela com os resultados
         tabela.innerHTML = html
-    }
-
-    function montarLinha(i) {
-        let labelStatus = status[i].replace("-", " ")
-
-        return `<tr>
-        <td>${datas[i]}</td>
-        <td>${valores[i].toLocaleString("pt-BR")}</td>
-        <td><span class="status ${status[i]}">${labelStatus}</span></td>
-        <td>${estufas[i]}</td>
-        <td>8.000</td>
-        <td>30.000</td>
-    </tr>`
     }
 
     filtrar()
@@ -199,7 +200,7 @@
     new Chart(ctxBarra, {
         type: "bar",
         data: {
-            labels: ["Baixa",  "Ideal", "Alta", "Muito Alta"],
+            labels: ["Baixa", "Ideal", "Alta", "Muito Alta"],
             datasets: [{
                 label: "Total",
                 data: [3, 3, 2, 2],

@@ -12,40 +12,32 @@
 <body>
     <div class="menu">
         <img class="logo" src="assets/logo/logo-branca.png" alt="Greenlight">
-
         <div class="item">
             <img class="icons" src="assets/img/icons/dashboard-icon.png" alt="">
             <a href="dashboard.html">Dashboard</a>
         </div>
-
         <div class="item">
             <img class="icons" src="assets/img/icons/perfil-icon.png" alt="">
             <a href="perfil.html">Perfil</a>
         </div>
-
         <div class="item">
             <img class="icons" src="assets/img/icons/ajuda-icon.png" alt="">
             <a href="usuarios.html" class="ativo">Usuários</a>
         </div>
-
         <div class="item">
             <img class="icons" src="assets/img/icons/ajuda-icon.png" alt="">
             <a href="ajuda.html">Ajuda</a>
         </div>
-
         <div class="item logout-container">
             <a href="home.html" class="logout">Sair</a>
         </div>
     </div>
 
     <div class="conteudo">
-        <div class="topo">
-            <span>ADMINISTRADOR</span>
-        </div>
+        <div class="topo"><span>ADMINISTRADOR</span></div>
 
         <h1>USUÁRIO</h1>
 
-        <!-- CABEÇALHO: subtítulo + botão -->
         <div class="usuarios-header">
             <p class="usuarios-subtitulo">Gerencie os usuários vinculados às estufas.</p>
             <a href="cadastroUsuario.html">
@@ -53,42 +45,41 @@
             </a>
         </div>
 
-        <!-- CARDS DE ESTATÍSTICAS -->
- <div class="usuarios-cards">
+        <div class="usuarios-cards">
             <div class="stat-card total">
                 <span class="stat-label">Total de usuários</span>
-                <span class="stat-valor">3</span>
+                <span class="stat-valor" id="cardTotal">0</span>
             </div>
             <div class="stat-card ativos">
                 <span class="stat-label">Ativos</span>
-                <span class="stat-valor">2</span>
+                <span class="stat-valor" id="cardAtivos">0</span>
             </div>
             <div class="stat-card inativos">
                 <span class="stat-label">Inativos</span>
-                <span class="stat-valor">1</span>
+                <span class="stat-valor" id="cardInativos">0</span>
             </div>
         </div>
-        <!-- TABELA -->
+
         <div class="linha">
             <div class="box">
-
-                <!-- FILTROS -->
                 <div class="usuarios-filtros">
-                    <select class="filtro-select">
-                        <option selected>Todos os perfis</option>
+                    <input type="text" id="campoBusca" placeholder="Buscar por nome..." oninput="filtrar()">
+
+                    <select class="filtro-select" id="filtroPerfil" onchange="filtrar()">
+                        <option value="">Todos os perfis</option>
                         <option>Adm</option>
                         <option>Gerente</option>
                         <option>Operador</option>
                     </select>
 
-                    <select class="filtro-select">
-                        <option selected>Status do perfil</option>
+                    <select class="filtro-select" id="filtroStatus" onchange="filtrar()">
+                        <option value="">Status do perfil</option>
                         <option>Ativo</option>
                         <option>Inativo</option>
                     </select>
 
-                    <select class="filtro-select">
-                        <option selected>Todas as estufas</option>
+                    <select class="filtro-select" id="filtroEstufa" onchange="filtrar()">
+                        <option value="">Todas as estufas</option>
                         <option>A1</option>
                         <option>A2</option>
                     </select>
@@ -103,31 +94,70 @@
                             <th>Estufa vinculada</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>Esther</td>
-                            <td>Adm</td>
-                            <td><span class="status ideal">Ativo</span></td>
-                            <td>A1</td>
-                        </tr>
-                        <tr>
-                            <td>Max</td>
-                            <td>Gerente</td>
-                            <td><span class="status ideal">Ativo</span></td>
-                            <td>A1</td>
-                        </tr>
-                        <tr>
-                            <td>Nicole</td>
-                            <td>Operador</td>
-                            <td><span class="status muito-alta">Inativo</span></td>
-                            <td>A2</td>
-                        </tr>
-                    </tbody>
+                    <tbody id="tabelaBody"></tbody>
                 </table>
             </div>
         </div>
-
     </div>
 </body>
 
 </html>
+
+<script>
+    let nomes = ["Esther", "Max", "Nicole", "Clara", "Brandão", "Luiza", "Julia", "Thamyres"]
+    let perfis = ["Adm", "Gerente", "Operador", "Operador", "Gerente", "Adm", "Operador", "Gerente"]
+    let status = ["Ativo", "Ativo", "Inativo", "Ativo", "Ativo", "Inativo", "Ativo", "Inativo"]
+    let estufas = ["A1", "A1", "A2", "A2", "A1", "A2", "A1", "A2"]
+
+    function filtrar() {
+        let busca = campoBusca.value.toLowerCase()
+        let filtroPerfil = document.getElementById("filtroPerfil").value
+        let filtroSt = filtroStatus.value
+        let filtroEst = filtroEstufa.value
+        let html = ""
+        let total = 0
+        let ativos = 0
+        let inativos = 0
+
+        let i = 0
+        while (i < nomes.length) {
+            // verifica se a pessoa passa em cada filtro
+            let passouBusca = busca == "" || nomes[i].toLowerCase().includes(busca)
+            let passouPerfil = filtroPerfil == "" || perfis[i] == filtroPerfil
+            let passouStatus = filtroSt == "" || status[i] == filtroSt
+            let passouEstufa = filtroEst == "" || estufas[i] == filtroEst
+
+            // só adiciona na tabela se passou em todos os filtros
+            if (passouBusca && passouPerfil && passouStatus && passouEstufa) {
+                // define a cor conforme o status
+                let classeStatus = ""
+                if (status[i] == "Ativo") {
+                    classeStatus = "ideal"
+                } else {
+                    classeStatus = "muito-alta"
+                }
+
+                // monta a linha e acumula no html
+                html += `<tr>
+                <td>${nomes[i]}</td>
+                <td>${perfis[i]}</td>
+                <td><span class="status ${classeStatus}">${status[i]}</span></td>
+                <td>${estufas[i]}</td>
+            </tr>`
+
+                total++
+                if (status[i] == "Ativo") ativos++
+                if (status[i] == "Inativo") inativos++
+            }
+            i++
+        }
+
+        // atualiza a tabela e os cards com os resultados
+        tabelaBody.innerHTML = html
+        cardTotal.innerHTML = total
+        cardAtivos.innerHTML = ativos
+        cardInativos.innerHTML = inativos
+    }
+
+    filtrar()
+</script>
