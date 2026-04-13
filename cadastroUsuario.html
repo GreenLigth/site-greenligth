@@ -4,9 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Dashboard - Cadastrar Usuario</title>
-    <link rel="stylesheet" href="styles/dashboard.css">
     <link rel="stylesheet" href="styles/cadastroUsuario.css">
-     <link rel="icon" href="./assets/logo/logosite.png">
+    <link rel="stylesheet" href="styles/dashboard.css">
+
+    <link rel="icon" href="./assets/logo/logosite.png">
 </head>
 
 <body>
@@ -22,9 +23,9 @@
             <img class="icons" src="assets/img/icons/perfil-icon.png" alt="">
             <a href="perfil.html">Perfil</a>
         </div>
-         <div class="item">
+        <div class="item">
             <img class="icons" src="assets/img/icons/ajuda-icon.png" alt="">
-            <a href="usuarios.html"  class="ativo">Usuários</a>
+            <a href="usuarios.html" class="ativo">Usuários</a>
         </div>
 
         <div class="item">
@@ -42,8 +43,50 @@
             <span>ADMINISTRADOR</span>
         </div>
         <h1>CADASTRAR <br>USUÁRIO</h1>
-    </div>
 
+        <div class="container-perfil">
+
+            
+                <div class="campo">
+                    <label>Nome Completo</label>
+                    <input type="text" placeholder="Nome">
+                </div>
+
+                <div class="campo">
+                    <label>E-mail</label>
+                    <input type="email" placeholder="nome@email.com">
+                </div>
+
+                <div class="campo">
+                    <label>Nome da Estufa</label>
+                    <input type="text" placeholder="Ex: Estufa Principal">
+                </div>
+
+                <div class="campo">
+                    <label>Cargo</label>
+                    <input type="text" placeholder="Informe o cargo do funcionario">
+                </div>
+
+                <div class="campo-senha-container">
+                    <div class="campo">
+                        <label>Senha</label>
+                        <div class="campo input">
+                            <input type="password" placeholder="Mínimo 8 caracteres" id="ipt_senha">
+                        </div>
+                        <button onclick="visualizar()" class="visualizar-senha">visualizar</button>
+                    </div>
+                    <button type="submit" class="btn-salvar">Salvar alterações</button>
+        </div>
+    </div>
 </body>
 
 </html>
+<script>
+    function visualizar(){
+        let senha = ipt_senha.value;
+        if (ipt_senha.type == 'password'){
+            ipt_senha.type = 'text'
+        } else {
+        ipt_senha.type = 'password'
+    }}
+</script>
