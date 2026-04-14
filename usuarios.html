@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - Usuários</title>
+    <link rel="stylesheet" href="styles/dashboard.css">
+    <link rel="stylesheet" href="styles/usuario.css">
+    <link rel="icon" href="./assets/logo/logosite.png">
+</head>
+
+<body>
+    <div class="menu">
+        <img class="logo" src="assets/logo/logo-branca.png" alt="Greenlight">
+        <div class="item">
+            <img class="icons" src="assets/img/icons/dashboard-icon.png" alt="">
+            <a href="dashboard.html">Dashboard</a>
+        </div>
+        <div class="item">
+            <img class="icons" src="assets/img/icons/perfil-icon.png" alt="">
+            <a href="perfil.html">Perfil</a>
+        </div>
+        <div class="item">
+            <img class="icons" src="assets/img/icons/ajuda-icon.png" alt="">
+            <a href="usuarios.html" class="ativo">Usuários</a>
+        </div>
+        <div class="item">
+            <img class="icons" src="assets/img/icons/ajuda-icon.png" alt="">
+            <a href="ajuda.html">Ajuda</a>
+        </div>
+        <div class="item logout-container">
+            <a href="home.html" class="logout">Sair</a>
+        </div>
+    </div>
+
+    <div class="conteudo">
+        <div class="topo"><span>ADMINISTRADOR</span></div>
+
+        <h1>USUÁRIO</h1>
+
+        <div class="usuarios-header">
+            <p class="usuarios-subtitulo">Gerencie os usuários vinculados às estufas.</p>
+            <a href="cadastroUsuario.html">
+                <button class="btn-novo-usuario">+ Novo usuário</button>
+            </a>
+        </div>
+
+        <div class="usuarios-cards">
+            <div class="stat-card total">
+                <span class="stat-label">Total de usuários</span>
+                <span class="stat-valor" id="cardTotal">0</span>
+            </div>
+            <div class="stat-card ativos">
+                <span class="stat-label">Ativos</span>
+                <span class="stat-valor" id="cardAtivos">0</span>
+            </div>
+            <div class="stat-card inativos">
+                <span class="stat-label">Inativos</span>
+                <span class="stat-valor" id="cardInativos">0</span>
+            </div>
+        </div>
+
+        <div class="linha">
+            <div class="box">
+                <div class="usuarios-filtros">
+                    <input type="text" id="campoBusca" placeholder="Buscar por nome..." oninput="filtrar()">
+
+                    <select class="filtro-select" id="filtroPerfil" onchange="filtrar()">
+                        <option value="">Todos os perfis</option>
+                        <option>Adm</option>
+                        <option>Gerente</option>
+                        <option>Operador</option>
+                    </select>
+
+                    <select class="filtro-select" id="filtroStatus" onchange="filtrar()">
+                        <option value="">Status do perfil</option>
+                        <option>Ativo</option>
+                        <option>Inativo</option>
+                    </select>
+
+                    <select class="filtro-select" id="filtroEstufa" onchange="filtrar()">
+                        <option value="">Todas as estufas</option>
+                        <option>A1</option>
+                        <option>A2</option>
+                    </select>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Nível de acesso</th>
+                            <th>Status</th>
+                            <th>Estufa vinculada</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script>
+    let nomes = ["Esther", "Max", "Nicole", "Clara", "Brandão", "Luiza", "Julia", "Thamyres"]
+    let perfis = ["Adm", "Gerente", "Operador", "Operador", "Gerente", "Adm", "Operador", "Gerente"]
+    let status = ["Ativo", "Ativo", "Inativo", "Ativo", "Ativo", "Inativo", "Ativo", "Inativo"]
+    let estufas = ["A1", "A1", "A2", "A2", "A1", "A2", "A1", "A2"]
+
+    function filtrar() {
+        let busca = campoBusca.value.toLowerCase()
+        let filtroPerfil = document.getElementById("filtroPerfil").value
+        let filtroSt = filtroStatus.value
+        let filtroEst = filtroEstufa.value
+        let html = ""
+        let total = 0
+        let ativos = 0
+        let inativos = 0
+
+        let i = 0
+        while (i < nomes.length) {
+            // verifica se a pessoa passa em cada filtro
+            let passouBusca = busca == "" || nomes[i].toLowerCase().includes(busca)
+            let passouPerfil = filtroPerfil == "" || perfis[i] == filtroPerfil
+            let passouStatus = filtroSt == "" || status[i] == filtroSt
+            let passouEstufa = filtroEst == "" || estufas[i] == filtroEst
+
+            // só adiciona na tabela se passou em todos os filtros
+            if (passouBusca && passouPerfil && passouStatus && passouEstufa) {
+                // define a cor conforme o status
+                let classeStatus = ""
+                if (status[i] == "Ativo") {
+                    classeStatus = "ideal"
+                } else {
+                    classeStatus = "muito-alta"
+                }
+
+                // monta a linha e acumula no html
+                html += `<tr>
+                <td>${nomes[i]}</td>
+                <td>${perfis[i]}</td>
+                <td><span class="status ${classeStatus}">${status[i]}</span></td>
+                <td>${estufas[i]}</td>
+            </tr>`
+
+                total++
+                if (status[i] == "Ativo") ativos++
+                if (status[i] == "Inativo") inativos++
+            }
+            i++
+        }
+
+        // atualiza a tabela e os cards com os resultados
+        tabelaBody.innerHTML = html
+        cardTotal.innerHTML = total
+        cardAtivos.innerHTML = ativos
+        cardInativos.innerHTML = inativos
+    }
+
+    filtrar()
+</script>

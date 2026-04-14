@@ -1,0 +1,92 @@
+.conteudo {
+    flex: 1;
+    margin-left: 250px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.topo {
+    text-align: right;
+    background-color: #1a4a32;
+    margin: -28px -30px 28px -30px;
+    padding: 14px 30px;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+h1 {
+    font-size: 44px;
+    font-weight: 900;
+    color: #1a2e22;
+    margin-bottom: 20px;
+}
+
+/* CONTAINER DO FORMULÁRIO - Centralizado e Largo */
+.container-perfil {
+    width: 60%; 
+    max-width: 600px; 
+    margin: 0 auto; 
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 60px;
+}
+
+/* 8. CAMPOS DE ENTRADA - Largura Total Garantida */
+.campo {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    width: 100%; /* Força todas as caixas a terem o mesmo tamanho */
+}
+
+.campo label {
+    font-weight: bold;
+    font-size: 15px;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.campo input {
+    width: 100%;
+    padding: 20px; 
+    border: 1px solid #ccc;
+    border-radius: 15px; 
+    font-size: 16px;
+    outline: none;
+}
+
+.campo-senha-container {
+    position: relative; /* Base para o texto flutuar ao lado */
+    width: 100%;
+}
+
+.visualizar-senha {
+    position: absolute;
+    right: -90px; /* Joga o texto para fora da caixa, na direita */
+    top: 58px; /* Alinha exatamente no meio da altura do input */
+    font-size: 14px;
+    color: #666;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+/* 11. BOTÃO SALVAR - Agora do mesmo tamanho das caixas */
+.btn-salvar {
+    width: 100%; /* Ocupa os mesmos 800px das caixas de texto */
+    background-color: #165c45;
+    color: white;
+    padding: 22px; 
+    border: none;
+    border-radius: 15px;
+    font-weight: bold;
+    font-size: 20px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: 0.3s;
+}
+
+.btn-salvar:hover {
+    background-color: #0d3d2e;
+}

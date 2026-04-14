@@ -1,0 +1,96 @@
+.usuarios-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.usuarios-subtitulo {
+    font-size: 13px;
+    color: #353535;
+}
+
+.btn-novo-usuario {
+    background: #206F4A;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.btn-novo-usuario:hover {
+    background-color: #1a4a32;
+}
+
+.usuarios-cards {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 18px;
+}
+
+.stat-card {
+    border-radius: 14px;
+    padding: 16px 20px;
+    text-align: center;
+    width: 130px;
+    flex-shrink: 0;
+    color: #ffffff;
+}
+
+.stat-card.total {
+    background: #1a4a32;
+}
+
+.stat-card.ativos {
+    background: #206F4A;
+}
+
+.stat-card.inativos {
+    background: #e8f5e9;
+    color: #1a4a32;
+    border: 1px solid #a5d6a7;
+}
+
+.stat-label {
+    font-size: 11px;
+    display: block;
+    margin-bottom: 4px;
+    opacity: 0.9;
+}
+
+.stat-valor {
+    font-size: 32px;
+    font-weight: 800;
+    display: block;
+    line-height: 1;
+}
+
+.usuarios-filtros {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 14px;
+    align-items: center;
+}
+
+.filtro-select {
+    background: #206F4A;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 14px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+#campoBusca {
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    outline: none;
+    background: #fff;
+    color: #1a4a32;
+    border: 1px solid #c8ddd0;
+    flex: 1;
+}
