@@ -46,7 +46,7 @@
                 <input class="pegaDado" type="text" id="ipt_preco">
 
                 <h3>
-                     <span class="indicador">Custo mensal da produção (R$):</span> <br><br>
+                    <span class="indicador">Custo mensal da produção (R$):</span> <br><br>
                     <input class="pegaDado" type="text" id="ipt_custo">
 
                 </h3>
@@ -61,7 +61,7 @@
                         <option value="ideal">Ideal </option>
                         <option value="alta">Alta (excesso de luz)</option>
                     </select>
-                   
+
                 </h4>
 
                 <button class="butao" onclick="calcular()">Analisar Produção</button>
@@ -73,7 +73,7 @@
 
             <div class="linha card">
 
-                <h1 class=" titulo">Diagnóstico da sua produção </h1> 
+                <h1 class=" titulo">Diagnóstico da sua produção </h1>
 
                 <p class=" mensagem" id="resultado">
                 </p>
@@ -104,60 +104,66 @@
         let densidade = area * plantas; // quantidade de alface por metro quadrado 
         let dias = 30;
 
-        // Porcentacem de acordo com o select
-        let perda;
-        if (luz == "baixa") {
-            perda = 0.15; // abaixo de 100
-        } else if (luz == "ideal") { // entre 150 e 250
-            perda = 0 ;
-        } else { // acima de 500 
-            perda = 0.40;
+        if (area < 0 || plantas < 0 || preco < 0 || custo < 0 || luz == "") {
+
+            alert(`Verifique os valores e tente novamente`)
+
+        } else {
+
+            // Porcentacem de acordo com o select
+            let perda;
+            if (luz == "baixa") {
+                perda = 0.15; // abaixo de 100
+            } else if (luz == "ideal") { // entre 150 e 250
+                perda = 0;
+            } else { // acima de 500 
+                perda = 0.40;
+            }
+
+            // Cálculos Financeiros
+
+            let perdaProducao = densidade - (densidade * perda);
+
+            let receitaAtual = perdaProducao * preco - custo;
+
+
+            // Cálculos com o nosso sensor
+
+            let aumentoProducao = densidade + (densidade * 0.30);
+
+            let novoFaturamento = aumentoProducao * preco - custo;
+
+            let Porcentagem = ((receitaAtual - custo) * 100) / aumentoProducao;
+
+            let formatadoPerda = perdaProducao.toLocaleString('pt-BR');
+
+            let formatadoAumento = aumentoProducao.toLocaleString('pt-BR');
+
+
+            let formatadoReceita = receitaAtual.toLocaleString('pt-BR', {
+                style: 'currency',
+                currency: 'BRL'
+            });
+
+
+            let formatadoFaturamento = novoFaturamento.toLocaleString('pt-BR', {
+                style: 'currency',
+                currency: 'BRL'
+            });
+
+            resultado.innerHTML = `
+                Produção estimada: <b>${formatadoPerda} unidades</b> <br><br>
+                Sua produção está com um défict de <span class = "perder">${(perda * 100)}%</span> devido à luminosidade.<br><br>
+                Receita atual: <b>R$ ${formatadoReceita}</b><br><br>
+                <h3>Com o auxílio do nosso monitoramento</h3>
+                Reduziremos as perdas em até <span class = "ganhar"> 30% </span><br>
+                Estimativa do aumento na produção: <b>${formatadoAumento} unidades</b><br>
+
+                Aumento do faturamento:<br><br>
+                <span class ="ganhar">R$ ${formatadoFaturamento} (${Porcentagem.toFixed(2)}%)</span><br><br>
+
+                O sistema monitora a luminosidade em tempo real e possui alertas automáticos,
+                auxiliando na implantação de prevenção de danos no crescimento da plantação.`;
         }
-
-        // Cálculos Financeiros
-
-        let perdaProducao = densidade - (densidade * perda);
-
-        let receitaAtual = perdaProducao * preco - custo;
-
-
-        // Cálculos com o nosso sensor
-
-        let aumentoProducao = densidade + (densidade * 0.30);
-
-        let novoFaturamento = aumentoProducao * preco - custo;
-
-        let Porcentagem = ((receitaAtual - custo) * 100) / aumentoProducao;
-        
-        let formatadoPerda = perdaProducao.toLocaleString('pt-BR');
-
-        let formatadoAumento = aumentoProducao.toLocaleString('pt-BR');
-        
-        
-        let formatadoReceita = receitaAtual.toLocaleString('pt-BR', {
-            style: 'currency',
-            currency: 'BRL'
-        });
-
-
-        let formatadoFaturamento = novoFaturamento.toLocaleString('pt-BR', {
-            style: 'currency',
-            currency: 'BRL'
-        });
-
-        resultado.innerHTML = `
-        Produção estimada: <b>${formatadoPerda} unidades</b> <br><br>
-        Sua produção está com um défict de <span class = "perder">${(perda * 100)}%</span> devido à luminosidade.<br><br>
-        Receita atual: <b>R$ ${formatadoReceita}</b><br><br>
-        <h3>Com o auxílio do nosso monitoramento</h3>
-        Reduziremos as perdas em até <span class = "ganhar"> 30% </span><br>
-        Estimativa do aumento na produção: <b>${formatadoAumento} unidades</b><br>
-
-        Aumento do faturamento:<br><br>
-        <span class ="ganhar">R$ ${formatadoFaturamento} (${Porcentagem.toFixed(2)}%)</span><br><br>
-
-        O sistema monitora a luminosidade em tempo real e possui alertas automáticos,
-        auxiliando na implantação de prevenção de danos no crescimento da plantação.
-        `;
     }
 </script>
