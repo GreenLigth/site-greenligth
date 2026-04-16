@@ -49,29 +49,29 @@
             
                 <div class="campo">
                     <label>Nome Completo</label>
-                    <input type="text" placeholder="Nome">
+                    <input type="text" id="ipt_nome" placeholder="Nome">
                 </div>
 
                 <div class="campo">
                     <label>E-mail</label>
-                    <input type="email" placeholder="nome@email.com">
+                    <input type="email" id="ipt_email" placeholder="nome@email.com">
                 </div>
 
                 <div class="campo">
                     <label>Nome da Estufa</label>
-                    <input type="text" placeholder="Ex: Estufa Principal">
+                    <input type="text" id="ipt_estufa" placeholder="Ex: Estufa Principal">
                 </div>
 
                 <div class="campo">
                     <label>Cargo</label>
-                    <input type="text" placeholder="Informe o cargo do funcionario">
+                    <input type="text" id="ipt_cargo" placeholder="Informe o cargo do funcionario">
                 </div>
 
                 <div class="campo-senha-container">
                     <div class="campo">
                         <label>Senha</label>
                         <div class="campo input">
-                            <input type="password" placeholder="Mínimo 8 caracteres" id="ipt_senha">
+                            <input type="password" id="ipt_senha" placeholder="Mínimo 8 caracteres" id="ipt_senha">
                         </div>
                         <button onclick="visualizar()" class="visualizar-senha">visualizar</button>
                     </div>
@@ -83,10 +83,33 @@
 </html>
 <script>
     function visualizar(){
+
+        
+        let nome = ipt_nome.value;
+
+        let email = ipt_email.value; 
+        
         let senha = ipt_senha.value;
-        if (ipt_senha.type == 'password'){
-            ipt_senha.type = 'text'
-        } else {
-        ipt_senha.type = 'password'
-    }}
+        
+        let estufa = ipt_estufa.value;
+
+        let cargo = ipt_cargo.value;
+
+        let .com = email.includes(".com");
+
+        let greenlight = email.includes("@greenlight");
+
+
+        if(nome == "" || email == "" || senha == "" || cargo == "" || estufa == "" ) {
+
+            alert("Por favor, preencha todos os campos!");
+
+        
+        } else if (email != com || email != greenlight) {
+
+            alert("Por favor, insira um email empresarial!");
+ 
+        }
+        
+        }
 </script>

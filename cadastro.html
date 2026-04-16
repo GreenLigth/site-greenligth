@@ -88,14 +88,23 @@
         
         let estufa = ipt_estufa.value;
 
+        let .com = email.includes(".com");
+
+        let arroba = email.includes("@");
+
+
         if(nome == "" || email == "" || senha == "" || senhaDnv == "" || estufa == "" ) {
 
-            alert("Por favor, preencha todos os dados!")
+            alert("Por favor, preencha todos os campos!");
 
         } else if ( senha != senhaDnv ) {
 
-            alert("A senha e a senha de confirmação precisam ser iguais")
+            alert("A senha e a senha de confirmação precisam ser iguais");
 
+        } else if (email != com || email != arroba) {
+
+            alert("Por favor, insira um email válido");
+ 
         }
 
 
