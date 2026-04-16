@@ -21,34 +21,34 @@
                 <form>
                     <div class="input-group">
                         <label>Nome Completo</label>
-                        <input type="text" placeholder="Nome">
+                        <input type="text" id= "ipt_nome" placeholder="Nome">
                     </div>
 
                     <div class="input-group">
                         <label>E-mail</label>
-                        <input type="email" placeholder="nome@email.com">
+                        <input type="email" id="ipt_email" placeholder="nome@email.com">
                     </div>
 
                     <div class="input-group">
                         <label>Nome da Estufa</label>
-                        <input type="text" placeholder="Ex: Estufa Principal">
+                        <input type="text" id="ipt_estufa" placeholder="Ex: Estufa Principal">
                     </div>
 
                     <div class="input-group">
                         <label>Senha</label>
                         
-                            <input type="password" placeholder="Mínimo 8 caracteres">
+                            <input type="password" id="ipt_senha" placeholder="Mínimo 8 caracteres">
                         
                     </div>
 
                     <div class="input-group">
                         <label>Confirmar Senha</label>
                         <div class="password-wrapper">
-                            <input type="password" placeholder="Repita a senha">
+                            <input type="password" id="ipt_senhaDnv" placeholder="Repita a senha">
                         </div>
                     </div>
 
-                    <button type="submit" class="btn-primary">
+                    <button type="submit" class="btn-primary" onclick="fVerificar()">
                         <img src="./assets/icons/folha-branca.svg" alt="" width="20">
                         Criar Conta
                     </button>
@@ -73,3 +73,32 @@
 
 </body>
 </html>
+
+<script>
+
+    function fVerificar() {
+
+        let nome = ipt_nome.value;
+
+        let email = ipt_email.value; 
+        
+        let senha = ipt_senha.value;
+        
+        let senhaDnv = ipt_senhaDnv.value
+        
+        let estufa = ipt_estufa.value;
+
+        if(nome == "" || email == "" || senha == "" || senhaDnv == "" || estufa == "" ) {
+
+            alert("Por favor, preencha todos os dados!")
+
+        } else if ( senha != senhaDnv ) {
+
+            alert("A senha e a senha de confirmação precisam ser iguais")
+
+        }
+
+
+    }
+
+</script>
