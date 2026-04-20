@@ -37,19 +37,23 @@
                     <div class="input-group">
                         <label>Senha</label>
                         
-                            <input type="password" id="ipt_senha" placeholder="Mínimo 8 caracteres">
+                            <input type="password" id="ipt_senha" oninput="fSenha()" placeholder="Mínimo 8 caracteres">
                         
-                    </div>
+                    </div> 
 
+                    <div id="div_validar" class="validacao"></div>
+                    
                     <div class="input-group">
                         <label>Confirmar Senha</label>
                         <div class="password-wrapper">
                             <input type="password" id="ipt_senhaDnv" placeholder="Repita a senha">
                         </div>
                     </div>
-
+                    
+                    <div id="div_confirmar" class="validacao"></div>
+                    
                     <button type="submit" class="btn-primary" onclick="fVerificar()">
-                        <img src="./assets/icons/folha-branca.svg" alt="" width="20">
+                       <!-- <img src="./assets/icons/folha-branca.svg" alt="" width="20"> -->
                         Criar Conta
                     </button>
                 </form>
@@ -62,7 +66,7 @@
             <div class="overlay"></div>
             <div class="banner-content">
                 <div class="logo">
-                    <img src="./assets/logo/logo-branca.png" alt="Logo Greenlight" class="logo-img"> 
+                   <!-- <img src="./assets/logo/logo-branca.png" alt="Logo Greenlight" class="logo-img"> -->
                 </div>
                 <h1>Sistema Inteligente de Monitoramento de Luminosidade</h1>
                 <p>Monitore as condições de iluminação das suas estufas em tempo real.</p>
@@ -71,10 +75,81 @@
         
     </div>
 
-</body>
-</html>
+
+
 
 <script>
+
+    function fSenha() {
+
+        
+        div_validar.innerHTML = ' ';
+             
+        div_confirmar.innerHTML =' ';
+
+        let senha = ipt_senha.value;
+
+        let senhaDnv = ipt_senhaDnv.value;
+
+        let especial = ['!','@','#','$','%','&','*']; 
+
+        let numero = ['0','1','2','3','4','5','6','7','8','9'];
+
+        let temNumero = false;
+
+        let temEspecial = false; 
+
+        for (let i = 0; i < numero.length; i++ ) {
+
+            if(senha.includes(numero[i])) {
+
+                temNumero = true;
+            };
+
+        };
+
+        for (let i = 0; i < especial.length; i++) {
+
+            if(senha.includes(especial[i])) {
+
+                temEspecial = true;
+            };
+
+        };
+
+        if (senha.length < 8) {
+
+            div_validar.innerHTML = "<i> <b> Insira uma combinação de pelo menos oito caracteres </b> </i>";
+
+              console.log('passe no if tamanho senha ')
+
+        } else if (!temNumero) { 
+
+            div_validar.innerHTML = "<i> <b> Insira pelo menos um número </b> </i>";
+
+              console.log('passe no if numero ')
+
+        } else if (!temEspecial) {
+
+            div_validar.innerHTML = "<i> <b> Insira pelo menos um caractere especial. Ex: '#', '!'  </b> </i>";
+
+              console.log('passe no if especial ')
+
+        }else if ( senha != senhaDnv ) {
+
+            div_confirmar.innerHTML = "<i> <b> A senha e a senha de confirmação precisam ser iguais </b> </i>";
+
+              console.log('passe no if senha dnv ')
+        }else {
+
+             div_validar.innerHTML = ' ';
+
+             div_confirmar.innerHTML =' ';
+
+
+        }
+
+    }
 
     function fVerificar() {
 
@@ -88,26 +163,42 @@
         
         let estufa = ipt_estufa.value;
 
-        let .com = email.endsWith(".com");
+        let com = email.endsWith(".com");
 
         let arroba = email.includes("@");
+
+       
+
+        
 
 
         if(nome == "" || email == "" || senha == "" || senhaDnv == "" || estufa == "" ) {
 
             alert("Por favor, preencha todos os campos!");
 
-        } else if ( senha != senhaDnv ) {
+            console.log('passe no if')
 
-            alert("A senha e a senha de confirmação precisam ser iguais");
-
-        } else if (email != com || email != arroba) {
+        }else if ( !com || !arroba) {
 
             alert("Por favor, insira um email válido");
+
+              console.log('passe no if email ')
  
-        }
+        } else {
+
+            alert('Cadastro realizado com sucesso')
+
+            window.location.href = "//C:\Users\Home\site-greenligth\dashboard.html"
+
+            console.log('passei no else')
+
+        };
 
 
     }
 
 </script>
+
+
+</body>
+</html>
