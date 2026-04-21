@@ -54,8 +54,10 @@
 
                 <div class="campo">
                     <label>E-mail</label>
-                    <input type="email" id="ipt_email" placeholder="nome@email.com">
+                    <input type="email" id="ipt_email" oninput="fEmail()" placeholder="nome@email.com">
                 </div>
+
+                <div id="div_email" class="validacao"></div>
 
                 <div class="campo">
                     <label>Nome da Estufa</label>
@@ -71,8 +73,11 @@
                     <div class="campo">
                         <label>Senha</label>
                         <div class="campo input">
-                            <input type="password" id="ipt_senha" placeholder="Mínimo 8 caracteres" id="ipt_senha">
+                            <input type="password" id="ipt_senha" oninput="fSenha()" placeholder="Mínimo 8 caracteres" id="ipt_senha">
                         </div>
+                        
+                    <div id="div_validar" class="validacao"></div>
+                     <div id="div_botao" class="validacao"></div>
                         <button onclick="visualizar()" class="visualizar-senha">visualizar</button>
                     </div>
                     <button type="submit" class="btn-salvar">Salvar alterações</button>
@@ -82,6 +87,92 @@
 
 </html>
 <script>
+    
+    function fEmail () {
+
+        let email = ipt_email.value; 
+        
+        let com = email.endsWith(".com");
+
+        let arroba = email.includes("@");
+
+        
+        if ( !com || !arroba) {
+
+            div_email.innerHTML = "Por favor, insira um email válido";
+
+              console.log('passe no if email ')
+ 
+        } else {
+
+             div_email.innerHTML = " "
+
+        }
+
+
+    }
+
+    function fSenha() {
+
+        
+        div_validar.innerHTML = ' ';
+             
+
+        let senha = ipt_senha.value;
+
+
+        let especial = ['!','@','#','$','%','&','*']; 
+
+        let numero = ['0','1','2','3','4','5','6','7','8','9'];
+
+        let temNumero = false;
+
+        let temEspecial = false; 
+
+        for (let i = 0; i < numero.length; i++ ) {
+
+            if(senha.includes(numero[i])) {
+
+                temNumero = true;
+            };
+
+        };
+
+        for (let i = 0; i < especial.length; i++) {
+
+            if(senha.includes(especial[i])) {
+
+                temEspecial = true;
+            };
+
+        };
+
+        if (senha.length < 8) {
+
+            div_validar.innerHTML = "<i> <b> Insira uma combinação de pelo menos oito caracteres </b> </i>";
+
+              console.log('passe no if tamanho senha ')
+
+        } else if (!temNumero) { 
+
+            div_validar.innerHTML = "<i> <b> Insira pelo menos um número </b> </i>";
+
+              console.log('passe no if numero ')
+
+        } else if (!temEspecial) {
+
+            div_validar.innerHTML = "<i> <b> Insira pelo menos um caractere especial. Ex: '#', '!'  </b> </i>";
+
+              console.log('passe no if especial ')
+
+    
+        }else {
+
+             div_validar.innerHTML = ' ';
+
+        }
+
+    }
     function visualizar(){
 
         

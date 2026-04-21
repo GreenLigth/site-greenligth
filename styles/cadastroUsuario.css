@@ -57,6 +57,13 @@ h1 {
     outline: none;
 }
 
+.validacao {
+
+    color: red;
+    margin-bottom: 10px;
+
+}
+
 .campo-senha-container {
     position: relative; /* Base para o texto flutuar ao lado */
     width: 100%;

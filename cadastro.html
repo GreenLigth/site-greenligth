@@ -26,8 +26,10 @@
 
                     <div class="input-group">
                         <label>E-mail</label>
-                        <input type="email" id="ipt_email" placeholder="nome@email.com">
+                        <input type="email" oninput="fEmail()" id="ipt_email" placeholder="nome@email.com">
                     </div>
+
+                    <div id="div_email" class="validacao"></div>
 
                     <div class="input-group">
                         <label>Nome da Estufa</label>
@@ -51,6 +53,8 @@
                     </div>
                     
                     <div id="div_confirmar" class="validacao"></div>
+
+                    <div id="div_botao" class="validacao"></div>
                     
                     <button type="submit" class="btn-primary" onclick="fVerificar()">
                        <!-- <img src="./assets/icons/folha-branca.svg" alt="" width="20"> -->
@@ -79,6 +83,32 @@
 
 
 <script>
+
+
+
+    function fEmail () {
+
+        let email = ipt_email.value; 
+        
+        let com = email.endsWith(".com");
+
+        let arroba = email.includes("@");
+
+        
+        if ( !com || !arroba) {
+
+            div_email.innerHTML = "Por favor, insira um email válido";
+
+              console.log('passe no if email ')
+ 
+        } else {
+
+             div_email.innerHTML = " "
+
+        }
+
+
+    }
 
     function fSenha() {
 
@@ -163,28 +193,15 @@
         
         let estufa = ipt_estufa.value;
 
-        let com = email.endsWith(".com");
-
-        let arroba = email.includes("@");
-
        
-
-        
-
-
+       
         if(nome == "" || email == "" || senha == "" || senhaDnv == "" || estufa == "" ) {
 
-            alert("Por favor, preencha todos os campos!");
+             alert("Por favor, preencha todos os campos!");
 
             console.log('passe no if')
 
-        }else if ( !com || !arroba) {
-
-            alert("Por favor, insira um email válido");
-
-              console.log('passe no if email ')
- 
-        } else {
+         } else {
 
             alert('Cadastro realizado com sucesso')
 
