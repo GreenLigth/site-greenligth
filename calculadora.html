@@ -56,10 +56,10 @@
                     <span class="indicador">Qual o nível de iluminação da sua estufa?</span>
                     <br><br>
                     <select class="selecao" id="sel_luz">
-                        <option value="0" selected disabled>Parâmetro de iluminação</option>
-                        <option value="baixa">Baixa (pouca luz)</option>
-                        <option value="ideal">Ideal </option>
-                        <option value="alta">Alta (excesso de luz)</option>
+                        <option value="0" selected disabled>Parâmetro de sobreamento</option>
+                        <option value="baixa">Baixo ( menos de 18%)</option>
+                        <option value="ideal">Médio (a partir de 30%)</option>
+                        <option value="alta">Alto (Superior a 50%)</option>
                     </select>
 
                 </h4>
@@ -78,11 +78,12 @@
                 <p class=" mensagem" id="resultado">
                 </p>
 
-            </div>
+            </div> 
 
-
-
+             <div id="div_alerta" class="validacao"></div>
     </div>
+
+    
 
     </section>
 
@@ -114,11 +115,11 @@
 
             // Porcentacem de acordo com o select
             let perda;
-            if (luz == "baixa") {
-                perda = 0.15; // abaixo de 100
-            } else if (luz == "ideal") { // entre 150 e 250
+            if (luz == "baixo") {
+                perda = 0.15; // abaixo de 18
+            } else if (luz == "Médio") { // entre 30 e 50
                 perda = 0;
-            } else { // acima de 500 
+            } else { // acima de 50
                 perda = 0.40;
             }
 
@@ -156,16 +157,27 @@
             resultado.innerHTML = `
                 Produção estimada: <b>${formatadoPerda} unidades</b> <br><br>
                 Sua produção está com um défict de <span class = "perder">${(perda * 100)}%</span> devido à luminosidade.<br><br>
-                Receita atual: <b>R$ ${formatadoReceita}</b><br><br>
+                Receita atual: <b>${formatadoReceita}</b><br><br>
                 <h3>Com o auxílio do nosso monitoramento</h3>
                 Reduziremos as perdas em até <span class = "ganhar"> 30% </span><br>
                 Estimativa do aumento na produção: <b>${formatadoAumento} unidades</b><br>
 
                 Aumento do faturamento:<br><br>
-                <span class ="ganhar">R$ ${formatadoFaturamento} (${Porcentagem.toFixed(2)}%)</span><br><br>
+                <span class ="ganhar"> ${formatadoFaturamento} (${Porcentagem.toFixed(2)}%)</span><br><br>
 
                 O sistema monitora a luminosidade em tempo real e possui alertas automáticos,
-                auxiliando na implantação de prevenção de danos no crescimento da plantação.`;
+                auxiliando na implantação de prevenção de danos no crescimento da plantação.<br>
+                
+                <b class = "validacao"> 
+                Fontes utuilizada para no apoio dos cálculos: AVALIAÇÃO DE DIFERENTES NÍVEIS DE SOMBREAMENTO PARA 
+                A PRODUÇÃO DE ALFACE AMERICANA EM PALMAS/TO.<br>
+                ATENUAÇÃO E DENSIDADE DO FLUXO DE RADIAÇÃO SOLAR NO 
+                DESENVOLVIMENTO DA ALFACE </b>`;
+
         }
+        
+    
+      
     }
+
 </script>

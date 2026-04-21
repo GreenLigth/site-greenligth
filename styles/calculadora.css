@@ -84,9 +84,9 @@ img {
   gap: 16px;
 }
 
-section, div {
+/*section, div {
   flex: 1; 
-}
+}*/
 
 .banner {
 
@@ -122,6 +122,16 @@ section, div {
     margin-right: 28px;
     
 }
+
+
+
+.validacao {
+
+    color: red;
+    font-size: 15px;
+
+}
+
 
 
 .container {
