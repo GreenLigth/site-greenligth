@@ -149,25 +149,25 @@
 
         if (senha.length < 8) {
 
-            div_validar.innerHTML = "<i> <b> Insira uma combinação de pelo menos oito caracteres </b> </i>";
+            div_validar.innerHTML = "Insira uma combinação de pelo menos oito caracteres ";
 
               console.log('passe no if tamanho senha ')
 
         } else if (!temNumero) { 
 
-            div_validar.innerHTML = "<i> <b> Insira pelo menos um número </b> </i>";
+            div_validar.innerHTML = " Insira pelo menos um número ";
 
               console.log('passe no if numero ')
 
         } else if (!temEspecial) {
 
-            div_validar.innerHTML = "<i> <b> Insira pelo menos um caractere especial. Ex: '#', '!'  </b> </i>";
+            div_validar.innerHTML = " Insira pelo menos um caractere especial. Ex: '#', '!'";
 
               console.log('passe no if especial ')
 
         }else if ( senha != senhaDnv ) {
 
-            div_confirmar.innerHTML = "<i> <b> A senha e a senha de confirmação precisam ser iguais </b> </i>";
+            div_confirmar.innerHTML = " A senha e a senha de confirmação precisam ser iguais";
 
               console.log('passe no if senha dnv ')
         }else {
