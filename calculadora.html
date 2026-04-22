@@ -37,7 +37,7 @@
             <div class=" card linha">
 
                 <h1 class="simulador titulo">Simulador Inteligente</h1>
-                <p class="paragrafo">Entenda o impacto da iluminação no seu faturamento</p>
+                <p class="paragrafo">Entenda o impacto da iluminação<br> no seu faturamento</p>
                 <span class="indicador">Área da estufa (m²):</span>
                 <input class="pegaDado" type="text" id="ipt_area">
                 <span class="indicador"> Quantidade de plantas por m²:</span>
@@ -71,7 +71,7 @@
 
         <section class=" banner container">
 
-            <div class="linha card">
+            <div class="linha card card-direito">
 
                 <h1 class=" titulo">Diagnóstico da sua produção </h1>
 
@@ -156,7 +156,7 @@
 
             resultado.innerHTML = `
                 Produção estimada: <b>${formatadoPerda} unidades</b> <br><br>
-                Sua produção está com um défict de <span class = "perder">${(perda * 100)}%</span> devido à luminosidade.<br><br>
+                Sua produção está com um déficit de <span class = "perder">${(perda * 100)}%</span> devido à luminosidade.<br><br>
                 Receita atual: <b>${formatadoReceita}</b><br><br>
                 <h3>Com o auxílio do nosso monitoramento</h3>
                 Elevaremos a produção em até <span class = "ganhar"> 30% </span><br>
@@ -170,7 +170,7 @@
                 
                 <b class = "validacao"> 
                 <br>
-                Fontes utuilizada para no apoio dos cálculos: AVALIAÇÃO DE DIFERENTES NÍVEIS DE SOMBREAMENTO PARA 
+                Fontes utilizada para apoio dos cálculos: AVALIAÇÃO DE DIFERENTES NÍVEIS DE SOMBREAMENTO PARA 
                 A PRODUÇÃO DE ALFACE AMERICANA EM PALMAS/TO.<br>
                 ATENUAÇÃO E DENSIDADE DO FLUXO DE RADIAÇÃO SOLAR NO 
                 DESENVOLVIMENTO DA ALFACE </b>`;
