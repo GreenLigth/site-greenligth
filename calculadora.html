@@ -116,11 +116,11 @@
             // Porcentacem de acordo com o select
             let perda;
             if (luz == "baixo") {
-                perda = 0.15; // abaixo de 18
+                perda = 0.40; // abaixo de 18
             } else if (luz == "medio") { // entre 30 e 50
                 perda = 0;
             } else { // acima de 50
-                perda = 0.40;
+                perda = 0.15;
             }
 
             // Cálculos Financeiros
@@ -160,10 +160,10 @@
                 Receita atual: <b>${formatadoReceita}</b><br><br>
                 <h3>Com o auxílio do nosso monitoramento</h3>
                 Reduziremos as perdas em até <span class = "ganhar"> 30% </span><br>
-                Estimativa do aumento na produção: <b>${formatadoAumento} unidades</b><br>
+                Estimativa do aumento na produção: <b>${formatadoAumento} unidades</b><br><br>
 
                 Aumento do faturamento:<br><br>
-                <span class ="ganhar"> ${formatadoFaturamento} (${Porcentagem.toFixed(2)}%)</span><br><br>
+                <span class ="ganhar"> ${formatadoFaturamento} (${Porcentagem.toFixed(2)}%) relacionado a receita anterior</span><br><br>
 
                 O sistema monitora a luminosidade em tempo real e possui alertas automáticos,
                 auxiliando na implantação de prevenção de danos no crescimento da plantação.<br>
