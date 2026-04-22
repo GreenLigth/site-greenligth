@@ -195,7 +195,7 @@ img {
 
 .selecao {
 
-  width: 300px;
+  width: 100%;
   padding: 0.4rem 1rem;
   border: 1px solid #165c45;
   border-radius: 8px;
