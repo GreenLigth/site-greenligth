@@ -56,10 +56,10 @@
                     <span class="indicador">Qual o nível de iluminação da sua estufa?</span>
                     <br><br>
                     <select class="selecao" id="sel_luz">
-                        <option value="0" selected disabled>Parâmetro de sobreamento</option>
-                        <option value="baixo">Baixo ( menos de 18%)</option>
-                        <option value="medio">Médio (a partir de 30%)</option>
-                        <option value="alto">Alto (Superior a 50%)</option>
+                        <option value="0" selected disabled>Parâmetro de luminosidade</option>
+                        <option value="baixo">Baixa ( menos de 20%)</option>
+                        <option value="medio">Média (a partir de 30%)</option>
+                        <option value="alto">Alta (Superior a 50%)</option>
                     </select>
 
                 </h3>
@@ -103,7 +103,6 @@
         let custo = Number(ipt_custo.value);
         let luz = sel_luz.value;
         let densidade = area * plantas; // quantidade de alface por metro quadrado 
-        let dias = 30;
 
         if (area < 0 || plantas < 0 || preco < 0 || custo < 0 || luz == "") {
 
@@ -116,11 +115,11 @@
             // Porcentacem de acordo com o select
             let perda;
             if (luz == "baixo") {
-                perda = 0.40; // abaixo de 18
+                perda = 0.15; // abaixo de 18
             } else if (luz == "medio") { // entre 30 e 50
-                perda = 0;
+                perda = 0.05;
             } else { // acima de 50
-                perda = 0.15;
+                perda = 0.40;
             }
 
             // Cálculos Financeiros
@@ -132,7 +131,7 @@
 
             // Cálculos com o nosso sensor
 
-            let aumentoProducao = densidade + (densidade * 0.30);
+            let aumentoProducao = densidade + (densidade * 0.30) ;
 
             let novoFaturamento = aumentoProducao * preco - custo;
 
