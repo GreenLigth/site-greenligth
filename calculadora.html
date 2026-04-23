@@ -42,7 +42,7 @@
                 <input class="pegaDado" type="text" id="ipt_area">
                 <span class="indicador"> Quantidade de plantas por m²:</span>
                 <input class="pegaDado" type="text" id="ipt_plantas">
-                <span class="indicador">Preço de venda por saca (R$):</span>
+                <span class="indicador">Preço de venda por unidade (R$):</span>
                 <input class="pegaDado" type="text" id="ipt_preco">
 
                 <h3>
@@ -131,11 +131,11 @@
 
             // Cálculos com o nosso sensor
 
-            let aumentoProducao = densidade + (densidade * 0.30) ;
+            let aumentoProducao = (densidade + (densidade * 0.30)) - perdaProducao ;
 
-            let novoFaturamento = aumentoProducao * preco - custo;
+            let novoFaturamento = aumentoProducao * preco;
 
-            let Porcentagem = (( novoFaturamento * 100) / receitaAtual) - 100  ;
+            let Porcentagem = (( novoFaturamento * 100) / receitaAtual) ;
 
             let formatadoPerda = perdaProducao.toLocaleString('pt-BR');
 
