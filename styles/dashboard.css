@@ -70,6 +70,12 @@ body {
     min-height: 100vh;
 }
 
+.conteudo .titulo-dash{
+    color: #1a2e22;
+    font-weight: bold;
+    font-size: 25px;
+}
+
 .topo {
     text-align: right;
     background-color: #1a4a32;
@@ -86,6 +92,9 @@ h1 {
     color: #1a2e22;
     margin-bottom: 20px;
 }
+
+
+
 
 .linha-topo {
     display: flex;
@@ -105,7 +114,7 @@ h1 {
 }
 
 .grafico-barras h3 {
-    font-size: 14px;
+    font-size:15px;
     font-weight: 700;
     color: #1a2e22;
     margin-bottom: 14px;
@@ -115,6 +124,11 @@ h1 {
     flex: 1;
     position: relative;
     min-height: 300px;
+}
+
+.coluna-esquerda{
+    display: flex;
+    gap: 30px !important;
 }
 
 .coluna-meio {
@@ -127,6 +141,7 @@ h1 {
 .cards {
     display: flex;
     gap: 14px;
+    margin-bottom: 50px;
 }
 
 .card.atencao {
@@ -152,55 +167,32 @@ h1 {
 }
 
 .grafico-linha {
-    background-color: #0569356a;
+    background-color: #c6e1d1;
     border-radius: 14px;
     padding: 18px 20px;
     flex: 1;
+    gap: 5px;
     display: flex;
     flex-direction: column;
 }
 
 .grafico-linha h3 {
-    font-size: 14px;
+    font-size:15px;
     font-weight: 700;
     color: #004230;
     margin-bottom: 15px;
+}
+
+.grafico-linha p{
+    font-size: 12px ;
+    font-weight: 600;
+    color: #1a2e22;
 }
 
 .grafico-linha .chart-wrap {
     position: relative;
     height: 200px;
     width: 100%;
-}
-
-.lumi-box {
-    background-color: #ffffff;
-    border-radius: 14px;
-    padding: 18px 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    flex-shrink: 0;
-}
-
-.lumi-box h3 {
-    font-size: 14px;
-    font-weight: 700;
-    color: #206F4A;
-    margin-bottom: 4px;
-}
-
-.lumi-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 18px;
-    font-weight: 600;
-    color: #1a2e22;
-}
-
-.lumi-item span.emoji {
-    font-size: 26px;
 }
 
 .coluna-direita {
@@ -211,10 +203,21 @@ h1 {
 }
 
 .grafico-rosca h3 {
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 700;
     color: #1a2e22;
     margin-bottom: 14px;
+}
+
+.grafico-rosca p{
+    margin-top: 20px;
+    color: #065f46;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.grafico-rosca .p-alerta{
+    color: #75030e;
 }
 
 .grafico-rosca {

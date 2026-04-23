@@ -36,26 +36,13 @@
     <div class="conteudo">
         <div class="topo"><span>ADMINISTRADOR</span></div>
         <h1>DASHBOARD</h1>
+        <h2 class="titulo-dash">Bem vindo - Estufas verdes</h2>
+        <br>
 
         <div class="linha-topo">
 
-            <div class="grafico-barras">
-                <h3>Quantidade por estado dos sensores</h3>
-                <div class="chart-wrap">
-                    <canvas id="graficoBarra"></canvas>
-                </div>
-            </div>
-
-            <div class="coluna-meio">
+            <div id="coluna-esquerda">
                 <div class="cards">
-                    <div class="card">
-                        Média de Luz (Geral)
-                        <strong>20.740</strong>
-                        <p style="font-size: 10px; margin-top: 5px; opacity: 0.8;">
-                            O nível de luz está dentro do esperado para um crescimento saudável.
-                        </p>
-                    </div>
-
                     <div class="card atencao">
                         Pico de Luz: BioFolhas
                         <strong>42.000</strong>
@@ -63,24 +50,32 @@
                             Atenção! Esta estufa está recebendo luz acima do limite máximo.
                         </p>
                     </div>
+
+                    <div class="card">
+                        Média de Luz<b> mensal acumulada</b>
+                        <strong>20.740</strong>
+                        <p style="font-size: 10px; margin-top: 5px; opacity: 0.8;">
+                            O nível de luz está dentro do esperado para um crescimento saudável.
+                        </p>
+                    </div>
                 </div>
+
                 <div class="grafico-linha">
-                    <h3>Crescimento do investimento</h3>
+                    <h3>Média mensal de luminosidade</h3>
                     <div class="chart-wrap">
                         <canvas id="graficoLinha"></canvas>
                     </div>
+                    <p>Luminosidade ideal para plantio (15.000) </p>
                 </div>
-                <div class="lumi-box">
-                    <h3>Luminosidades mais atingidas</h3>
-                    <div class="lumi-item">
-                        <span class="emoji">☀️</span> >30.000
-                    </div>
-                    <div class="lumi-item">
-                        <span class="emoji">☁️</span> 15.000
-                    </div>
-                    <div class="lumi-item">
-                        <span class="emoji">🌙</span>
-                        8.000
+
+            </div>
+
+            <div class="coluna-meio">
+
+                <div class="grafico-barras">
+                    <h3>Quantidade por estado (STATUS) dos sensores nas estufas</h3>
+                    <div class="chart-wrap">
+                        <canvas id="graficoBarra"></canvas>
                     </div>
                 </div>
 
@@ -88,34 +83,12 @@
 
             <div class="coluna-direita">
                 <div class="grafico-rosca">
-                    <h3>Quantidade de sensores por estufa</h3>
+                    <h3>Quantidade de sensores em ALERTA por estufa</h3>
                     <div class="chart-wrap">
                         <canvas id="graficoRosca"></canvas>
                     </div>
-                </div>
-                <div class="box-empresas">
-                    <table>
-                        <tr>
-                            <th>Empresa</th>
-                            <th>Representante</th>
-                            <th>Região</th>
-                        </tr>
-                        <tr>
-                            <td>AgroFace</td>
-                            <td>Julia</td>
-                            <td>Nordeste</td>
-                        </tr>
-                        <tr>
-                            <td>AlVerde</td>
-                            <td>Esther</td>
-                            <td>Sudeste</td>
-                        </tr>
-                        <tr>
-                            <td>BioFolhas</td>
-                            <td>Luiza</td>
-                            <td>Sul</td>
-                        </tr>
-                    </table>
+                    <p>Quantidade total de sensores: <b>10</b></p>
+                    <p class="p-alerta">Quantidade de sensores em ALERTA: <b>7</b></p>
                 </div>
             </div>
 
@@ -202,7 +175,7 @@
         data: {
             labels: ["Baixa", "Ideal", "Alta", "Muito Alta"],
             datasets: [{
-                label: "Total",
+                label: "STATUS",
                 data: [3, 3, 2, 2],
                 backgroundColor: ["#3097a3", "#065f46", "#92400e", "#991b1b"],
                 barPercentage: 0.5
@@ -221,27 +194,30 @@
         }
     })
 
+
+
+
     // gráfico linha
     let ctxLinha = document.getElementById("graficoLinha").getContext("2d")
     new Chart(ctxLinha, {
         type: "line",
         data: {
-            labels: ["AgroFace", "AlVerde", "BioFolhas", "AgroFace", "AlVerde"],
+            labels: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
             datasets: [
                 {
-                    label: "Valor Real",
-                    data: [15000, 5400, 42000, 32000, 10500],
+                    label: "Luminosidade Média",
+                    data: [15000, 5400, 42000, 32000, 10500, 8000, 3233, 7777, 4543, 28000, 23000, 12000],
                     borderColor: "white"
                 },
                 {
-                    label: "Limite Máximo",
-                    data: [30000, 30000, 30000, 30000, 30000],
+                    label: "Luminosidade Máxima",
+                    data: [30000, 30000, 30000, 30000, 30000, 30000, 30000, 30000, 30000, 30000, 30000, 30000],
                     borderColor: "green",
                     pointRadius: 0
                 },
                 {
-                    label: "Limite Mínimo",
-                    data: [8000, 8000, 8000, 8000, 8000],
+                    label: "Luminosidade Mínima",
+                    data: [8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000],
                     borderColor: "red",
                     pointRadius: 0
                 }
@@ -259,9 +235,9 @@
     new Chart(ctxRosca, {
         type: "doughnut",
         data: {
-            labels: ["AgroFace", "AlVerde", "BioFolhas", "TerraFresca"],
+            labels: ["AgroFace", "AlVerde", "BioFolhas"],
             datasets: [{
-                data: [55, 25, 15, 5],
+                data: [3, 1, 3],
                 backgroundColor: ["#206F4A", "#4ade80", "#a3a3a3", "#1a4a32"]
             }]
         },
