@@ -37,7 +37,7 @@
             <div class=" card linha">
 
                 <h1 class="simulador titulo">Simulador Inteligente</h1>
-                <p class="paragrafo">Entenda o impacto da iluminação no seu faturamento</p>
+                <p class="paragrafo">Entenda o impacto da iluminação<br> no seu faturamento</p>
                 <span class="indicador">Área da estufa (m²):</span>
                 <input class="pegaDado" type="text" id="ipt_area">
                 <span class="indicador"> Quantidade de plantas por m²:</span>
@@ -51,7 +51,7 @@
 
                 </h3>
 
-                <h4>
+                <h3>
 
                     <span class="indicador">Qual o nível de iluminação da sua estufa?</span>
                     <br><br>
@@ -62,7 +62,7 @@
                         <option value="alto">Alto (Superior a 50%)</option>
                     </select>
 
-                </h4>
+                </h3>
 
                 <button class="butao" onclick="calcular()">Analisar Produção</button>
 
@@ -71,7 +71,7 @@
 
         <section class=" banner container">
 
-            <div class="linha card">
+            <div class="linha card card-direito">
 
                 <h1 class=" titulo">Diagnóstico da sua produção </h1>
 
@@ -116,11 +116,11 @@
             // Porcentacem de acordo com o select
             let perda;
             if (luz == "baixo") {
-                perda = 0.15; // abaixo de 18
-            } else if (luz == "médio") { // entre 30 e 50
+                perda = 0.40; // abaixo de 18
+            } else if (luz == "medio") { // entre 30 e 50
                 perda = 0;
             } else { // acima de 50
-                perda = 0.40;
+                perda = 0.15;
             }
 
             // Cálculos Financeiros
@@ -136,7 +136,7 @@
 
             let novoFaturamento = aumentoProducao * preco - custo;
 
-            let Porcentagem = ((receitaAtual - custo) * 100) / aumentoProducao;
+            let Porcentagem = ( novoFaturamento * 10) / receitaAtual  ;
 
             let formatadoPerda = perdaProducao.toLocaleString('pt-BR');
 
@@ -156,20 +156,21 @@
 
             resultado.innerHTML = `
                 Produção estimada: <b>${formatadoPerda} unidades</b> <br><br>
-                Sua produção está com um défict de <span class = "perder">${(perda * 100)}%</span> devido à luminosidade.<br><br>
+                Sua produção está com um déficit de <span class = "perder">${(perda * 100)}%</span> devido à luminosidade.<br><br>
                 Receita atual: <b>${formatadoReceita}</b><br><br>
                 <h3>Com o auxílio do nosso monitoramento</h3>
-                Reduziremos as perdas em até <span class = "ganhar"> 30% </span><br>
-                Estimativa do aumento na produção: <b>${formatadoAumento} unidades</b><br>
+                Elevaremos a produção em até <span class = "ganhar"> 30% </span><br>
+                Estimativa do aumento na produção: <b>${formatadoAumento} unidades</b><br><br>
 
                 Aumento do faturamento:<br><br>
-                <span class ="ganhar"> ${formatadoFaturamento} (${Porcentagem.toFixed(2)}%)</span><br><br>
+                <span class ="ganhar"> ${formatadoFaturamento} (${Porcentagem.toFixed(2)}%) relacionado a receita anterior</span><br><br>
 
                 O sistema monitora a luminosidade em tempo real e possui alertas automáticos,
                 auxiliando na implantação de prevenção de danos no crescimento da plantação.<br>
                 
                 <b class = "validacao"> 
-                Fontes utuilizada para no apoio dos cálculos: AVALIAÇÃO DE DIFERENTES NÍVEIS DE SOMBREAMENTO PARA 
+                <br>
+                Fontes utilizada para apoio dos cálculos: AVALIAÇÃO DE DIFERENTES NÍVEIS DE SOMBREAMENTO PARA 
                 A PRODUÇÃO DE ALFACE AMERICANA EM PALMAS/TO.<br>
                 ATENUAÇÃO E DENSIDADE DO FLUXO DE RADIAÇÃO SOLAR NO 
                 DESENVOLVIMENTO DA ALFACE </b>`;

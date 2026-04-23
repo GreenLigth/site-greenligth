@@ -72,7 +72,7 @@ img {
 
 .body {
 
-  background: #206F4A;
+  background: #ffffff;
   background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('../assets/img/fundohome.jpg');
   background-size: cover;
   background-position: center;
@@ -91,10 +91,10 @@ img {
 .banner {
 
   display: flex;
-  background-color: rgba(255, 255, 255, 0.788);
+  background-color:rgba(1, 43, 0, 0.725);
   width: 100%;
   max-width: 700px;
-  border-radius: 58px;
+  border-radius: 15px;
   padding : 2rem 2.5rem;
   margin-top:70px;    /* afasta da navbar */
   margin-bottom: 40px; /* afasta do que vem abaixo */
@@ -115,15 +115,26 @@ img {
 }
 
 .card {
-    
+    color: #fff9f6;
     display: flex;
-    margin-top: 10px;
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-top: 5px;
+    margin-left:5px;
+    margin-right: 5px;
     
 }
 
+.card-direito {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
+.card-direito .titulo {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 20px;
+}
 
 .validacao {
 
@@ -146,20 +157,21 @@ img {
 
 
 .simulador .titulo h1 {
-
+  display: flex;
   color: #000000;
   font-size: 2rem;/*tamanho da fonte*/
   font-weight: 400;/*negrito*/
   line-height: 1;/*aumenta o espaço entre as linhas pra ler melhor*/
   max-width: 380px;/*largura máxima pra não estourar o layout*/
   font: 'Open Sans', sans-serif;
+  justify-content: center;
 }
 
 
 .paragrafo {
 
   display: flex;
-  position: relative;
+  justify-content: flex-start;
   left: 10px;
   font-size: 1.3rem;
 
@@ -177,20 +189,17 @@ img {
 }
 
 .indicador {
-    
-    font-size: 1.2rem;
-    margin-bottom: 0.8px;
-    
-    
+    font-size: 14px;
+
 }
 
 .pegaDado {
 
   width: 500px;
   padding: 0.4rem 1rem;
-  border: 2px solid #2ed69e;
-  border-radius: 6px;
-  background-color: #ffffff;
+  border: 1px solid #165c45;
+  border-radius: 8px;
+  background-color:#fff9f6;
   font-size: 1.1rem;
   
 
@@ -198,10 +207,10 @@ img {
 
 .selecao {
 
-  width: 300px;
-  padding: 0.6rem 1rem;
-  border: 2px solid #2ed69e;
-  border-radius: 6px;
+  width: 100%;
+  padding: 0.4rem 1rem;
+  border: 1px solid #165c45;
+  border-radius: 8px;
   background-color: #ffffff;
   font-size: 1.1rem;
   
@@ -217,33 +226,30 @@ img {
     color: white;
     padding: 15px; 
     border: none;
-    border-radius: 15px;
+    border-radius: 8px;
     font-weight: bold;
     font-size: 20px;
     cursor: pointer;
     margin-top: 10px;
-    transition: 0.3s;
     margin-left: 35px;
     margin-bottom: 20px;
-
-
 }
 
 .mensagem {
 
-    color: #000000;
-    font-size: 1.2rem;
+    color: #fff9f6;
+    font-size: 17px;
     
 }
 
 
 .perder {
-     color: red; 
+     color: rgb(221, 0, 0); 
      font-weight: bold;
 }
 
 .ganhar {
-    color: green; 
+    color: rgb(0, 197, 0); 
     font-weight: bold
 }
 
