@@ -116,8 +116,9 @@
                             <th>Valor (Lux)</th>
                             <th>Status</th>
                             <th>Estufa</th>
-                            <th>Limite Mín</th>
-                            <th>Limite Máx</th>
+                            <th>Sensor</th>
+                            <th>Corredor</th>
+                            <th>Bloco</th>
                         </tr>
                     </thead>
                     <tbody id="tabela"></tbody>
@@ -129,43 +130,42 @@
 </body>
 
 <script>
-    let datas = ["01/01/2026 08:00", "01/01/2024 08:01", "01/01/2024 08:01", "01/01/2024 08:04", "01/01/2026 08:00", "01/01/2024 08:03", "01/01/2024 08:02", "01/01/2026 08:00", "01/01/2024 08:02", "01/01/2024 08:04"]
-    let valores = [42000, 38500, 32000, 31000, 15000, 22000, 10500, 5400, 6200, 4800]
-    let status = ["muito-alta", "muito-alta", "alta", "alta", "ideal", "ideal", "ideal", "baixa", "baixa", "baixa"]
-    let estufas = ["BioFolhas", "AgroFace", "AgroFace", "BioFolhas", "AgroFace", "AlVerde", "AlVerde", "AlVerde", "BioFolhas", "AgroFace"]
+    let datas = ["15/01/2026 08:00", "10/02/2026 09:15", "05/03/2026 07:45", "20/03/2026 10:00", "02/04/2026 08:30", "18/04/2026 11:00", "07/05/2026 07:00", "14/06/2026 08:45", "03/07/2026 09:00", "22/08/2026 10:30", "08/09/2026 08:00", "11/10/2026 09:30", "19/11/2026 07:45", "03/12/2026 10:00"];
+    let valores = [42000, 38500, 32000, 31000, 15000, 22000, 10500, 5400, 6200, 4800, 18000, 25000, 12000, 9500];
+    let status = ["muito-alta", "muito-alta", "alta", "alta", "ideal", "ideal", "ideal", "baixa", "baixa", "baixa", "ideal", "ideal", "ideal", "ideal"];
+    let estufas = ["BioFolhas", "Agroface", "Agroface", "BioFolhas", "Agroface", "AlVerde", "AlVerde", "AlVerde", "BioFolhas", "Agroface", "AlVerde", "Agroface", "AlVerde", "BioFolhas"];
+    let sensores = ["E6", "E8", "E7", "E5", "E9", "E1", "E2", "E5", "E6", "E9", "E1", "E7", "E2", "E5"];
+    let corredores = ["B", "A", "C", "A", "B", "C", "C", "A", "B", "B", "C", "C", "C", "A"];
+    let blocos = ["1", "2", "1", "1", "2", "2", "2", "1", "1", "2", "2", "1", "2", "1"];
 
     function filtrar() {
-        let busca = campoBusca.value.toLowerCase()
-        let gravidade = filtroGravidade.value
-        let html = "" // vai acumular as linhas da tabela
+        let busca = document.getElementById("campoBusca").value.toLowerCase();
+        let gravidade = document.getElementById("filtroGravidade").value;
+        let html = "";
 
-        let i = 0
+        let i = 0;
         while (i < datas.length) {
-            // verifica se o registro passa em cada filtro
-            let passouBusca = busca == "" || estufas[i].toLowerCase().includes(busca)
-            let passouGravidade = gravidade == "" || status[i] == gravidade
+            let passouBusca = busca == "" || estufas[i].toLowerCase().includes(busca);
+            let passouGravidade = gravidade == "" || status[i] == gravidade;
 
-            // só adiciona na tabela se passou em todos os filtros
             if (passouBusca && passouGravidade) {
-                let labelStatus = status[i].replace("-", " ")
+                let labelStatus = status[i].replace("-", " ");
 
-                // monta a linha e acumula no html
+                // Montagem da linha com campos do banco
                 html += `<tr>
-                <td>${datas[i]}</td>
-                <td>${valores[i].toLocaleString("pt-BR")}</td>
-                <td><span class="status ${status[i]}">${labelStatus}</span></td>
-                <td>${estufas[i]}</td>
-                <td>8.000</td>
-                <td>30.000</td>
-            </tr>`
+                    <td>${datas[i]}</td>
+                    <td>${valores[i].toLocaleString("pt-BR")}</td>
+                    <td><span class="status ${status[i]}">${labelStatus}</span></td>
+                    <td>${estufas[i]}</td>
+                    <td>${sensores[i]}</td>
+                    <td>${corredores[i]}</td>
+                    <td>${blocos[i]}</td>
+                </tr>`;
             }
-            i++
+            i++;
         }
-
-        // atualiza a tabela com os resultados
-        tabela.innerHTML = html
+        document.getElementById("tabela").innerHTML = html;
     }
-
     filtrar()
 
     // gráfico barras
@@ -193,8 +193,6 @@
             }
         }
     })
-
-
 
 
     // gráfico linha
