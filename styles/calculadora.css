@@ -91,7 +91,7 @@ img {
 .banner {
 
   display: flex;
-  background-color:rgba(1, 43, 0, 0.725);
+  background-color:rgba(1, 43, 0, 0.825);
   width: 100%;
   max-width: 700px;
   border-radius: 15px;
