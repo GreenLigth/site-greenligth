@@ -138,34 +138,37 @@
     let corredores = ["B", "A", "C", "A", "B", "C", "C", "A", "B", "B", "C", "C", "C", "A"];
     let blocos = ["1", "2", "1", "1", "2", "2", "2", "1", "1", "2", "2", "1", "2", "1"];
 
+
     function filtrar() {
         let busca = document.getElementById("campoBusca").value.toLowerCase();
         let gravidade = document.getElementById("filtroGravidade").value;
         let html = "";
 
-        let i = 0;
-        while (i < datas.length) {
-            let passouBusca = busca == "" || estufas[i].toLowerCase().includes(busca);
-            let passouGravidade = gravidade == "" || status[i] == gravidade;
-
-            if (passouBusca && passouGravidade) {
-                let labelStatus = status[i].replace("-", " ");
-
-                // Montagem da linha com campos do banco
-                html += `<tr>
-                    <td>${datas[i]}</td>
-                    <td>${valores[i].toLocaleString("pt-BR")}</td>
-                    <td><span class="status ${status[i]}">${labelStatus}</span></td>
-                    <td>${estufas[i]}</td>
-                    <td>${sensores[i]}</td>
-                    <td>${corredores[i]}</td>
-                    <td>${blocos[i]}</td>
-                </tr>`;
+        for (let i = 0; i < datas.length; i++) {
+            if (
+                (busca == "" || estufas[i].toLowerCase().includes(busca)) &&
+                (gravidade == "" || status[i] == gravidade)
+            ) {
+                html += `
+            <tr>
+                <td>${datas[i]}</td>
+                <td>${valores[i]}</td>
+                <td>
+                    <span class="status ${status[i]}">
+                        ${status[i]}
+                    </span>
+                </td>
+                <td>${estufas[i]}</td>
+                <td>${sensores[i]}</td>
+                <td>${corredores[i]}</td>
+                <td>${blocos[i]}</td>
+            </tr>
+            `;
             }
-            i++;
         }
         document.getElementById("tabela").innerHTML = html;
     }
+
     filtrar()
 
     // gráfico barras
