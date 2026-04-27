@@ -159,6 +159,14 @@
 
               console.log('passe no if numero ')
 
+        } else if (senha == senha.toUpperCase()){
+
+            div_validar.innerHTML = " Insira pelo menos uma letra minúscula ";
+
+        } else if (senha == senha.toLowerCase()) {
+
+            div_validar.innerHTML = " Insira pelo menos uma letra maiúscula ";
+            
         } else if (!temEspecial) {
 
             div_validar.innerHTML = " Insira pelo menos um caractere especial. Ex: '#', '!'";
