@@ -35,12 +35,12 @@
                 <form>
                     <div class="input-group">
                         <label>E-mail</label>
-                        <input type="email" id="input_email" placeholder="Seu @email.com">
+                        <input type="email" id="ipt_email" placeholder="seunome@email.com">
                     </div>
 
                     <div class="input-group">
                         <label>Senha</label>
-                        <input type="password" id="input_senha" placeholder="Sua senha">
+                        <input type="password" id="ipt_senha" placeholder="******">
                     </div>
 
                     <button type="button" class="btn-login" onclick="login()">Entrar</button>
@@ -56,16 +56,31 @@
 </html>
 <script>
     function login() {
-        let emailDigitado = input_email.value
-        let senhaDigitada = input_senha.value
-        let email = 'fernando.brandao@estufasverdes.com'
-        let senha = 'Clara#PI04'
+        let email = ipt_email.value;
+        let senha = ipt_senha.value;
 
-
-        if (senha == senhaDigitada && email == emailDigitado) {
-            window.location.assign("./dashboard.html")
+        if(email == "" || senha == ""){
+            alert("Insira dados validos nos campos!")
         } else {
-            alert('Email/Senha inválido!')
+
+        let dados = {
+            email: email,
+            senha: senha
         }
+
+        fetch('http://localhost:3333/usuarios/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dados)
+        })
+            .then(res => res.json())
+            .then(data => {
+                localStorage.setItem("idUsuario", data[0].idUsuario)
+                window.location.href = "dashboard.html"
+            })
+            .catch(error => console.error('Erro:', error));
     }
+}
 </script>

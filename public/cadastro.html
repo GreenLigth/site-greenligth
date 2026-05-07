@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Greenlight - Criar Conta</title>
     <link rel="stylesheet" href="styles/cadastro.css">
-    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@700;900&family=Montserrat:wght@400;700;800&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@700;900&family=Montserrat:wght@400;700;800&family=Open+Sans:wght@400;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" href="./assets/logo/logosite.png">
 </head>
+
 <body>
 
     <div class="main-container reversed">
-        
+
         <section class="form-side">
             <div class="form-box">
                 <h2>Criar Conta</h2>
@@ -21,7 +25,7 @@
                 <form>
                     <div class="input-group">
                         <label>Nome Completo</label>
-                        <input type="text" id= "ipt_nome" placeholder="Nome">
+                        <input type="text" id="ipt_nome" placeholder="Nome">
                     </div>
 
                     <div class="input-group">
@@ -38,26 +42,26 @@
 
                     <div class="input-group">
                         <label>Senha</label>
-                        
-                            <input type="password" id="ipt_senha" oninput="fSenha()" placeholder="Mínimo 8 caracteres">
-                        
-                    </div> 
+
+                        <input type="password" id="ipt_senha" oninput="fSenha()" placeholder="Mínimo 8 caracteres">
+
+                    </div>
 
                     <div id="div_validar" class="validacao"></div>
-                    
+
                     <div class="input-group">
                         <label>Confirmar Senha</label>
                         <div class="password-wrapper">
                             <input type="password" id="ipt_senhaDnv" placeholder="Repita a senha">
                         </div>
                     </div>
-                    
+
                     <div id="div_confirmar" class="validacao"></div>
 
                     <div id="div_botao" class="validacao"></div>
-                    
+
                     <button type="submit" class="btn-primary" onclick="fVerificar()">
-                       <!-- <img src="./assets/icons/folha-branca.svg" alt="" width="20"> -->
+                        <!-- <img src="./assets/icons/folha-branca.svg" alt="" width="20"> -->
                         Criar Conta
                     </button>
                 </form>
@@ -70,160 +74,143 @@
             <div class="overlay"></div>
             <div class="banner-content">
                 <div class="logo">
-                   <!-- <img src="./assets/logo/logo-branca.png" alt="Logo Greenlight" class="logo-img"> -->
+                    <!-- <img src="./assets/logo/logo-branca.png" alt="Logo Greenlight" class="logo-img"> -->
                 </div>
                 <h1>Sistema Inteligente de Monitoramento de Luminosidade</h1>
                 <p>Monitore as condições de iluminação das suas estufas em tempo real.</p>
             </div>
         </section>
-        
+
     </div>
 
 
 
 
-<script>
+    <script>
 
 
 
-    function fEmail () {
+        function fEmail() {
 
-        let email = ipt_email.value; 
-        
-        let com = email.endsWith(".com");
+            let email = ipt_email.value;
+            let com = email.endsWith(".com");
+            let arroba = email.includes("@");
 
-        let arroba = email.includes("@");
+            if (!com || !arroba) {
 
-        
-        if ( !com || !arroba) {
+                div_email.innerHTML = "Por favor, insira um email válido";
 
-            div_email.innerHTML = "Por favor, insira um email válido";
+                console.log('passe no if email ')
 
-              console.log('passe no if email ')
- 
-        } else {
-
-             div_email.innerHTML = " "
-
-        }
-
-
-    }
-
-    function fSenha() {
-
-        
-        div_validar.innerHTML = ' ';
-             
-        div_confirmar.innerHTML =' ';
-
-        let senha = ipt_senha.value;
-
-        let senhaDnv = ipt_senhaDnv.value;
-
-        let especial = ['!','@','#','$','%','&','*']; 
-
-        let numero = ['0','1','2','3','4','5','6','7','8','9'];
-
-        let temNumero = false;
-
-        let temEspecial = false; 
-
-        for (let i = 0; i < numero.length; i++ ) {
-
-            if(senha.includes(numero[i])) {
-
-                temNumero = true;
-            };
-
-        };
-
-        for (let i = 0; i < especial.length; i++) {
-
-            if(senha.includes(especial[i])) {
-
-                temEspecial = true;
-            };
-
-        };
-
-        if (senha.length < 8) {
-
-            div_validar.innerHTML = "Insira uma combinação de pelo menos oito caracteres ";
-
-              console.log('passe no if tamanho senha ')
-
-        } else if (!temNumero) { 
-
-            div_validar.innerHTML = " Insira pelo menos um número ";
-
-              console.log('passe no if numero ')
-
-        } else if (senha == senha.toUpperCase()){
-
-            div_validar.innerHTML = " Insira pelo menos uma letra minúscula ";
-
-        } else if (senha == senha.toLowerCase()) {
-
-            div_validar.innerHTML = " Insira pelo menos uma letra maiúscula ";
-            
-        } else if (!temEspecial) {
-
-            div_validar.innerHTML = " Insira pelo menos um caractere especial. Ex: '#', '!'";
-
-              console.log('passe no if especial ')
-
-        }else if ( senha != senhaDnv ) {
-
-            div_confirmar.innerHTML = " A senha e a senha de confirmação precisam ser iguais";
-
-              console.log('passe no if senha dnv ')
-        }else {
-
-             div_validar.innerHTML = ' ';
-
-             div_confirmar.innerHTML =' ';
+            } else {
+                div_email.innerHTML = " "
+            }
 
 
         }
 
-    }
+        function fSenha() {
+            div_validar.innerHTML = ' ';
+            div_confirmar.innerHTML = ' ';
+            let senha = ipt_senha.value;
+            let senhaDnv = ipt_senhaDnv.value;
 
-    function fVerificar() {
+            let especial = ['!', '@', '#', '$', '%', '&', '*'];
+            let numero = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
-        let nome = ipt_nome.value;
+            let temNumero = false;
+            let temEspecial = false;
 
-        let email = ipt_email.value; 
-        
-        let senha = ipt_senha.value;
-        
-        let senhaDnv = ipt_senhaDnv.value
-        
-        let estufa = ipt_estufa.value;
+            for (let i = 0; i < numero.length; i++) {
+                if (senha.includes(numero[i])) {
+                    temNumero = true;
+                };
 
-       
-       
-        if(nome == "" || email == "" || senha == "" || senhaDnv == "" || estufa == "" ) {
+            };
 
-             alert("Por favor, preencha todos os campos!");
+            for (let i = 0; i < especial.length; i++) {
 
-            console.log('passe no if')
+                if (senha.includes(especial[i])) {
+                    temEspecial = true;
+                };
 
-         } else {
+            };
 
-            alert('Cadastro realizado com sucesso')
+            if (senha.length < 8) {
+                div_validar.innerHTML = "Insira uma combinação de pelo menos oito caracteres ";
+                console.log('passe no if tamanho senha ')
 
-            window.location.href = "//C:\Users\Home\site-greenligth\dashboard.html"
+            } else if (!temNumero) {
+                div_validar.innerHTML = " Insira pelo menos um número ";
 
-            console.log('passei no else')
+                console.log('passe no if numero ')
 
-        };
+            } else if (senha == senha.toUpperCase()) {
+
+                div_validar.innerHTML = " Insira pelo menos uma letra minúscula ";
+
+            } else if (senha == senha.toLowerCase()) {
+
+                div_validar.innerHTML = " Insira pelo menos uma letra maiúscula ";
+
+            } else if (!temEspecial) {
+
+                div_validar.innerHTML = " Insira pelo menos um caractere especial. Ex: '#', '!'";
+
+                console.log('passe no if especial ')
+
+            } else if (senha != senhaDnv) {
+
+                div_confirmar.innerHTML = " A senha e a senha de confirmação precisam ser iguais";
+
+                console.log('passe no if senha dnv ')
+            } else {
+
+                div_validar.innerHTML = ' ';
+
+                div_confirmar.innerHTML = ' ';
 
 
-    }
+            }
 
-</script>
+        }
+
+        function fVerificar() {
+
+            let nome = ipt_nome.value;
+
+            let email = ipt_email.value;
+
+            let senha = ipt_senha.value;
+
+            let senhaDnv = ipt_senhaDnv.value
+
+            let estufa = ipt_estufa.value;
+
+
+
+            if (nome == "" || email == "" || senha == "" || senhaDnv == "" || estufa == "") {
+
+                alert("Por favor, preencha todos os campos!");
+
+                console.log('passe no if')
+
+            } else {
+
+                alert('Cadastro realizado com sucesso')
+
+                window.location.href = "//C:\Users\Home\site-greenligth\dashboard.html"
+
+                console.log('passei no else')
+
+            };
+
+
+        }
+
+    </script>
 
 
 </body>
+
 </html>
