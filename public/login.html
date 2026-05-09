@@ -53,7 +53,6 @@
 
 </body>
 
-</html>
 <script>
     function login() {
         let email = ipt_email.value;
@@ -77,10 +76,11 @@
         })
             .then(res => res.json())
             .then(data => {
-                localStorage.setItem("idUsuario", data[0].idUsuario)
-                window.location.href = "dashboard.html"
+                localStorage.setItem("idEmpresa", data[0].idEmpresa)
+                window.location.href = "../dashboard/dashboard.html"
             })
             .catch(error => console.error('Erro:', error));
     }
 }
 </script>
+</html>

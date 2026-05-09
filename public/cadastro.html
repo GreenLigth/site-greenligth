@@ -41,6 +41,11 @@
                     </div>
 
                     <div class="input-group">
+                        <label>CNPJ</label>
+                        <input type="text" id="ipt_cnpj" placeholder="Insira seu CNPJ">
+                    </div>
+
+                    <div class="input-group">
                         <label>Senha</label>
 
                         <input type="password" id="ipt_senha" oninput="fSenha()" placeholder="Mínimo 8 caracteres">
@@ -60,8 +65,7 @@
 
                     <div id="div_botao" class="validacao"></div>
 
-                    <button type="submit" class="btn-primary" onclick="fVerificar()">
-                        <!-- <img src="./assets/icons/folha-branca.svg" alt="" width="20"> -->
+                    <button type="submit" class="btn-primary" onclick="cadastrar()">
                         Criar Conta
                     </button>
                 </form>
@@ -159,53 +163,44 @@
 
                 console.log('passe no if especial ')
 
-            } else if (senha != senhaDnv) {
-
-                div_confirmar.innerHTML = " A senha e a senha de confirmação precisam ser iguais";
-
-                console.log('passe no if senha dnv ')
-            } else {
-
-                div_validar.innerHTML = ' ';
-
-                div_confirmar.innerHTML = ' ';
-
-
             }
 
         }
 
-        function fVerificar() {
-
-            let nome = ipt_nome.value;
-
+        function cadastrar() {
+            let nomeCompleto = ipt_nome.value;
             let email = ipt_email.value;
-
+            let cnpj = ipt_cnpj.value;
+            let nomeEstufa = ipt_estufa.value;
             let senha = ipt_senha.value;
 
-            let senhaDnv = ipt_senhaDnv.value
-
-            let estufa = ipt_estufa.value;
-
-
-
-            if (nome == "" || email == "" || senha == "" || senhaDnv == "" || estufa == "") {
-
-                alert("Por favor, preencha todos os campos!");
-
-                console.log('passe no if')
-
+            if (email == "" || nomeCompleto == "" || cnpj == "" || senha == "" || nomeEstufa == "" ) {
+                alert("Preencha os campos corretamente")
             } else {
+                let dados = {
+                    nome: nomeCompleto,
+                    email: email,
+                    cnpj: cnpj,
+                    nomeEstufa: nomeEstufa,
+                    senha: senha
+                }
 
-                alert('Cadastro realizado com sucesso')
-
-                window.location.href = "//C:\Users\Home\site-greenligth\dashboard.html"
-
-                console.log('passei no else')
-
-            };
-
-
+                fetch('http://localhost:3333/usuarios/cadastrar', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(dados)
+                })
+                    .then(res => {
+                        if (res.ok)
+                            return res.json()
+                    }).then(resultado => {
+                        console.log(resultado)
+                        window.location.href = "/public/login.html"
+                    })
+                    .catch(error => console.error('Erro:', error));
+            }
         }
 
     </script>
