@@ -35,12 +35,14 @@
                 <form>
                     <div class="input-group">
                         <label>E-mail</label>
-                        <input type="email" id="ipt_email" placeholder="seunome@email.com">
+                        <input type="email" id="ipt_email" placeholder="seuemail@email.com">
                     </div>
 
                     <div class="input-group">
                         <label>Senha</label>
-                        <input type="password" id="ipt_senha" placeholder="******">
+                        <input type="password" id="ipt_senha" placeholder="******" oninput="visualizar()">
+                        <span onclick="visualizar()" style="cursor: pointer;">
+                        <img src="/public/assets/icons/eye.png"></span> 
                     </div>
 
                     <button type="button" class="btn-login" onclick="login()">Entrar</button>
@@ -80,6 +82,14 @@
                 window.location.href = "../dashboard/dashboard.html"
             })
             .catch(error => console.error('Erro:', error));
+    }
+}
+
+ function visualizar(){
+        if (ipt_senha.type == 'password'){
+            ipt_senha.type = 'text'
+        } else {
+        ipt_senha.type = 'password'
     }
 }
 </script>

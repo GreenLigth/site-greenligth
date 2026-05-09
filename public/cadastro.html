@@ -49,6 +49,8 @@
                         <label>Senha</label>
 
                         <input type="password" id="ipt_senha" oninput="fSenha()" placeholder="Mínimo 8 caracteres">
+                        <span onclick="visualizar()" style="cursor: pointer;">
+                            <img src="/public/assets/icons/eye.png"></span>
 
                     </div>
 
@@ -58,6 +60,8 @@
                         <label>Confirmar Senha</label>
                         <div class="password-wrapper">
                             <input type="password" id="ipt_senhaDnv" placeholder="Repita a senha">
+                            <span onclick="visualizar()" style="cursor: pointer;">
+                                <img src="/public/assets/icons/eye.png"></span>
                         </div>
                     </div>
 
@@ -86,14 +90,7 @@
         </section>
 
     </div>
-
-
-
-
     <script>
-
-
-
         function fEmail() {
 
             let email = ipt_email.value;
@@ -101,16 +98,10 @@
             let arroba = email.includes("@");
 
             if (!com || !arroba) {
-
                 div_email.innerHTML = "Por favor, insira um email válido";
-
-                console.log('passe no if email ')
-
             } else {
                 div_email.innerHTML = " "
             }
-
-
         }
 
         function fSenha() {
@@ -133,11 +124,9 @@
             };
 
             for (let i = 0; i < especial.length; i++) {
-
                 if (senha.includes(especial[i])) {
                     temEspecial = true;
                 };
-
             };
 
             if (senha.length < 8) {
@@ -147,22 +136,12 @@
             } else if (!temNumero) {
                 div_validar.innerHTML = " Insira pelo menos um número ";
 
-                console.log('passe no if numero ')
-
             } else if (senha == senha.toUpperCase()) {
-
                 div_validar.innerHTML = " Insira pelo menos uma letra minúscula ";
-
             } else if (senha == senha.toLowerCase()) {
-
                 div_validar.innerHTML = " Insira pelo menos uma letra maiúscula ";
-
             } else if (!temEspecial) {
-
                 div_validar.innerHTML = " Insira pelo menos um caractere especial. Ex: '#', '!'";
-
-                console.log('passe no if especial ')
-
             }
 
         }
@@ -174,7 +153,7 @@
             let nomeEstufa = ipt_estufa.value;
             let senha = ipt_senha.value;
 
-            if (email == "" || nomeCompleto == "" || cnpj == "" || senha == "" || nomeEstufa == "" ) {
+            if (email == "" || nomeCompleto == "" || cnpj == "" || senha == "" || nomeEstufa == "") {
                 alert("Preencha os campos corretamente")
             } else {
                 let dados = {
@@ -203,9 +182,15 @@
             }
         }
 
+        function visualizar() {
+            if (ipt_senha.type == 'password') {
+                ipt_senha.type = 'text'
+            } else {
+                ipt_senha.type = 'password'
+            }
+        }
+
     </script>
-
-
 </body>
 
 </html>
