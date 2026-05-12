@@ -64,8 +64,15 @@
             </div>
 
             <div class="campo">
-                <label>Cargo</label>
-                <input type="text" id="ipt_cargo" placeholder="Informe o cargo do funcionario">
+                <label>Cargo e nível de acesso ao sistema</label>
+                <select class="" id="select_cargo">
+                    <option value="" selected disabled>Selecione o nível de acesso do usuário</option>
+                    <option value="0"> Administrador (Total)</option>
+                    <option value="1">Gerente (Geral)</option>
+                    <option value="2">Supervisor(Parcial)</option>
+                    <option value="3">Operador (Nenhum)</option>
+                    
+                </select>
             </div>
 
             <div class="campo-senha-container">
@@ -183,11 +190,13 @@
 
         let nomeEstufa = ipt_estufa.value;
 
-        let cargo = ipt_cargo.value;
+        let cargo = Number(select_cargo.value);
 
         let com = email.endsWith(".com");
 
         let greenlight = email.includes("@greenlight");
+
+        let fkEmpresa = sessionStorage.getItem("idEmpresa"); // getItem pra pegar o valor que o setItem do login guardou
 
 
 
@@ -203,11 +212,13 @@
         } else {
 
             let dados = {
+
                 nome: nome,
                 email: email,
                 cargo: cargo,
                 nomeEstufa: nomeEstufa,
-                senha: senha
+                senha: senha,
+                fkEmpresa: fkEmpresa
             }
 
             fetch('http://localhost:3333/usuarios/cadastrarUsuario', {
@@ -222,7 +233,7 @@
                         return res.json()
                 }).then(resultado => {
                     console.log(resultado)
-                    window.location.href = "/public/login.html"
+                    alert ('Usuario cadastrado com sucesso!')
                 })
                 .catch(error => console.error('Erro:', error));
         }
