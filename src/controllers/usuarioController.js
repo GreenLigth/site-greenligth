@@ -102,10 +102,12 @@ function cadastrarUsuario(req, res) {
         res.status(400).send("O nome da sua estufa está undefined");
     } else if (fkEmpresa == undefined) {
         res.status(400).send("A empresa está undefined!"); 
-    }else {
+    }else if (fkSuperior == undefined) {
+        res.status(400).send("O superior está undefined!"); }
+    else {
 
         // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-        usuarioModel.cadastrarUsuario(nome, email, nivelAcesso, nomeEstufa, senha, fkEmpresa)
+        usuarioModel.cadastrarUsuario(nome, email, nivelAcesso, nomeEstufa, senha, fkEmpresa,fkSuperior)
             .then(
                 function (resultado) {
                     res.json(resultado);
