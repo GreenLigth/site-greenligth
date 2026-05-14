@@ -88,7 +88,7 @@ function cadastrarUsuario(req, res) {
     var nomeEstufa = req.body.nomeEstufa;
     var senha = req.body.senha;
     var fkEmpresa = req.body.fkEmpresa;
-    var fkSuperior = ReadableByteStreamController.body.fkSuperior
+    var fkSuperior = req.body.fkSuperior
 
     // Faça as validações dos valores
     if (nome == undefined) {
