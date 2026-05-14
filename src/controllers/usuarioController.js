@@ -84,10 +84,11 @@ function cadastrarUsuario(req, res) {
     // Crie uma variável que vá recuperar os valores do arquivo cadastroUsuario.html
     var nome = req.body.nome;
     var email = req.body.email;
-    var senha = req.body.senha;
     var nivelAcesso = req.body.cargo;
     var nomeEstufa = req.body.nomeEstufa;
+    var senha = req.body.senha;
     var fkEmpresa = req.body.fkEmpresa;
+    var fkSuperior = ReadableByteStreamController.body.fkSuperior
 
     // Faça as validações dos valores
     if (nome == undefined) {
