@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Registros - Estufas</title>
+    <link rel="stylesheet" href="../styles/dashboard/dashboard.css">
+    <link rel="stylesheet" href="../styles/dashboard/registro.css">
+    <link rel="icon" href="../assets/logo/logosite.png">
+</head>
+<body>
+    <div class="menu">
+        <img class="logo" src="../assets/logo/logo-branca.png" alt="Greenlight">
+        <div class="item">
+            <img class="icons" src="../assets/img/icons/dashboard-icon.png" alt="">
+            <a href="dashboard.html">Dashboard</a>
+        </div>
+        <div class="item">
+            <img class="icons" src="../assets/img/icons/perfil-icon.png" alt="">
+            <a href="perfil.html">Perfil</a>
+        </div>
+        <div class="item">
+            <img class="icons" src="../assets/img/icons/icon-registro.png" alt="">
+            <a href="registros.html" class="ativo">Registros</a>
+        </div>
+        <div class="item">
+            <img class="icons" src="../assets/img/icons/multiple-users-silhouette.png" alt="">
+            <a href="usuarios.html">Usuários</a>
+        </div>
+        <div class="item">
+            <img class="icons" src="../assets/img/icons/ajuda-icon.png" alt="">
+            <a href="ajuda.html">Ajuda</a>
+        </div>
+        <div class="item logout-container">
+            <a href="../home.html" class="logout">Sair</a>
+        </div>
+    </div>
+
+    <div class="conteudo">
+        <div class="topo"><span>ADMINISTRADOR</span></div>
+
+        <h1>Registros de Luminosidade</h1>
+        <p class="usuarios-subtitulo">Histórico detalhado de capturas dos sensores.</p>
+
+        <div class="box">
+
+            <div class="filtros-container">
+                <input type="text" id="campoBusca" placeholder="Buscar estufa ou sensor..." oninput="filtrar()" style="flex: 2; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                
+                <select id="filtroMes" onchange="filtrar()" class="filtro-select">
+                    <option value="">Todos os meses</option>
+                    <option value="/01/">Janeiro</option>
+                    <option value="/02/">Fevereiro</option>
+                    <option value="/03/">Março</option>
+                    <option value="/04/">Abril</option>
+                    <option value="/05/">Maio</option>
+                    <option value="/06/">Junho</option>
+                    <option value="/07/">Julho</option>
+                    <option value="/08/">Agosto</option>
+                    <option value="/09/">Setembro</option>
+                    <option value="/10/">Outubro</option>
+                    <option value="/11/">Novembro</option>
+                    <option value="/12/">Dezembro</option>
+                </select>
+
+                <select id="filtroCorredor" onchange="filtrar()" class="filtro-select">
+                    <option value="">Corredores (Todos)</option>
+                    <option value="A">Corredor A</option>
+                    <option value="B">Corredor B</option>
+                    <option value="C">Corredor C</option>
+                </select>
+
+                <select id="filtroGravidade" onchange="filtrar()" class="filtro-select">
+                    <option value="">Gravidades (Todas)</option>
+                    <option value="muito-alta">Muito Alta</option>
+                    <option value="alta">Alta</option>
+                    <option value="ideal">Ideal</option>
+                    <option value="baixa">Baixa</option>
+                </select>
+            </div>
+
+            <div class="tabela-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Data / Hora</th>
+                            <th>Valor (Lux)</th>
+                            <th>Status</th>
+                            <th>Estufa</th>
+                            <th>Sensor</th>
+                            <th>Corredor</th>
+                            <th>Bloco</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaCorpo">
+                        </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let datas = ["15/01/2026 08:00", "10/02/2026 09:15", "05/03/2026 07:45", "20/03/2026 10:00", "02/04/2026 08:30", "18/04/2026 11:00", "07/05/2026 07:00", "14/06/2026 08:45", "03/07/2026 09:00", "22/08/2026 10:30", "08/09/2026 08:00", "11/10/2026 09:30", "19/11/2026 07:45", "03/12/2026 10:00"];
+        let valores = [42000, 38500, 32000, 31000, 15000, 22000, 10500, 5400, 6200, 4800, 18000, 25000, 12000, 9500];
+        let statusList = ["muito-alta", "muito-alta", "alta", "alta", "ideal", "ideal", "ideal", "baixa", "baixa", "baixa", "ideal", "ideal", "ideal", "ideal"];
+        let estufas = ["BioFolhas", "Agroface", "Agroface", "BioFolhas", "Agroface", "AlVerde", "AlVerde", "AlVerde", "BioFolhas", "Agroface", "AlVerde", "Agroface", "AlVerde", "BioFolhas"];
+        let sensores = ["E6", "E8", "E7", "E5", "E9", "E1", "E2", "E5", "E6", "E9", "E1", "E7", "E2", "E5"];
+        let corredores = ["B", "A", "C", "A", "B", "C", "C", "A", "B", "B", "C", "C", "C", "A"];
+        let blocos = ["1", "2", "1", "1", "2", "2", "2", "1", "1", "2", "2", "1", "2", "1"];
+
+        function filtrar() {
+            let busca = document.getElementById("campoBusca").value.toLowerCase();
+            let gravidade = document.getElementById("filtroGravidade").value;
+            let mes = document.getElementById("filtroMes").value;
+            let corredor = document.getElementById("filtroCorredor").value;
+            
+            let html = "";
+
+            for (let i = 0; i < datas.length; i++) {
+                let passouBusca = busca == "" || estufas[i].toLowerCase().includes(busca) || sensores[i].toLowerCase().includes(busca);
+                let passouGravidade = gravidade == "" || statusList[i] == gravidade;
+                let passouMes = mes == "" || datas[i].includes(mes);
+                let passouCorredor = corredor == "" || corredores[i] == corredor;
+
+                if (passouBusca && passouGravidade && passouMes && passouCorredor) {
+                    html += `
+                    <tr>
+                        <td>${datas[i]}</td>
+                        <td>${valores[i]}</td>
+                        <td><span class="status ${statusList[i]}">${statusList[i]}</span></td>
+                        <td>${estufas[i]}</td>
+                        <td>${sensores[i]}</td>
+                        <td>${corredores[i]}</td>
+                        <td>${blocos[i]}</td>
+                    </tr>`;
+                }
+            }
+            document.getElementById("tabelaCorpo").innerHTML = html;
+        }
+
+        filtrar();
+    </script>
+</body>
+</html>
