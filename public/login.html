@@ -78,7 +78,8 @@
         })
             .then(res => res.json())
             .then(data => {
-                localStorage.setItem("idEmpresa", data[0].idEmpresa)
+                sessionStorage.setItem("idEmpresa", data[0].idEmpresa) // guarda o valor do id da empresa do usuario q está logado
+                sessionStorage.setItem("idUsuario",data[0].idUsuario) // guarda o valor do id do usuario q está logado
                 window.location.href = "../dashboard/dashboard.html"
             })
             .catch(error => console.error('Erro:', error));

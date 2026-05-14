@@ -19,12 +19,12 @@
 
         <section class="form-side">
             <div class="form-box">
-                <h2>Criar Conta</h2>
+                <h2>Criar Conta como administrador</h2>
                 <p class="subtitle">Cadastre-se para acessar o painel de monitoramento</p>
 
                 <form>
                     <div class="input-group">
-                        <label>Nome Completo</label>
+                        <label>Nome da Empresa</label>
                         <input type="text" id="ipt_nome" placeholder="Nome">
                     </div>
 
@@ -147,39 +147,41 @@
         }
 
         function cadastrar() {
+
             let nomeCompleto = ipt_nome.value;
             let email = ipt_email.value;
             let cnpj = ipt_cnpj.value;
             let nomeEstufa = ipt_estufa.value;
             let senha = ipt_senha.value;
 
-            if (email == "" || nomeCompleto == "" || cnpj == "" || senha == "" || nomeEstufa == "") {
-                alert("Preencha os campos corretamente")
-            } else {
-                let dados = {
-                    nome: nomeCompleto,
-                    email: email,
-                    cnpj: cnpj,
-                    nomeEstufa: nomeEstufa,
-                    senha: senha
+                if (email == "" || nomeCompleto == "" || cnpj == "" || senha == "" || nomeEstufa == "") {
+                    alert("Preencha os campos corretamente")
+                } else {
+                    let dados = {
+                        nome: nomeCompleto,
+                        email: email,
+                        cnpj: cnpj,
+                        nomeEstufa: nomeEstufa,
+                        senha: senha
+                    }
+
+                    fetch('http://localhost:3333/usuarios/cadastrar', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(dados)
+                    })
+                        .then(res => {
+                            if (res.ok)
+                                return res.json()
+                        }).then(resultado => {
+                            console.log(resultado)
+                            window.location.href = "/public/login.html"
+                        })
+                        .catch(error => console.error('Erro:', error));
                 }
 
-                fetch('http://localhost:3333/usuarios/cadastrar', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(dados)
-                })
-                    .then(res => {
-                        if (res.ok)
-                            return res.json()
-                    }).then(resultado => {
-                        console.log(resultado)
-                        window.location.href = "/public/login.html"
-                    })
-                    .catch(error => console.error('Erro:', error));
-            }
         }
 
         function visualizar() {
