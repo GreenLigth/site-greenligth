@@ -198,6 +198,7 @@
 
         let fkEmpresa = sessionStorage.getItem("idEmpresa"); // getItem pra pegar o valor que o setItem do login guardou
 
+        let fkSuperior = sessionStorage.getItem("idUsuario");// pega o valor do id no login com getItem              
 
 
 
@@ -218,7 +219,8 @@
                 cargo: cargo,
                 nomeEstufa: nomeEstufa,
                 senha: senha,
-                fkEmpresa: fkEmpresa
+                fkEmpresa: fkEmpresa,
+                fkSuperior: fkSuperior
             }
 
             fetch('http://localhost:3333/usuarios/cadastrarUsuario', {
