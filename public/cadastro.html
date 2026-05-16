@@ -41,6 +41,11 @@
                     </div>
 
                     <div class="input-group">
+                        <label>Nome do administrador</label>
+                        <input type="text" id="ipt_adm" placeholder="Insira o nome do administrador">
+                    </div>
+
+                    <div class="input-group">
                         <label>CNPJ</label>
                         <input type="text" id="ipt_cnpj" placeholder="Insira seu CNPJ">
                     </div>
@@ -50,7 +55,7 @@
 
                         <input type="password" id="ipt_senha" oninput="fSenha()" placeholder="Mínimo 8 caracteres">
                         <span onclick="visualizar()" style="cursor: pointer;">
-                            <img src="/public/assets/icons/eye.png"></span>
+                            <img src="assets/icons/eye.png"></span>
 
                     </div>
 
@@ -61,7 +66,7 @@
                         <div class="password-wrapper">
                             <input type="password" id="ipt_senhaDnv" placeholder="Repita a senha">
                             <span onclick="visualizar()" style="cursor: pointer;">
-                                <img src="/public/assets/icons/eye.png"></span>
+                                <img src="assets/icons/eye.png"></span>
                         </div>
                     </div>
 
@@ -69,7 +74,7 @@
 
                     <div id="div_botao" class="validacao"></div>
 
-                    <button type="submit" class="btn-primary" onclick="cadastrar()">
+                    <button type="submit" class="btn-primary" onclick="cadastrar(event)">
                         Criar Conta
                     </button>
                 </form>
@@ -146,19 +151,22 @@
 
         }
 
-        function cadastrar() {
+        function cadastrar(event) {
+            event.preventDefault();
 
-            let nomeCompleto = ipt_nome.value;
+            let nomeEmpresa = ipt_nome.value;
+            let nomeAdm = ipt_adm.value;
             let email = ipt_email.value;
             let cnpj = ipt_cnpj.value;
             let nomeEstufa = ipt_estufa.value;
             let senha = ipt_senha.value;
 
-                if (email == "" || nomeCompleto == "" || cnpj == "" || senha == "" || nomeEstufa == "") {
+                if (email == "" || nomeEmpresa == "" || cnpj == "" || senha == "" || nomeEstufa == "") {
                     alert("Preencha os campos corretamente")
                 } else {
                     let dados = {
-                        nome: nomeCompleto,
+                        nome: nomeEmpresa,
+                        nomeAdm: nomeAdm,
                         email: email,
                         cnpj: cnpj,
                         nomeEstufa: nomeEstufa,
@@ -177,7 +185,7 @@
                                 return res.json()
                         }).then(resultado => {
                             console.log(resultado)
-                            window.location.href = "/public/login.html"
+                            window.location.href = "login.html"
                         })
                         .catch(error => console.error('Erro:', error));
                 }

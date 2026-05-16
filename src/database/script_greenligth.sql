@@ -56,9 +56,7 @@ CONSTRAINT chFkEmpresa
 statusPerfil BOOLEAN, 
 nivelAcesso INT,
 CONSTRAINT chAcesso
-	CHECK (nivelAcesso > 0 AND nivelAcesso <= 3),
-    senha VARCHAR(45),
-	email VARCHAR(45)
+	CHECK (nivelAcesso > 0 AND nivelAcesso <= 3)
 );
 
 CREATE TABLE sensor (
