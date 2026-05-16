@@ -191,7 +191,7 @@ h1 {
 
 .grafico-linha .chart-wrap {
     position: relative;
-    height: 200px;
+    height: 400px;
     width: 100%;
 }
 
@@ -230,7 +230,7 @@ h1 {
 
 .grafico-rosca .chart-wrap {
     position: relative;
-    height: 300px;
+    height: 500px;
 }
 
 .box-empresas {
