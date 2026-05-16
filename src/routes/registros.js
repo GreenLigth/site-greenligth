@@ -1,10 +1,10 @@
 var express = require("express");
 var router = express.Router();
 
-var usuarioController = require("../controllers/");
+var registrosController = require("../controllers/registrosController");
 
-router.post("/buscarRegistros", function (req, res) {
-    usuarioController.buscarRegistros(req, res);
-})
+router.get("/buscarRegistros/:idEmpresa", function (req, res) {
+    registrosController.buscarRegistros(req, res);
+});
 
 module.exports = router;

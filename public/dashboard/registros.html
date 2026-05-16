@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../styles/dashboard/registro.css">
     <link rel="icon" href="../assets/logo/logosite.png">
 </head>
+
 <body>
     <div class="menu">
         <img class="logo" src="../assets/logo/logo-branca.png" alt="Greenlight">
@@ -44,8 +45,9 @@
         <div class="box">
 
             <div class="filtros-container">
-                <input type="text" id="campoBusca" placeholder="Buscar estufa ou sensor..." oninput="filtrar()" style="flex: 2; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
-                
+                <input type="text" id="campoBusca" placeholder="Buscar estufa ou sensor..." oninput="filtrar()"
+                    style="flex: 2; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+
                 <select id="filtroMes" onchange="filtrar()" class="filtro-select">
                     <option value="">Todos os meses</option>
                     <option value="/01/">Janeiro</option>
@@ -92,52 +94,86 @@
                         </tr>
                     </thead>
                     <tbody id="tabelaCorpo">
-                        </tbody>
+                    </tbody>
                 </table>
             </div>
         </div>
     </div>
+</body>
 
-    <script>
-        let datas = ["15/01/2026 08:00", "10/02/2026 09:15", "05/03/2026 07:45", "20/03/2026 10:00", "02/04/2026 08:30", "18/04/2026 11:00", "07/05/2026 07:00", "14/06/2026 08:45", "03/07/2026 09:00", "22/08/2026 10:30", "08/09/2026 08:00", "11/10/2026 09:30", "19/11/2026 07:45", "03/12/2026 10:00"];
-        let valores = [42000, 38500, 32000, 31000, 15000, 22000, 10500, 5400, 6200, 4800, 18000, 25000, 12000, 9500];
-        let statusList = ["muito-alta", "muito-alta", "alta", "alta", "ideal", "ideal", "ideal", "baixa", "baixa", "baixa", "ideal", "ideal", "ideal", "ideal"];
-        let estufas = ["BioFolhas", "Agroface", "Agroface", "BioFolhas", "Agroface", "AlVerde", "AlVerde", "AlVerde", "BioFolhas", "Agroface", "AlVerde", "Agroface", "AlVerde", "BioFolhas"];
-        let sensores = ["E6", "E8", "E7", "E5", "E9", "E1", "E2", "E5", "E6", "E9", "E1", "E7", "E2", "E5"];
-        let corredores = ["B", "A", "C", "A", "B", "C", "C", "A", "B", "B", "C", "C", "C", "A"];
-        let blocos = ["1", "2", "1", "1", "2", "2", "2", "1", "1", "2", "2", "1", "2", "1"];
+</html>
+<script>
+    let listaRegistros = [];
+    const idEmpresaLogada = sessionStorage.ID_EMPRESA || 1;
 
-        function filtrar() {
-            let busca = document.getElementById("campoBusca").value.toLowerCase();
-            let gravidade = document.getElementById("filtroGravidade").value;
-            let mes = document.getElementById("filtroMes").value;
-            let corredor = document.getElementById("filtroCorredor").value;
-            
-            let html = "";
-
-            for (let i = 0; i < datas.length; i++) {
-                let passouBusca = busca == "" || estufas[i].toLowerCase().includes(busca) || sensores[i].toLowerCase().includes(busca);
-                let passouGravidade = gravidade == "" || statusList[i] == gravidade;
-                let passouMes = mes == "" || datas[i].includes(mes);
-                let passouCorredor = corredor == "" || corredores[i] == corredor;
-
-                if (passouBusca && passouGravidade && passouMes && passouCorredor) {
-                    html += `
-                    <tr>
-                        <td>${datas[i]}</td>
-                        <td>${valores[i]}</td>
-                        <td><span class="status ${statusList[i]}">${statusList[i]}</span></td>
-                        <td>${estufas[i]}</td>
-                        <td>${sensores[i]}</td>
-                        <td>${corredores[i]}</td>
-                        <td>${blocos[i]}</td>
-                    </tr>`;
+    function obterDadosBanco() {
+        fetch(`/registros/buscarRegistros/${idEmpresaLogada}`)
+            .then(function (resposta) {
+                if (resposta.status == 204) {
+                    document.getElementById("tabelaCorpo").innerHTML = "<tr><td colspan='7' style='text-align:center;'>Nenhum registro encontrado no banco de dados.</td></tr>";
+                    return;
                 }
-            }
-            document.getElementById("tabelaCorpo").innerHTML = html;
+                if (resposta.ok) {
+                    resposta.json().then(function (dadosDoBanco) {
+                        listaRegistros = dadosDoBanco;
+                        filtrar();
+                    });
+                } else {
+                    console.error("Erro na resposta da API.");
+                }
+            })
+            .catch(function (erro) {
+                console.log("Erro ao efetuar o Fetch dos registros: ", erro);
+            });
+    }
+
+    function calcularStatus(luminosidade) {
+        if (luminosidade >= 173) return "muito-alta";
+        if (luminosidade >= 168) return "alta";
+        if (luminosidade >= 164) return "ideal";
+        return "baixa";
+    }
+
+    function filtrar() {
+        if (typeof event !== 'undefined' && event) {
+            event.preventDefault();
         }
 
-        filtrar();
-    </script>
-</body>
-</html>
+        let busca = document.getElementById("campoBusca").value.toLowerCase();
+        let gravidade = document.getElementById("filtroGravidade").value;
+        let mes = document.getElementById("filtroMes").value;
+        let corredor = document.getElementById("filtroCorredor").value;
+
+        let html = "";
+
+        for (let i = 0; i < listaRegistros.length; i++) {
+            let registro = listaRegistros[i];
+            let statusCalculado = calcularStatus(registro.luminosidade);
+
+            // Converte para brasill 
+            let dataFormatada = new Date(registro.dataLeitura).toLocaleString('pt-BR');
+
+            let passouBusca = busca == "" || registro.nomeEstufa.toLowerCase().includes(busca) || registro.codigoSensor.toLowerCase().includes(busca);
+            let passouGravidade = gravidade == "" || statusCalculado == gravidade;
+            let passouMes = mes == "" || dataFormatada.includes(mes);
+            let passouCorredor = corredor == "" || registro.corredor == corredor;
+
+            if (passouBusca && passouGravidade && passouMes && passouCorredor) {
+                html += `
+                    <tr>
+                        <td>${dataFormatada}</td>
+                        <td>${registro.luminosidade} Lux</td>
+                        <td><span class="status ${statusCalculado}">${statusCalculado.toUpperCase()}</span></td>
+                        <td>${registro.nomeEstufa}</td>
+                        <td>${registro.codigoSensor}</td>
+                        <td>${registro.corredor}</td>
+                        <td>${registro.bloco}</td>
+                    </tr>`;
+            }
+        }
+
+        document.getElementById("tabelaCorpo").innerHTML = html || "<tr><td colspan='7' style='text-align:center;'>Nenhum resultado corresponde aos filtros aplicados.</td></tr>";
+    }
+
+    window.onload = obterDadosBanco;
+</script>
