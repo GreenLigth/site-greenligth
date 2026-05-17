@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <title>Dashboard - Ajuda</title>
@@ -11,26 +10,11 @@
 <body>
     <div class="menu">
         <img class="logo" src="../assets/logo/logo-branca.png" alt="Greenlight">
-        <div class="item">
-            <img class="icons" src="../assets/img/icons/dashboard-icon.png" alt="">
-            <a href="dashboard.html">Dashboard</a>
-        </div>
-        <div class="item">
-            <img class="icons" src="../assets/img/icons/perfil-icon.png" alt="">
-            <a href="perfil.html">Perfil</a>
-        </div>
-        <div class="item">
-            <img class="icons" src="../assets/img/icons/icon-registro.png" alt="">
-            <a href="registros.html">Registros</a>
-        </div>
-        <div class="item">
-            <img class="icons" src="../assets/img/icons/multiple-users-silhouette.png" alt="">
-            <a href="usuarios.html">Usuários</a>
-        </div>
-        <div class="item">
-            <img class="icons" src="../assets/img/icons/ajuda-icon.png" alt="">
-            <a href="ajuda.html" class="ativo">Ajuda</a>
-        </div>
+        <div class="item"><img class="icons" src="../assets/img/icons/dashboard-icon.png" alt=""><a href="dashboard.html">Dashboard</a></div>
+        <div class="item"><img class="icons" src="../assets/img/icons/perfil-icon.png" alt=""><a href="perfil.html">Perfil</a></div>
+        <div class="item"><img class="icons" src="../assets/img/icons/icon-registro.png" alt=""><a href="registros.html">Registros</a></div>
+        <div class="item"><img class="icons" src="../assets/img/icons/multiple-users-silhouette.png" alt=""><a href="usuarios.html">Usuários</a></div>
+        <div class="item"><img class="icons" src="../assets/img/icons/ajuda-icon.png" alt=""><a href="ajuda.html" class="ativo">Ajuda</a></div>
 
         <div class="item logout-container">
             <a href="../home.html" class="logout">Sair</a>
@@ -45,45 +29,73 @@
         <h1>AJUDA</h1>
 
         <div class="ajuda-container">
+            <div class="ajuda-esquerda">
+                <h2>FAQ - Perguntas frequentes</h2>
+                <p>Ainda precisa de ajuda? Fale com um dos nossos especialistas no botão abaixo</p>
+                <button class="btn-suporte">Quero falar com o suporte</button>
+            </div>
 
-    <!-- Lado esquerdo -->
-    <div class="ajuda-esquerda">
-        <h2>FAQ - Perguntas frequentes</h2>
-        <p>Ainda precisa de ajuda? Fale com um dos nossos especialistas no botão abaixo</p>
+            <div class="ajuda-direita">
 
-        <button class="btn-suporte">Quero falar com o suporte</button>
-    </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>O que é a GreenLight?</span>
+                    <span class="plus">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>A GreenLight é uma plataforma inteligente de monitoramento de estufas que permite acompanhar em tempo real os dados dos seus sensores, gerenciar usuários e visualizar relatórios de forma simples e eficiente.</p>
+                </div>               
+            </div>
 
-    <!-- Lado direito -->
-    <div class="ajuda-direita">
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>Como altero minha senha cadastrada?</span>
+                    <span class="plus">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Vá até o menu <strong>Perfil</strong>, clique em "Editar Perfil" e depois em "Alterar Senha". Preencha a senha atual e a nova senha nos campos solicitados.</p>
+                </div>
+            </div>
 
-        <div class="faq-item">
-            <span>O que é a GreenLight?</span>
-            <span class="plus">+</span>
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>Um sensor apareceu como inativo no meu dashboard. O que devo fazer?</span>
+                        <span class="plus">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Verifique se o sensor está ligado e com sinal de internet. Aguarde alguns minutos. Caso continue inativo, entre em contato com o suporte técnico.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>Os dados do dashboard atualizam sozinhos ou preciso recarregar a página?</span>
+                    <span class="plus">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Os dados atualizam automaticamente a cada 30 segundos. Não é necessário recarregar a página manualmente.</p>
+                </div>
+            </div>
+
+            </div>
         </div>
-
-        <div class="faq-item">
-            <span>Como altero minha senha cadastrada?</span>
-            <span class="plus">+</span>
-        </div>
-
-        <div class="faq-item">
-            <span>Um sensor apareceu como inativo no meu dashboard. O que devo fazer?</span>
-            <span class="plus">+</span>
-        </div>
-
-        <div class="faq-item">
-            <span>Os dados do dashboard atualizam sozinhos ou preciso recarregar a página?</span>
-            <span class="plus">+</span>
-        </div>
-
     </div>
-
-    </div>
-    </div>
-
-    
-
 </body>
-
 </html>
+<script>
+        document.querySelectorAll('.faq-item').forEach(item => {
+            let question = item.querySelector('.faq-question');
+
+            question.addEventListener('click', () => {
+                // Fecha a pargunta aberta quando abrir outra
+                document.querySelectorAll('.faq-item').forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.classList.remove('active');
+                    }
+                });
+
+                // Abre ou fecha o item atual
+                item.classList.toggle('active');
+            });
+        });
+    </script>

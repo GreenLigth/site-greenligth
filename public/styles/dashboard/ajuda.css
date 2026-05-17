@@ -12,7 +12,7 @@ body {
     background-color: #eef3ee;
 }
 
-/*Menu lateral*/
+/* ================= MENU LATERAL ================= */
 .menu {
     width: 200px;
     background-color: #1a4a32;
@@ -64,14 +64,13 @@ body {
     color: #7aab90 !important;
 }
 
-
-/* CONTEÚDO */
+/* ================= CONTEÚDO ================= */
 .conteudo {
-    margin-left: 100px;
+    margin-left: 200px;
     flex: 1;
     padding: 28px 30px;
     min-height: 100vh;
-    width: calc(100% - 200px); /* garante espaço */
+    width: calc(100% - 200px);
 }
 
 .topo {
@@ -82,9 +81,6 @@ body {
     color: #ffffff;
     font-size: 15px;
     font-weight: 700;
-    position: relative;
-    z-index: 10;
-
 }
 
 h1 {
@@ -95,10 +91,6 @@ h1 {
 }
 
 /* ================= AJUDA ================= */
-.conteudo{
-    margin-left: 200px;
-}
-
 .ajuda-container {
     display: flex;
     gap: 60px;
@@ -129,25 +121,50 @@ h1 {
     padding: 12px 20px;
     border-radius: 20px;
     cursor: pointer;
+    font-weight: 600;
 }
 
-/* DIREITA */
 .ajuda-direita {
     flex: 1;
 }
 
 .faq-item {
-    width: 100%;
-    padding: 18px;
     border-bottom: 2px solid #4ade80;
-    margin-bottom: 50px;
+    margin-bottom: 12px;
+    overflow: hidden;
+}
+
+.faq-question {
+    width: 100%;
+    padding: 18px 0;
+    background: none;
+    border: none;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    font-size: 16px;
+    text-align: left;
+    cursor: pointer;
+    color: #1a2e22;
+    font-weight: 600;
 }
 
-.plus {
-    font-size: 20px;
-    color: #4ade80;
-    cursor: pointer;
+/* Resposta */
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+    padding: 0;
+    margin-bottom: 10px;
 }
+
+.faq-item.active .faq-answer {
+    max-height: 400px;
+}
+
+.faq-answer p {
+    color: black;
+    line-height: 1.6;
+    font-size: 15px;
+}
+
