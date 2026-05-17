@@ -109,60 +109,79 @@
 </html>
 
 <script>
-    let nomes = ["Esther", "Max", "Nicole", "Clara", "Brandão", "Luiza", "Julia", "Thamyres"]
-    let perfis = ["Adm", "Gerente", "Operador", "Operador", "Gerente", "Adm", "Operador", "Gerente"]
-    let status = ["Ativo", "Ativo", "Inativo", "Ativo", "Ativo", "Inativo", "Ativo", "Inativo"]
-    let estufas = ["A1", "A1", "A2", "A2", "A1", "A2", "A1", "A2"]
+    let listaUsuarios = [];
+    const idEmpresaLogada = sessionStorage.ID_EMPRESA;
 
-    function filtrar() {
-        let busca = campoBusca.value.toLowerCase()
-        let filtroPerfil = document.getElementById("filtroPerfil").value
-        let filtroSt = filtroStatus.value
-        let filtroEst = filtroEstufa.value
-        let html = ""
-        let total = 0
-        let ativos = 0
-        let inativos = 0
-
-        let i = 0
-        while (i < nomes.length) {
-            // verifica se a pessoa passa em cada filtro
-            let passouBusca = busca == "" || nomes[i].toLowerCase().includes(busca)
-            let passouPerfil = filtroPerfil == "" || perfis[i] == filtroPerfil
-            let passouStatus = filtroSt == "" || status[i] == filtroSt
-            let passouEstufa = filtroEst == "" || estufas[i] == filtroEst
-
-            // só adiciona na tabela se passou em todos os filtros
-            if (passouBusca && passouPerfil && passouStatus && passouEstufa) {
-                // define a cor conforme o status
-                let classeStatus = ""
-                if (status[i] == "Ativo") {
-                    classeStatus = "ideal"
-                } else {
-                    classeStatus = "muito-alta"
+    function obterDadosBanco() {
+        fetch(`/usuarios/buscarUsuarios/${idEmpresaLogada}`)
+            .then(function (resposta) {
+                if (resposta.status == 204) {
+                    document.getElementById("tabelaBody").innerHTML = "<tr><td colspan='4' style='text-align:center;'>Nenhum usuário cadastrado.</td></tr>";
+                    return;
                 }
-
-                // monta a linha e acumula no html
-                html += `<tr>
-                <td>${nomes[i]}</td>
-                <td>${perfis[i]}</td>
-                <td><span class="status ${classeStatus}">${status[i]}</span></td>
-                <td>${estufas[i]}</td>
-            </tr>`
-
-                total++
-                if (status[i] == "Ativo") ativos++
-                if (status[i] == "Inativo") inativos++
-            }
-            i++
-        }
-
-        // atualiza a tabela e os cards com os resultados
-        tabelaBody.innerHTML = html
-        cardTotal.innerHTML = total
-        cardAtivos.innerHTML = ativos
-        cardInativos.innerHTML = inativos
+                if (resposta.ok) {
+                    resposta.json().then(function (dadosDoBanco) {
+                        listaUsuarios = dadosDoBanco;
+                        filtrar(); // Chama o filtro para renderizar a tabela na primeira vez
+                    });
+                } else {
+                    console.error("Erro na resposta da API.");
+                }
+            })
+            .catch(function (erro) {
+                console.log("Erro ao efetuar o Fetch dos usuários: ", erro);
+            });
     }
 
-    filtrar()
+    function filtrar() {
+        let busca = campoBusca.value.toLowerCase();
+        let filtroPerfil = document.getElementById("filtroPerfil").value;
+        let filtroSt = filtroStatus.value;
+        let filtroEst = filtroEstufa.value;
+        
+        let html = "";
+        let total = 0;
+        let ativos = 0;
+        let inativos = 0;
+
+        // Varre a lista de usuários vinda do banco 
+        let i = 0;
+        while (i < listaUsuarios.length) {
+            let usuario = listaUsuarios[i];
+
+            let passouBusca = busca == "" || usuario.nome.toLowerCase().includes(busca);
+            let passouPerfil = filtroPerfil == "" || usuario.nivelAcesso == filtroPerfil;
+            let passouStatus = filtroSt == "" || usuario.statusPerfil == filtroSt;
+            let passouEstufa = filtroEst == "" || usuario.nomeEstufa == filtroEst;
+
+            if (passouBusca && passouPerfil && passouStatus && passouEstufa) {
+                
+                // Define a cor conforme o status vindo do banco ('Ativo' ou 'Inativo')
+                let classeStatus = (usuario.statusPerfil == "Ativo") ? "ideal" : "muito-alta";
+
+                // Monta a linha dinamicamente com as colunas do banco
+                html += `<tr>
+                    <td>${usuario.nome}</td>
+                    <td>${usuario.nivelAcesso}</td>
+                    <td><span class="status ${classeStatus}">${usuario.statusPerfil}</span></td>
+                    <td>${usuario.nomeEstufa}</td>
+                </tr>`;
+
+                // Contador dos KPIs baseado 
+                total++;
+                if (usuario.statusPerfil == "Ativo") ativos++;
+                if (usuario.statusPerfil == "Inativo") inativos++;
+            }
+            i++;
+        }
+
+        // Atualiza os elementos da tela
+        tabelaBody.innerHTML = html || "<tr><td colspan='4' style='text-align:center;'>Nenhum resultado corresponde aos filtros.</td></tr>";
+        cardTotal.innerHTML = total;
+        cardAtivos.innerHTML = ativos;
+        cardInativos.innerHTML = inativos;
+    }
+
+    // Quando a página carregar puxa do banco automaticamente
+    window.onload = obterDadosBanco;
 </script>
