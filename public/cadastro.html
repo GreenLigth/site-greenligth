@@ -54,7 +54,7 @@
                         <label>Senha</label>
 
                         <input type="password" id="ipt_senha" oninput="fSenha()" placeholder="Mínimo 8 caracteres">
-                        <span onclick="visualizar()" style="cursor: pointer;">
+                        <span onclick="visualizar(ipt_senha)" style="cursor: pointer;">
                             <img src="assets/icons/eye.png"></span>
 
                     </div>
@@ -64,8 +64,8 @@
                     <div class="input-group">
                         <label>Confirmar Senha</label>
                         <div class="password-wrapper">
-                            <input type="password" id="ipt_senhaDnv" placeholder="Repita a senha">
-                            <span onclick="visualizar()" style="cursor: pointer;">
+                            <input type="password" oninput="fSenha()" id="ipt_senhaDnv" placeholder="Repita a senha"><br>
+                            <span onclick="visualizar(ipt_senhaDnv)" style="cursor: pointer;">
                                 <img src="assets/icons/eye.png"></span>
                         </div>
                     </div>
@@ -95,112 +95,194 @@
         </section>
 
     </div>
-    <script>
+   <script>
         function fEmail() {
 
             let email = ipt_email.value;
-            let com = email.endsWith(".com");
+
             let arroba = email.includes("@");
 
-            if (!com || !arroba) {
+            let com = email.endsWith(".com");
+
+            let posArroba = email.indexOf("@");
+
+            let temDominio = email.includes(".", posArroba); // busca o ponto apenas após o @, evitando pontos antes dele.
+            //Verifica se existe um domínio
+
+            let duploPonto = email.includes(".."); // evita email como @..com 
+
+            let emailOk = false;
+
+            if (!arroba || !com || posArroba == 0 || !temDominio || duploPonto) { // posArroba == 0 e temDominio são validações novas
+                
                 div_email.innerHTML = "Por favor, insira um email válido";
+
             } else {
-                div_email.innerHTML = " "
+                
+                emailOk = true;
+
+                div_email.innerHTML = " ";
             }
+
+            return emailOk;
         }
 
+
         function fSenha() {
+
             div_validar.innerHTML = ' ';
+
             div_confirmar.innerHTML = ' ';
+
             let senha = ipt_senha.value;
+
             let senhaDnv = ipt_senhaDnv.value;
 
+            let senhaOk = false;
+
             let especial = ['!', '@', '#', '$', '%', '&', '*'];
+
             let numero = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
             let temNumero = false;
+
             let temEspecial = false;
 
             for (let i = 0; i < numero.length; i++) {
+
                 if (senha.includes(numero[i])) {
+
                     temNumero = true;
                 };
-
             };
 
             for (let i = 0; i < especial.length; i++) {
+
                 if (senha.includes(especial[i])) {
+
                     temEspecial = true;
                 };
             };
 
             if (senha.length < 8) {
+
                 div_validar.innerHTML = "Insira uma combinação de pelo menos oito caracteres ";
-                console.log('passe no if tamanho senha ')
 
             } else if (!temNumero) {
+
                 div_validar.innerHTML = " Insira pelo menos um número ";
 
             } else if (senha == senha.toUpperCase()) {
+
                 div_validar.innerHTML = " Insira pelo menos uma letra minúscula ";
+
             } else if (senha == senha.toLowerCase()) {
+
                 div_validar.innerHTML = " Insira pelo menos uma letra maiúscula ";
+
             } else if (!temEspecial) {
+
                 div_validar.innerHTML = " Insira pelo menos um caractere especial. Ex: '#', '!'";
+
+            } else if (senha != senhaDnv) {
+
+                div_validar.innerHTML = " A senha e a senha de confirmação precisam ser iguais";
+
+            } else {
+
+                senhaOk = true;
+
             }
 
+            return senhaOk;
+
         }
+
 
         function cadastrar(event) {
-            event.preventDefault();
+
+            event.preventDefault(); // evita que a página recarregue sempre que da erro
 
             let nomeEmpresa = ipt_nome.value;
+
             let nomeAdm = ipt_adm.value;
+
             let email = ipt_email.value;
+
             let cnpj = ipt_cnpj.value;
+
             let nomeEstufa = ipt_estufa.value;
+
             let senha = ipt_senha.value;
 
-                if (email == "" || nomeEmpresa == "" || cnpj == "" || senha == "" || nomeEstufa == "") {
-                    alert("Preencha os campos corretamente")
-                } else {
-                    let dados = {
-                        nome: nomeEmpresa,
-                        nomeAdm: nomeAdm,
-                        email: email,
-                        cnpj: cnpj,
-                        nomeEstufa: nomeEstufa,
-                        senha: senha
-                    }
+            let confirmarSenha = fSenha(); // chamada do resultado das funções de validação de email e senha
 
-                    fetch('http://localhost:3333/usuarios/cadastrar', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(dados)
-                    })
-                        .then(res => {
-                            if (res.ok)
-                                return res.json()
-                        }).then(resultado => {
-                            console.log(resultado)
-                            window.location.href = "login.html"
-                        })
-                        .catch(error => console.error('Erro:', error));
+            let confirmarEmail = fEmail();
+
+            let mensagem = "";
+
+            if (email == "" || nomeEmpresa == "" || cnpj == "" || senha == "" || nomeEstufa == "") {
+
+                mensagem = "Preencha os campos corretamente";
+
+            } else if (!confirmarEmail || !confirmarSenha) {
+
+                mensagem = "Por favor, verifique seus dados e tente novamente!";
+
+            } else {
+
+                mensagem = "Cadastro realizado com sucesso!"
+
+                let dados = {
+                    nome: nomeEmpresa,
+                    nomeAdm: nomeAdm,
+                    email: email,
+                    cnpj: cnpj,
+                    nomeEstufa: nomeEstufa,
+                    senha: senha
                 }
+
+                fetch('http://localhost:3333/usuarios/cadastrar', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(dados)
+                })
+                    .then(res => {
+
+                        if (res.ok)
+
+                            return res.json()
+
+                    }).then(resultado => {
+
+                        console.log(resultado)
+
+                        window.location.href = "login.html"
+
+                    })
+                    .catch(error => console.error('Erro:', error));
+            }
 
         }
 
-        function visualizar() {
-            if (ipt_senha.type == 'password') {
-                ipt_senha.type = 'text'
+
+        function visualizar(campo) {
+
+
+            if (campo.type == 'password') {
+
+                campo.type = 'text'
+
             } else {
-                ipt_senha.type = 'password'
+
+                campo.type = 'password'
+
             }
         }
 
-    </script>
+</script>
 </body>
 
 </html>

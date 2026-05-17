@@ -56,7 +56,7 @@ function cadastrar(req, res) {
     } else if (senha == undefined) {
         res.status(400).send("Sua senha está undefined!");
     } else if (cnpj == undefined) {
-        res.status(400).send("Sua senha está undefined!");
+        res.status(400).send("Sua cnpj está undefined!");
     } else if (nomeEstufa == undefined) {
         res.status(400).send("O nome da sua estufa está undefined");
     } else {
