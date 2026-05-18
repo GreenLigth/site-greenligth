@@ -42,7 +42,7 @@ function cadastrar(nome, nomeAdm, cnpj, email, senha, nomeEstufa) {
 
 // Cadastro de usuario na dashboard
 
-function cadastrarUsuario(nome, email, nivelAcesso, nomeEstufa, senha, fkEmpresa, fkSuperior) {
+function cadastrarUsuario(nome, email, nivelAcesso, nomeEstufa,senha, fkEmpresa, fkSuperior) {
 
     console.log("function cadastrarUsuario():", nome, nivelAcesso, email, senha, fkEmpresa, nomeEstufa, fkSuperior);
 
