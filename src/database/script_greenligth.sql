@@ -12,11 +12,7 @@ USE greenlight;
 CREATE TABLE empresa (
 idEmpresa INT PRIMARY KEY AUTO_INCREMENT,
 nome VARCHAR(50) NOT NULL,	
-CNPJ VARCHAR(14) UNIQUE NOT NULL,
-fkMatriz INT, 
-CONSTRAINT chMatriz
-	FOREIGN KEY (fkMatriz)
-    REFERENCES empresa (idEmpresa)
+CNPJ VARCHAR(14) UNIQUE NOT NULL
 );
 
 CREATE TABLE setor(
@@ -56,7 +52,15 @@ CONSTRAINT chFkEmpresa
 statusPerfil BOOLEAN, 
 nivelAcesso INT,
 CONSTRAINT chAcesso
-	CHECK (nivelAcesso > 0 AND nivelAcesso <= 3)
+	CHECK (	nivelAcesso BETWEEN 0 AND 3),
+fkEstufa INT,
+	CONSTRAINT chEstufaUsuario 
+		FOREIGN KEY (fkEstufa) 
+		REFERENCES estufa (idEstufa),
+fkSuperior INT,
+	CONSTRAINT chSuperior
+		FOREIGN KEY (fkSuperior) 
+		REFERENCES usuario (idUsuario)
 );
 
 CREATE TABLE sensor (

@@ -36,11 +36,6 @@
                     <div id="div_email" class="validacao"></div>
 
                     <div class="input-group">
-                        <label>Nome da Estufa</label>
-                        <input type="text" id="ipt_estufa" placeholder="Ex: Estufa Principal">
-                    </div>
-
-                    <div class="input-group">
                         <label>Nome do administrador</label>
                         <input type="text" id="ipt_adm" placeholder="Insira o nome do administrador">
                     </div>
@@ -211,8 +206,6 @@
 
             let cnpj = ipt_cnpj.value;
 
-            let nomeEstufa = ipt_estufa.value;
-
             let senha = ipt_senha.value;
 
             let confirmarSenha = fSenha(); // chamada do resultado das funções de validação de email e senha
@@ -221,7 +214,7 @@
 
             let mensagem = "";
 
-            if (email == "" || nomeEmpresa == "" || cnpj == "" || senha == "" || nomeEstufa == "") {
+            if (email == "" || nomeEmpresa == "" || cnpj == "" || senha == "") {
 
                 mensagem = "Preencha os campos corretamente";
 
@@ -238,7 +231,6 @@
                     nomeAdm: nomeAdm,
                     email: email,
                     cnpj: cnpj,
-                    nomeEstufa: nomeEstufa,
                     senha: senha
                 }
 
