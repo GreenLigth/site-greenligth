@@ -90,7 +90,7 @@ h1 {
     font-size: 44px;
     font-weight: 900;
     color: #1a2e22;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
 }
 
 
@@ -111,6 +111,7 @@ h1 {
     background-color: #ffffff;
     display: flex;
     flex-direction: column;
+    max-height: 490px;
 }
 
 .grafico-barras h3 {
@@ -123,7 +124,7 @@ h1 {
 .grafico-barras .chart-wrap {
     flex: 1;
     position: relative;
-    min-height: 300px;
+    min-height: 200px;
 }
 
 .coluna-esquerda{
@@ -141,7 +142,7 @@ h1 {
 .cards {
     display: flex;
     gap: 14px;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
 }
 
 .card.atencao {
@@ -169,7 +170,7 @@ h1 {
 .grafico-linha {
     background-color: #c6e1d1;
     border-radius: 14px;
-    padding: 18px 20px;
+    padding: 15px 20px;
     flex: 1;
     gap: 5px;
     display: flex;
@@ -191,7 +192,7 @@ h1 {
 
 .grafico-linha .chart-wrap {
     position: relative;
-    height: 400px;
+    height: 220px;
     width: 100%;
 }
 
@@ -226,11 +227,12 @@ h1 {
     padding: 18px 20px;
     flex: 1;
     height: fit-content;
+    max-height: 490px;
 }
 
 .grafico-rosca .chart-wrap {
     position: relative;
-    height: 500px;
+    height: 300px;
 }
 
 .box-empresas {
