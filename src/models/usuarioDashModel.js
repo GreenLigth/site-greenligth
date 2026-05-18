@@ -2,7 +2,7 @@ var database = require("../database/config")
 
 // Cadastro de usuario na dashboard
 
-function cadastrarUsuario(nome, email, nivelAcesso, nomeEstufa,senha, fkEmpresa, fkSuperior) {
+function cadastrarUsuario(nome, email, nivelAcesso, nomeEstufa,senha, fkEmpresa, fkSuperior,) {
 
     console.log("function cadastrarUsuario():", nome, nivelAcesso, email, senha, fkEmpresa, nomeEstufa, fkSuperior);
 
@@ -21,7 +21,7 @@ function cadastrarUsuario(nome, email, nivelAcesso, nomeEstufa,senha, fkEmpresa,
 
             var instrucaoUsuario = `
             INSERT INTO usuario (nome,email,nivelAcesso,senha,fkEmpresa,fkEstufa,fkSuperior) VALUES
-             ('${nome}', '${email}', '${nivelAcesso}', '${senha}', '${fkEmpresa}', '${fkEstufa}', ${fkSuperior});`;
+             ('${nome}', '${email}', ${nivelAcesso}, '${senha}', '${fkEmpresa}', '${fkEstufa}', ${fkSuperior});`;
 
             return database.executar(instrucaoUsuario);
 
