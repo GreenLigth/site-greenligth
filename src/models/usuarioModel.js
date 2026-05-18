@@ -10,8 +10,8 @@ function autenticar(email, senha) {
 }
 
 // Coloque os mesmos parâmetros aqui. Vá para a var instrucaoSql
-function cadastrar(nome, nomeAdm, cnpj, email, senha, nomeEstufa) {
-    console.log("ACESSEI O USUARIO MODEL \n \n function cadastrar():", nome, nomeAdm, cnpj, email, senha, nomeEstufa);
+function cadastrar(nome, nomeAdm, cnpj, email, senha) {
+    console.log("ACESSEI O USUARIO MODEL \n \n function cadastrar():", nome, nomeAdm, cnpj, email, senha);
 
     var instrucaoEmpresa = `
         INSERT INTO empresa (nome, CNPJ) VALUES ('${nome}', '${cnpj}');
@@ -20,16 +20,6 @@ function cadastrar(nome, nomeAdm, cnpj, email, senha, nomeEstufa) {
     var idEmpresa; 
 
     return database.executar(instrucaoEmpresa)
-        .then(function (resultadoEmpresa) {
-            idEmpresa = resultadoEmpresa.insertId; 
-            console.log("Empresa cadastrada com ID:", idEmpresa);
-
-            var instrucaoEstufa = `
-                INSERT INTO estufa (nomeEstufa, fkEmpresa) VALUES ('${nomeEstufa}', ${idEmpresa});
-            `;
-
-            return database.executar(instrucaoEstufa);
-        })
         .then(function (resultadoEstufa) {
             var instrucaoUser = `
                 INSERT INTO usuario (nome, email, senha, fkEmpresa) VALUES ('${nomeAdm}', '${email}', '${senha}', ${idEmpresa});
