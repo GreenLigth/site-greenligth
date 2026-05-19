@@ -174,3 +174,83 @@ input {
 .btn-login:hover {
     background-color: var(--verde-escuro);
 }@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+/*modal que antes de ir para dashboard*/
+.modal-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: none; 
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal-container.active {
+    display: flex; 
+}
+
+.modal-content {
+    background-color: white;
+    padding: 40px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    max-width: 400px;
+    width: 90%;
+}
+
+.icon-sucesso {
+    font-size: 60px;
+    color: #2ecc71; 
+    margin-bottom: 20px;
+}
+
+.modal-content h3 {
+    color: var(--verde-escuro);
+    font-size: 24px;
+    margin-bottom: 10px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.modal-content p {
+    color: var(--cinza-texto);
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+/*olhinho da senha*/
+.password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.password-wrapper input {
+    padding-right: 45px; 
+}
+
+.password-wrapper .toggle-password {
+    position: absolute;
+    right: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.password-wrapper .toggle-password img {
+    width: 20px;
+    height: auto;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+
+.password-wrapper .toggle-password img:hover {
+    opacity: 1;
+}

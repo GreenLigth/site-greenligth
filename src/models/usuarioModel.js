@@ -9,7 +9,7 @@ function autenticar(email, senha) {
     return database.executar(instrucaoSql);
 }
 
-// Coloque os mesmos parâmetros aqui. Vá para a var instrucaoSql
+
 function cadastrar(nome, nomeAdm, cnpj, email, senha) {
     console.log("ACESSEI O USUARIO MODEL \n \n function cadastrar():", nome, nomeAdm, cnpj, email, senha);
 
@@ -17,19 +17,19 @@ function cadastrar(nome, nomeAdm, cnpj, email, senha) {
         INSERT INTO empresa (nome, CNPJ) VALUES ('${nome}', '${cnpj}');
     `;
 
-    var idEmpresa; 
-
     return database.executar(instrucaoEmpresa)
-        .then(function (resultadoEstufa) {
+        .then(function (resultadoEmpresa) {
+            var idEmpresa = resultadoEmpresa.insertId; 
+
             var instrucaoUser = `
-                INSERT INTO usuario (nome, email, senha, fkEmpresa) VALUES ('${nomeAdm}', '${email}', '${senha}', ${idEmpresa});
-            `;
+                INSERT INTO usuario (nome, email, senha, fkEmpresa, statusPerfil, nivelAcesso) 
+                VALUES ('${nomeAdm}', '${email}', '${senha}', ${idEmpresa}, 1, 3);
+            `; 
             
             console.log("Executando a instrução SQL Usuário: \n" + instrucaoUser);
             return database.executar(instrucaoUser);
         });
 }
-
 
 module.exports = {
     autenticar,

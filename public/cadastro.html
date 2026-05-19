@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,17 +11,23 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" href="./assets/logo/logosite.png">
 </head>
-
 <body>
 
-    <div class="main-container reversed">
+    <div id="modal_sucesso" class="modal-container">
+        <div class="modal-content">
+            <i class="fa-solid fa-circle-check icon-sucesso"></i>
+            <h3>Cadastro Realizado!</h3>
+            <p>Sua conta foi criada com sucesso. Você será redirecionado para o login em instantes.</p>
+        </div>
+    </div>
 
+    <div class="main-container reversed">
         <section class="form-side">
             <div class="form-box">
                 <h2>Criar Conta como administrador</h2>
                 <p class="subtitle">Cadastre-se para acessar o painel de monitoramento</p>
 
-                <form>
+                <form id="form_cadastro">
                     <div class="input-group">
                         <label>Nome da Empresa</label>
                         <input type="text" id="ipt_nome" placeholder="Nome">
@@ -47,11 +52,12 @@
 
                     <div class="input-group">
                         <label>Senha</label>
-
-                        <input type="password" id="ipt_senha" oninput="fSenha()" placeholder="Mínimo 8 caracteres">
-                        <span onclick="visualizar(ipt_senha)" style="cursor: pointer;">
-                            <img src="assets/icons/eye.png"></span>
-
+                        <div class="password-wrapper">
+                            <input type="password" id="ipt_senha" oninput="fSenha()" placeholder="Mínimo 8 caracteres">
+                            <span onclick="visualizar(ipt_senha)" style="cursor: pointer;" class="toggle-password">
+                                <img src="assets/icons/eye.png">
+                            </span>
+                        </div>
                     </div>
 
                     <div id="div_validar" class="validacao"></div>
@@ -59,14 +65,14 @@
                     <div class="input-group">
                         <label>Confirmar Senha</label>
                         <div class="password-wrapper">
-                            <input type="password" oninput="fSenha()" id="ipt_senhaDnv" placeholder="Repita a senha"><br>
-                            <span onclick="visualizar(ipt_senhaDnv)" style="cursor: pointer;">
-                                <img src="assets/icons/eye.png"></span>
+                            <input type="password" oninput="fSenha()" id="ipt_senhaDnv" placeholder="Repita a senha">
+                            <span onclick="visualizar(ipt_senhaDnv)" style="cursor: pointer;" class="toggle-password">
+                                <img src="assets/icons/eye.png">
+                            </span>
                         </div>
                     </div>
 
                     <div id="div_confirmar" class="validacao"></div>
-
                     <div id="div_botao" class="validacao"></div>
 
                     <button type="submit" class="btn-primary" onclick="cadastrar(event)">
@@ -81,150 +87,90 @@
         <section class="banner-side">
             <div class="overlay"></div>
             <div class="banner-content">
-                <div class="logo">
-                    <!-- <img src="./assets/logo/logo-branca.png" alt="Logo Greenlight" class="logo-img"> -->
-                </div>
+                <div class="logo"></div>
                 <h1>Sistema Inteligente de Monitoramento de Luminosidade</h1>
                 <p>Monitore as condições de iluminação das suas estufas em tempo real.</p>
             </div>
         </section>
-
     </div>
-   <script>
+
+    <script>
         function fEmail() {
-
             let email = ipt_email.value;
-
             let arroba = email.includes("@");
-
             let com = email.endsWith(".com");
-
             let posArroba = email.indexOf("@");
-
-            let temDominio = email.includes(".", posArroba); // busca o ponto apenas após o @, evitando pontos antes dele.
-            //Verifica se existe um domínio
-
-            let duploPonto = email.includes(".."); // evita email como @..com 
-
+            let temDominio = email.includes(".", posArroba);
+            let duploPonto = email.includes("..");
             let emailOk = false;
 
-            if (!arroba || !com || posArroba == 0 || !temDominio || duploPonto) { // posArroba == 0 e temDominio são validações novas
-                
+            if (!arroba || !com || posArroba == 0 || !temDominio || duploPonto) {
                 div_email.innerHTML = "Por favor, insira um email válido";
-
             } else {
-                
                 emailOk = true;
-
                 div_email.innerHTML = " ";
             }
-
             return emailOk;
         }
 
-
         function fSenha() {
-
             div_validar.innerHTML = ' ';
-
             div_confirmar.innerHTML = ' ';
-
             let senha = ipt_senha.value;
-
             let senhaDnv = ipt_senhaDnv.value;
-
             let senhaOk = false;
-
             let especial = ['!', '@', '#', '$', '%', '&', '*'];
-
             let numero = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-
             let temNumero = false;
-
             let temEspecial = false;
 
             for (let i = 0; i < numero.length; i++) {
-
                 if (senha.includes(numero[i])) {
-
                     temNumero = true;
                 };
             };
 
             for (let i = 0; i < especial.length; i++) {
-
                 if (senha.includes(especial[i])) {
-
                     temEspecial = true;
                 };
             };
 
             if (senha.length < 8) {
-
                 div_validar.innerHTML = "Insira uma combinação de pelo menos oito caracteres ";
-
             } else if (!temNumero) {
-
                 div_validar.innerHTML = " Insira pelo menos um número ";
-
             } else if (senha == senha.toUpperCase()) {
-
                 div_validar.innerHTML = " Insira pelo menos uma letra minúscula ";
-
             } else if (senha == senha.toLowerCase()) {
-
                 div_validar.innerHTML = " Insira pelo menos uma letra maiúscula ";
-
             } else if (!temEspecial) {
-
                 div_validar.innerHTML = " Insira pelo menos um caractere especial. Ex: '#', '!'";
-
             } else if (senha != senhaDnv) {
-
-                div_validar.innerHTML = " A senha e a senha de confirmação precisam ser iguais";
-
+                div_confirmar.innerHTML = " A senha e a senha de confirmação precisam ser iguais";
             } else {
-
                 senhaOk = true;
-
             }
-
             return senhaOk;
-
         }
 
-
         function cadastrar(event) {
-
-            event.preventDefault(); // evita que a página recarregue sempre que da erro
+            event.preventDefault(); // esse event não deixa a página de dar reload automático na nossa telinha
 
             let nomeEmpresa = ipt_nome.value;
-
             let nomeAdm = ipt_adm.value;
-
             let email = ipt_email.value;
-
             let cnpj = ipt_cnpj.value;
-
             let senha = ipt_senha.value;
-
-            let confirmarSenha = fSenha(); // chamada do resultado das funções de validação de email e senha
-
+            let confirmarSenha = fSenha();
             let confirmarEmail = fEmail();
 
-            let mensagem = "";
-
             if (email == "" || nomeEmpresa == "" || cnpj == "" || senha == "") {
-
-                mensagem = "Preencha os campos corretamente";
-
+                div_botao.innerHTML = "Preencha os campos corretamente";
             } else if (!confirmarEmail || !confirmarSenha) {
-
-                mensagem = "Por favor, verifique seus dados e tente novamente!";
-
+                div_botao.innerHTML = "Por favor, verifique seus dados e tente novamente!";
             } else {
-
-                mensagem = "Cadastro realizado com sucesso!"
+                div_botao.innerHTML = "";
 
                 let dados = {
                     nome: nomeEmpresa,
@@ -242,39 +188,34 @@
                     body: JSON.stringify(dados)
                 })
                     .then(res => {
-
-                        if (res.ok)
-
-                            return res.json()
-
-                    }).then(resultado => {
-
-                        console.log(resultado)
-
-                        window.location.href = "login.html"
-
+                        if (res.ok) return res.json();
                     })
-                    .catch(error => console.error('Erro:', error));
+                    .then(resultado => {
+                        console.log(resultado);
+
+                        // mostra o modal na tela adicionando a classe active
+                        document.getElementById("modal_sucesso").classList.add("active");
+
+                        // espera 3 segundos antes de mudar de tela
+                        setTimeout(() => {
+                            window.location.href = "login.html";
+                        }, 3000);
+                    })
+                    .catch(error => {
+                        console.error('Erro:', error);
+                        div_botao.innerHTML = "Erro ao conectar com o servidor.";
+                    });
             }
-
         }
-
 
         function visualizar(campo) {
-
-
             if (campo.type == 'password') {
-
-                campo.type = 'text'
-
+                campo.type = 'text';
             } else {
-
-                campo.type = 'password'
-
+                campo.type = 'password';
             }
         }
-
-</script>
+    </script>
 </body>
 
 </html>

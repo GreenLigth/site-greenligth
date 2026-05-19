@@ -21,11 +21,11 @@
     overflow: hidden;
 }
 
-section .form-box{
+section .form-box {
     justify-content: left;
 }
 
-section .banner-side{
+section .banner-side {
     justify-content: right;
 }
 
@@ -58,6 +58,7 @@ section .banner-side{
     font-size: 16px;
     margin-bottom: 30px;
 }
+
 .logo {
     display: flex;
     align-items: center;
@@ -65,7 +66,7 @@ section .banner-side{
     margin-bottom: 25px;
 }
 
-.logo img{
+.logo img {
     width: 200px;
 }
 
@@ -73,10 +74,8 @@ section .banner-side{
     margin-bottom: 18px; 
 }
 
-.none{
-
+.none {
     display: none;
-
 }
 
 .input-group label {
@@ -102,7 +101,6 @@ input:focus {
     outline: none;
     box-shadow: 0 0 0 3px rgba(26, 92, 61, 0.1);
 }
-
 
 .password-wrapper {
     position: relative;
@@ -137,10 +135,10 @@ input:focus {
 }
 
 .validacao {
-
     color: red;
     margin-bottom: 10px;
-
+    font-size: 14px;
+    font-weight: 600;
 }
 
 .btn-primary:hover {
@@ -163,8 +161,7 @@ input:focus {
 .banner-side {
     width: 50%;
     flex: 0 0 50%;
-   background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.7)), 
-    url('../assets/img/icons/Estufa-para-Alface.webp');
+    background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.7)), url('../assets/img/icons/Estufa-para-Alface.webp');
     background-size: cover;
     background-position: center;
     position: relative;
@@ -172,13 +169,6 @@ input:focus {
     align-items: flex-end; 
     padding: 8% 10%;
     color: white;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 25px;
 }
 
 .logo-img {
@@ -206,4 +196,84 @@ input:focus {
     line-height: 1.6;
     color: var(--verde-claro-legenda); 
     max-width: 480px;
+}
+
+/*modal add para mudança de cadastro pra login*/
+.modal-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: none; 
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal-container.active {
+    display: flex; 
+}
+
+.modal-content {
+    background-color: white;
+    padding: 40px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    max-width: 400px;
+    width: 90%;
+}
+
+.icon-sucesso {
+    font-size: 60px;
+    color: #2ecc71;
+    margin-bottom: 20px;
+}
+
+.modal-content h3 {
+    color: var(--verde-escuro);
+    font-size: 24px;
+    margin-bottom: 10px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.modal-content p {
+    color: var(--cinza-texto);
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+/*olhinho da senha*/
+.password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.password-wrapper input {
+    padding-right: 45px; 
+}
+
+/* Fixa o olhinho no canto direito interno do input */
+.password-wrapper .toggle-password {
+    position: absolute;
+    right: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.password-wrapper .toggle-password img {
+    width: 20px;
+    height: auto;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+
+.password-wrapper .toggle-password img:hover {
+    opacity: 1;
 }

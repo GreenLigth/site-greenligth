@@ -34,17 +34,15 @@ function autenticar(req, res) {
                 }
             );
     }
-
 }
 
 function cadastrar(req, res) {
-    // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
     var nome = req.body.nome;
     var nomeAdm = req.body.nomeAdm;
     var email = req.body.email;
     var senha = req.body.senha;
     var cnpj = req.body.cnpj;
-    // Faça as validações dos valores
+
     if (nome == undefined) {
         res.status(400).send("Seu nome está undefined!");
     } else if (nomeAdm == undefined) {
@@ -55,12 +53,9 @@ function cadastrar(req, res) {
         res.status(400).send("Sua senha está undefined!");
     } else if (cnpj == undefined) {
         res.status(400).send("Sua cnpj está undefined!");
-    } else if (nomeEstufa == undefined) {
-        res.status(400).send("O nome da sua estufa está undefined");
-    } else {
+    } else { 
 
-        // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-        usuarioModel.cadastrar(nome,nomeAdm, cnpj, email, senha)
+        usuarioModel.cadastrar(nome, nomeAdm, cnpj, email, senha)
             .then(
                 function (resultado) {
                     res.json(resultado);
@@ -68,10 +63,7 @@ function cadastrar(req, res) {
             ).catch(
                 function (erro) {
                     console.log(erro);
-                    console.log(
-                        "\nHouve um erro ao realizar o cadastro! Erro: ",
-                        erro.sqlMessage
-                    );
+                    console.log("\nHouve um erro ao realizar o cadastro! Erro: ", erro.sqlMessage);
                     res.status(500).json(erro.sqlMessage);
                 }
             );
