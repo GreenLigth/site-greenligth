@@ -110,28 +110,30 @@
 
 <script>
     let listaUsuarios = [];
-    const idEmpresaLogada = sessionStorage.ID_EMPRESA;
 
-    function obterDadosBanco() {
-        fetch(`/usuarios/buscarUsuarios/${idEmpresaLogada}`)
-            .then(function (resposta) {
-                if (resposta.status == 204) {
-                    document.getElementById("tabelaBody").innerHTML = "<tr><td colspan='4' style='text-align:center;'>Nenhum usuário cadastrado.</td></tr>";
-                    return;
-                }
-                if (resposta.ok) {
-                    resposta.json().then(function (dadosDoBanco) {
-                        listaUsuarios = dadosDoBanco;
-                        filtrar(); // Chama o filtro para renderizar a tabela na primeira vez
-                    });
-                } else {
-                    console.error("Erro na resposta da API.");
-                }
-            })
-            .catch(function (erro) {
-                console.log("Erro ao efetuar o Fetch dos usuários: ", erro);
-            });
-    }
+const idEmpresaLogada = sessionStorage.getItem("fkEmpresa") || 1; 
+
+function obterDadosBanco() {
+   
+    fetch(`/usuariosAdm/buscarUsuarios/${idEmpresaLogada}`)
+        .then(function (resposta) {
+            if (resposta.status == 204) {
+                document.getElementById("tabelaBody").innerHTML = "<tr><td colspan='4' style='text-align:center;'>Nenhum usuário cadastrado.</td></tr>";
+                return;
+            }
+            if (resposta.ok) {
+                resposta.json().then(function (dadosDoBanco) {
+                    listaUsuarios = dadosDoBanco;
+                    filtrar(); 
+                });
+            } else {
+                console.error("Erro na resposta da API.");
+            }
+        })
+        .catch(function (erro) {
+            console.log("Erro ao efetuar o Fetch dos usuários: ", erro);
+        });
+    }   
 
     function filtrar() {
         let busca = campoBusca.value.toLowerCase();

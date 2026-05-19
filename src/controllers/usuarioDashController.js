@@ -50,8 +50,28 @@ function cadastrarUsuario(req, res) {
     }
 }
 
-module.exports = {
+function buscarUsuarios(req, res) {
+    var idEmpresa = req.params.idEmpresa;
 
-    cadastrarUsuario
-    
+    if (idEmpresa == undefined) {
+        res.status(400).send("O idEmpresa está indefinido no Controller!");
+    } else {
+        usuarioModel.buscarUsuarios(idEmpresa)
+            .then(function (resultado) {
+                if (resultado.length > 0) {
+                    res.status(200).json(resultado);
+                } else {
+                    res.status(204).send("Nenhum usuário encontrado.");
+                }
+            }).catch(function (erro) {
+                console.log(erro);
+                res.status(500).json(erro.sqlMessage);
+            });
+    }
 }
+
+module.exports = {
+    cadastrarUsuario,
+    buscarUsuarios
+};
+

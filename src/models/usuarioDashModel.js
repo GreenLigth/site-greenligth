@@ -29,7 +29,35 @@ function cadastrarUsuario(nome, email, nivelAcesso, nomeEstufa,senha, fkEmpresa,
 
 }
 
+function buscarUsuarios(idEmpresa) {
+    var instrucaoSql = `
+        SELECT 
+            u.idUsuario,
+            u.nome,
+            CASE 
+                WHEN u.nivelAcesso = 0 THEN 'Adm'
+                WHEN u.nivelAcesso = 1 THEN 'Gerente'
+                WHEN u.nivelAcesso = 2 THEN 'Operador'
+                WHEN u.nivelAcesso = 3 THEN 'Funcionário'
+                ELSE 'Adm Principal' -- Caso o primeiro cadastro venha nulo
+            END AS nivelAcesso,
+            CASE 
+                WHEN u.statusPerfil = 1 THEN 'Ativo'
+                ELSE 'Inativo'
+            END AS statusPerfil,
+            IFNULL(e.nomeEstufa, 'Sem Estufa') AS nomeEstufa
+        FROM usuario u
+        LEFT JOIN estufa e ON u.fkEstufa = e.idEstufa -- Relacionamento direto do banco novo!
+        WHERE u.fkEmpresa = ${idEmpresa}
+        ORDER BY u.nome ASC;
+    `;
+    console.log("Executando a instrução SQL de Busca: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
-    
-    cadastrarUsuario
+    cadastrarUsuario,
+    buscarUsuarios 
 };
+
+
