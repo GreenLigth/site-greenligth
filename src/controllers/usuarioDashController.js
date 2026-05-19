@@ -1,7 +1,6 @@
 var usuarioModel = require("../models/usuarioDashModel");
 
 
-//Cadastro Usuario 
 
 
 function cadastrarUsuario(req, res) {
