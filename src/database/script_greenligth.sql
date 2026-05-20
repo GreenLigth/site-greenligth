@@ -83,3 +83,132 @@ fkSensor INT,
 CONSTRAINT chFkSensor
 FOREIGN KEY (fkSensor) REFERENCES sensor(idSensor)
 );
+
+
+
+-- EMPRESA
+INSERT INTO empresa (nome, CNPJ) VALUES
+('GreenLight', '12345678000199');
+
+
+-- SETORES
+INSERT INTO setor (UF, cidade, estrada, km, fkEmpresa) VALUES
+('SP', 'Campinas', 'Rodovia Verde', '12', 1),
+('MG', 'Uberlandia', 'Estrada Solar', '8', 1);
+
+-- ESTUFAS
+INSERT INTO estufa (nomeEstufa, fkSetor, fkEmpresa) VALUES
+('Estufa A', 1, 1),
+('Estufa B', 1, 1),
+('Estufa C', 2, 1);
+
+-- USUARIOS
+INSERT INTO usuario 
+(nome, email, senha, fkEmpresa, statusPerfil, nivelAcesso, fkEstufa, fkSuperior)
+VALUES
+('Administrador', 'admin@green.com', '123', 1, true, 3, 1, NULL),
+('Carlos Silva', 'carlos@green.com', '123', 1, true, 2, 1, 1),
+('Julia Souza', 'julia@green.com', '123', 1, true, 1, 2, 1),
+('Fernanda Lima', 'fernanda@green.com', '123', 1, true, 1, 3, 1);
+
+-- SENSORES
+INSERT INTO sensor 
+(codigoSensor, fkEstufa, situacao, corredor, bloco)
+VALUES
+('SENS0001', 1, true, 'Corredor 1', 'A'),
+('SENS0002', 1, true, 'Corredor 2', 'A'),
+('SENS0003', 2, true, 'Corredor 1', 'B'),
+('SENS0004', 3, false, 'Corredor 3', 'C');
+
+-- REGISTROS DE LUMINOSIDADE
+INSERT INTO registroLuminosidade 
+(luminosidade, dataLeitura, fkSensor)
+VALUES
+(450, NOW(), 1),
+(500, NOW(), 1),
+(520, NOW(), 1),
+
+(300, NOW(), 2),
+(320, NOW(), 2),
+(310, NOW(), 2),
+
+(700, NOW(), 3),
+(720, NOW(), 3),
+(680, NOW(), 3),
+
+(150, NOW(), 4),
+(180, NOW(), 4),
+(170, NOW(), 4);
+
+
+CREATE VIEW vw_listarRegistros AS
+        SELECT 
+            r.idRegistro,
+            r.luminosidade,
+            r.dataLeitura,
+            s.codigoSensor,
+            s.corredor,
+            s.bloco,
+            e.nomeEstufa
+        FROM registroLuminosidade r
+        JOIN sensor s ON r.fkSensor = s.idSensor
+        JOIN estufa e ON s.fkEstufa = e.idEstufa
+        ORDER BY r.dataLeitura DESC;
+        
+CREATE VIEW vw_maiorPico AS
+        SELECT 
+            e.nomeEstufa,
+            MAX(r.luminosidade) AS maiorLuz
+        FROM registroLuminosidade r
+        JOIN sensor s ON r.fkSensor = s.idSensor
+        JOIN estufa e ON s.fkEstufa = e.idEstufa
+        WHERE MONTH(r.dataLeitura) = MONTH(NOW())
+          AND YEAR(r.dataLeitura) = YEAR(NOW())
+        GROUP BY e.nomeEstufa
+        ORDER BY maiorLuz DESC
+        LIMIT 1;
+        
+CREATE VIEW vw_mediaMensal AS
+ SELECT 
+            ROUND(AVG(r.luminosidade), 0) AS mediaLuz
+        FROM registroLuminosidade r
+        WHERE MONTH(r.dataLeitura) = MONTH(NOW())
+          AND YEAR(r.dataLeitura) = YEAR(NOW());
+		
+CREATE VIEW vw_contagemStatus AS
+        SELECT 
+        CASE
+            WHEN r.luminosidade > 30000 THEN 'muito-alta'
+            WHEN r.luminosidade BETWEEN 20000 AND 30000 THEN 'alta'
+            WHEN r.luminosidade BETWEEN 8000 AND 20000 THEN 'ideal'
+            ELSE 'baixa'
+        END AS status,
+        COUNT(*) AS quantidade
+        FROM registroLuminosidade r
+        WHERE MONTH(r.dataLeitura) = MONTH(NOW())
+          AND YEAR(r.dataLeitura) = YEAR(NOW())
+        GROUP BY status;
+        
+CREATE VIEW vw_mediaPorMes AS
+        SELECT 
+            MONTH(r.dataLeitura) AS mes,
+            ROUND(AVG(r.luminosidade), 0) AS mediaLuz
+        FROM registroLuminosidade r
+        WHERE YEAR(r.dataLeitura) = YEAR(NOW())
+        GROUP BY mes
+        ORDER BY mes;
+        
+CREATE VIEW vw_sensoresAlerta AS
+        SELECT 
+            e.nomeEstufa,
+            COUNT(DISTINCT s.idSensor) AS qtdAlerta
+        FROM registroLuminosidade r
+        JOIN sensor s ON r.fkSensor = s.idSensor
+        JOIN estufa e ON s.fkEstufa = e.idEstufa
+        WHERE r.luminosidade > 30000
+          AND MONTH(r.dataLeitura) = MONTH(NOW())
+          AND YEAR(r.dataLeitura) = YEAR(NOW())
+        GROUP BY e.nomeEstufa;
+        
+CREATE VIEW vw_qtdTotal AS
+SELECT COUNT(*) AS total FROM sensor;
