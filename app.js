@@ -25,6 +25,7 @@ var registrosRouter = require("./src/routes/registros");
 var usuarioDashRouter = require("./src/routes/usuarioDash");
 var usuariosAdmRouter = require("./src/routes/usuariosAdm");
 var dashboardRouter = require("./src/routes/dashboard");
+var estufaRouter = require("./src/routes/estufas");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -42,6 +43,7 @@ app.use("/registros", registrosRouter);
 app.use("/usuarios", usuarioDashRouter);
 app.use("/usuariosAdm", usuariosAdmRouter);
 app.use("/dashboard", dashboardRouter);
+app.use("/estufas", estufaRouter);
 
 app.listen(PORTA_APP, function () {
     console.log(`

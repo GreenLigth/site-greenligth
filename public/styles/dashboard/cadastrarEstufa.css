@@ -23,7 +23,7 @@ h1 {
     margin-bottom: 20px;
 }
 
-
+/* CONTAINER DO FORMULÁRIO - Centralizado e Largo */
 .container-perfil {
     width: 60%; 
     max-width: 600px; 
@@ -33,7 +33,7 @@ h1 {
     padding-bottom: 60px;
 }
 
-
+/* 8. CAMPOS DE ENTRADA - Largura Total Garantida */
 .campo {
     display: flex;
     flex-direction: column;

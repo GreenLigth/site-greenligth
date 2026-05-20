@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - Cadastrar Usuario</title>
+    <link rel="stylesheet" href="../styles/dashboard/cadastrarEstufa.css">
+    <link rel="stylesheet" href="../styles/dashboard/dashboard.css">
+    <link rel="icon" href="../assets/logo/logosite.png">
+</head>
+
+<body>
+    <div class="menu">
+        <img class="logo" src="../assets/logo/logo-branca.png" alt="Greenlight">
+        <div class="item">
+            <img class="icons" src="../assets/img/icons/dashboard-icon.png" alt="">
+            <a href="dashboard.html" class="ativo">Dashboard</a>
+        </div>
+        <div class="item">
+            <img class="icons" src="../assets/img/icons/perfil-icon.png" alt="">
+            <a href="perfil.html">Perfil</a>
+        </div>
+        <div class="item">
+            <img class="icons" src="../assets/img/icons/icon-registro.png" alt="">
+            <a href="registros.html">Registros</a>
+        </div>
+        <div class="item">
+            <img class="icons" src="../assets/img/icons/multiple-users-silhouette.png" alt="">
+            <a href="usuarios.html">Usuários</a>
+        </div>
+        <div class="item">
+            <img class="icons" src="../assets/img/icons/ajuda-icon.png" alt="">
+            <a href="ajuda.html">Ajuda</a>
+        </div>
+
+        <div class="item logout-container">
+            <a href="../home.html" class="logout">Sair</a>
+        </div>
+    </div>
+
+    <div class="conteudo">
+        <div class="topo">
+            <span>ADMINISTRADOR</span>
+        </div>
+        <h1>CADASTRAR <br>ESTUFAS</h1>
+
+        <div class="container-perfil">
+
+            <div class="campo">
+                <label>Nome da Estufa</label>
+                <input type="text" id="ipt_nome" placeholder="Nome">
+            </div>
+
+            <div class="campo">
+                <label>UF</label>
+                <input type="text" id="ipt_UF" placeholder="Ex: SP">
+            </div>
+
+            <div class="campo">
+                <label>Cidade</label>
+                <input type="text" id="ipt_cidade" placeholder="--">
+            </div>
+
+            <div class="campo">
+                <label>Estrada</label>
+                <input type="text" id="ipt_estrada" placeholder="--">
+            </div>
+
+            <div class="campo">
+                <label>Km</label>
+                <input type="text" id="ipt_km" placeholder="--">
+            </div>
+
+            <div id="div_botao" class="validacao"></div>
+
+            <button type="submit" class="btn-salvar" onclick="cadastrarEstufa()">Salvar alterações</button>
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+
+
+</body>
+</html>
+<script>
+    function cadastrarEstufa() {
+        let nomeEstufa = ipt_nome.value;
+        let UF = ipt_UF.value;
+        let cidade = ipt_cidade.value;
+        let estrada = ipt_estrada.value;
+        let km = ipt_km.value;
+
+        let fkEmpresa = sessionStorage.getItem("fkEmpresa");
+
+        console.log("Chamei a função");
+
+        if (UF == "" || nomeEstufa == "" || km == "" || cidade == "" || estrada == "") {
+            div_botao.style.color = "red";
+            div_botao.innerHTML = "Preencha os campos corretamente";
+            console.log("Caiu no if vazio");
+            return; // O código para aqui se houver erro
+        }
+
+        let dadosEstufa = {
+            nome: nomeEstufa,
+            uf: UF,
+            cidade: cidade,
+            estrada: estrada,
+            km: km,
+            fkEmpresa: fkEmpresa
+        };
+
+        console.log("Enviando dados da estufa:", dadosEstufa);
+
+        div_botao.innerHTML = "";
+
+        fetch('http://localhost:3333/estufas/cadastrarEstufa', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dadosEstufa)
+        })
+            .then(res => {
+                if (res.ok) {
+                    return res.json();
+                } else {
+                    throw new Error("Erro na resposta do servidor");
+                }
+            })
+            .then(resultado => {
+                console.log(resultado);
+                div_botao.style.color = "#28a745";
+                div_botao.innerHTML = "Cadastro realizado com sucesso!";
+
+                ipt_nome.value = "";
+                ipt_UF.value = "";
+                ipt_cidade.value = "";
+                ipt_estrada.value = "";
+                ipt_km.value = "";
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                div_botao.style.color = "red";
+                div_botao.innerHTML = "Erro ao realizar o cadastro. Tente novamente.";
+            });
+    }
+</script>

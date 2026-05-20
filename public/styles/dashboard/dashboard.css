@@ -93,8 +93,34 @@ h1 {
     margin-bottom: 5px;
 }
 
+.botao-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    margin-top: -50px;
+    margin-bottom: 40px;
+}
 
+.botao-subtitulo {
+    font-size: 13px;
+    color: #683636;
+}
 
+.btn-novo-usuario {
+    background: #206F4A;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    
+}
+
+.btn-novo-usuario:hover {
+    background-color: #1a4a32;
+}
 
 .linha-topo {
     display: flex;
