@@ -46,7 +46,7 @@
         <div class="botao-header">
             <p class="botao-subtitulo"></p>
             <a href="cadastrarEstufa.html">
-                <button class="btn-novo-usuario">Cadastrar estufas</button>
+                <button class="btn-novo-usuario">+ Cadastrar estufas</button>
             </a>
         </div>
 
@@ -55,18 +55,20 @@
             <div id="coluna-esquerda">
                 <div class="cards">
                     <div class="card atencao">
-                        Estufa com maior pico de luz mensal - <span id="nomeEstufaPico"></span>
+                        <p style="font-size: 15px; font-weight: bolder;">Estufa com maior pico de luz mensal - <span
+                                id="nomeEstufaPico"></span> </p>
                         <strong id="valorPico"></strong>
-                        <p style="font-size: 10px; margin-top: 5px; opacity: 0.8;">
-                            Atenção! Esta estufa está recebendo luz acima do limite máximo.
+                        <p style="font-size: 15px; margin-top: 5px; opacity: 0.8; font-weight: bolder;">
+                            Atenção! <br>Esta estufa está recebendo luz <br>acima do limite máximo.
                         </p>
                     </div>
 
                     <div class="card">
-                        Média de Luz<b> acumulada mensalmente por estufa</b>
+                        <p style="font-size: 15px; font-weight: bolder;">Média de Luz<b> acumulada mensalmente por
+                                estufa</b></p>
                         <strong id="valorMedia"></strong>
-                        <p style="font-size: 10px; margin-top: 5px; opacity: 0.8;">
-                            O nível de luz está dentro do esperado para um crescimento saudável.
+                        <p style="font-size: 15px; margin-top: 5px; opacity: 0.8; font-weight: bolder;">
+                            O nível de luz está dentro do esperado para <br>um crescimento saudável.
                         </p>
                     </div>
                 </div>
@@ -84,7 +86,7 @@
             <div class="coluna-meio">
 
                 <div class="grafico-barras">
-                    <h3>Estado (STATUS) dos sensores nas estufas - mensal</h3>
+                    <h3> Variação do estado (STATUS) dos sensores nas estufas durante o mês</h3>
                     <div class="chart-wrap">
                         <canvas id="graficoBarra"></canvas>
                     </div>
@@ -94,51 +96,23 @@
 
             <div class="coluna-direita">
                 <div class="grafico-rosca">
-                    <h3>Quantidade de sensores em ALERTA por estufa - mensal<h3>
+                    <h3>Quantidade de estufas com sensores em alerta no mês<h3>
                             <div class="chart-wrap">
                                 <canvas id="graficoRosca"></canvas>
                             </div>
-                            <p>Quantidade total de sensores: <b id="totalSensores"></b></p>
-                            <p class="p-alerta">Quantidade de sensores em ALERTA: <b id="totalAlerta"></b></p>
+                            <p>Quantidade total de estufas com sensores : <b id="totalSensores"></b></p>
+                            <p class="p-alerta">Quantidade de estufas com sensores em ALERTA: <b id="totalAlerta"></b></p>
                 </div>
             </div>
 
         </div>
 
-        
+
     </div>
 </body>
 
 <script>
-
-    // gráfico barras
-    let ctxBarra = document.getElementById("graficoBarra").getContext("2d")
-    new Chart(ctxBarra, {
-        type: "bar",
-        data: {
-            labels: ["Baixa", "Ideal", "Alta", "Muito Alta"],
-            datasets: [{
-                label: "STATUS",
-                data: [3, 3, 2, 2],
-                backgroundColor: ["#3097a3", "#065f46", "#92400e", "#991b1b"],
-                barPercentage: 0.5
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { position: "bottom" }
-            },
-            scales: {
-                x: { grid: { display: false } },
-                y: { beginAtZero: true }
-            }
-        }
-    })
-
     function carregarDashboard() {
-        carregarTabela()
         carregarCards()
         carregarGraficoBarras()
         carregarGraficoLinha()
@@ -151,7 +125,6 @@
             .then(function (res) { return res.json() })
             .then(function (dados) {
                 todosRegistros = dados
-                filtrar()
             })
     }
 
@@ -246,7 +219,25 @@
                         ]
                     },
                     options: {
-                        scales: { y: { beginAtZero: true } }
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Meses',
+                                    font: { size: 12, weight: 'bold' }
+                                }
+                            },
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: 'Parâmetro de Luminosidade',
+                                    font: { size: 12, weight: 'bold' }
+                                }
+                            }
+                        }
                     }
                 })
             })

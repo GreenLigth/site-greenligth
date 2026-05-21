@@ -114,6 +114,7 @@ h1 {
     border-radius: 8px;
     padding: 10px 20px;
     font-size: 14px;
+    font-weight: bold;
     cursor: pointer;
     
 }
@@ -137,7 +138,7 @@ h1 {
     background-color: #ffffff;
     display: flex;
     flex-direction: column;
-    max-height: 490px;
+    min-height: 650px;
 }
 
 .grafico-barras h3 {
@@ -150,7 +151,6 @@ h1 {
 .grafico-barras .chart-wrap {
     flex: 1;
     position: relative;
-    min-height: 200px;
 }
 
 .coluna-esquerda{
@@ -218,7 +218,7 @@ h1 {
 
 .grafico-linha .chart-wrap {
     position: relative;
-    height: 220px;
+    height: 400px;
     width: 100%;
 }
 
@@ -253,12 +253,12 @@ h1 {
     padding: 18px 20px;
     flex: 1;
     height: fit-content;
-    max-height: 490px;
+    min-height: 650px;
 }
 
 .grafico-rosca .chart-wrap {
     position: relative;
-    height: 300px;
+    height: 420px;
 }
 
 .box-empresas {
