@@ -101,7 +101,8 @@
                                 <canvas id="graficoRosca"></canvas>
                             </div>
                             <p>Quantidade total de estufas com sensores : <b id="totalSensores"></b></p>
-                            <p class="p-alerta">Quantidade de estufas com sensores em ALERTA: <b id="totalAlerta"></b></p>
+                            <p class="p-alerta">Quantidade de estufas com sensores em ALERTA: <b id="totalAlerta"></b>
+                            </p>
                 </div>
             </div>
 
@@ -112,6 +113,8 @@
 </body>
 
 <script>
+    const fkEmpresa = sessionStorage.getItem("fkEmpresa")
+
     function carregarDashboard() {
         carregarCards()
         carregarGraficoBarras()
@@ -121,7 +124,7 @@
     }
 
     function carregarTabela() {
-        fetch(`/dashboard/registros`)
+        fetch(`/dashboard/registros/${fkEmpresa}`)
             .then(function (res) { return res.json() })
             .then(function (dados) {
                 todosRegistros = dados
@@ -129,14 +132,14 @@
     }
 
     function carregarCards() {
-        fetch(`/dashboard/maior-pico`)
+        fetch(`/dashboard/maior-pico/${fkEmpresa}`)
             .then(function (res) { return res.json() })
             .then(function (dados) {
                 document.getElementById(`nomeEstufaPico`).innerHTML = dados.nomeEstufa
                 document.getElementById(`valorPico`).innerHTML = dados.maiorLuz.toLocaleString(`pt-BR`)
             })
 
-        fetch(`/dashboard/media-mensal`)
+        fetch(`/dashboard/media-mensal/${fkEmpresa}`)
             .then(function (res) { return res.json() })
             .then(function (dados) {
                 document.getElementById(`valorMedia`).innerHTML = dados.mediaLuz.toLocaleString(`pt-BR`)
@@ -144,7 +147,7 @@
     }
 
     function carregarGraficoBarras() {
-        fetch(`/dashboard/contagem-status`)
+        fetch(`/dashboard/contagem-status/${fkEmpresa}`)
             .then(function (res) { return res.json() })
             .then(function (dados) {
                 let labels = [`Baixa`, `Ideal`, `Alta`, `Muito Alta`]
@@ -183,7 +186,7 @@
     }
 
     function carregarGraficoLinha() {
-        fetch(`/dashboard/media-por-mes`)
+        fetch(`/dashboard/media-por-mes/${fkEmpresa}`)
             .then(function (res) { return res.json() })
             .then(function (dados) {
                 let mesesNomes = [`Janeiro`, `Fevereiro`, `Março`, `Abril`, `Maio`, `Junho`, `Julho`, `Agosto`, `Setembro`, `Outubro`, `Novembro`, `Dezembro`]
@@ -206,13 +209,13 @@
                             },
                             {
                                 label: `Luminosidade Máxima`,
-                                data: [30000, 30000, 30000, 30000, 30000, 30000, 30000, 30000, 30000, 30000, 30000, 30000],
+                                data: [300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300],
                                 borderColor: `red`,
                                 pointRadius: 0
                             },
                             {
                                 label: `Luminosidade Mínima`,
-                                data: [8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000],
+                                data: [140, 140, 140, 140, 140, 140, 140, 140, 140, 140, 140, 140],
                                 borderColor: `#3097a3`,
                                 pointRadius: 0
                             }
@@ -244,7 +247,7 @@
     }
 
     function carregarGraficoRosca() {
-        fetch(`/dashboard/alerta-por-estufa`)
+        fetch(`/dashboard/alerta-por-estufa/${fkEmpresa}`)
             .then(function (res) { return res.json() })
             .then(function (dados) {
                 let labels = []
@@ -295,7 +298,7 @@
     }
 
     function carregarTotalSensores() {
-        fetch(`/dashboard/total-sensores`)
+        fetch(`/dashboard/total-sensores/${fkEmpresa}`)
             .then(function (res) { return res.json() })
             .then(function (dados) {
                 document.getElementById(`totalSensores`).innerHTML = dados.total

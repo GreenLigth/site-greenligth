@@ -1,82 +1,94 @@
 var dashboardModel = require("../models/dashboardModel");
 
 function listarRegistros(req, res) {
-    dashboardModel.listarRegistros()
-        .then(function(resultado) {
-            res.status(200).json(resultado);
-        })
-        .catch(function(erro) {
-            console.log("\nHouve um erro ao listar os registros! Erro: ", erro.sqlMessage);
-            res.status(500).json({ erro: erro });
+    var fkEmpresa = req.params.fkEmpresa;
+
+    dashboardModel.listarRegistros(fkEmpresa)
+        .then(resultado => res.status(200).json(resultado))
+        .catch(erro => {
+            console.log(erro);
+            res.status(500).json(erro.sqlMessage);
         });
 }
- 
+
 function maiorPico(req, res) {
-    dashboardModel.maiorPico()
-        .then(function(resultado) {
-            res.status(200).json(resultado.length > 0 ? resultado[0] : {});
+    var fkEmpresa = req.params.fkEmpresa;
+
+    dashboardModel.maiorPico(fkEmpresa)
+        .then(resultado => {
+            res.status(200).json(resultado[0]);
         })
-        .catch(function(erro) {
-            console.log("\nHouve um erro ao buscar o maior pico! Erro: ", erro.sqlMessage);
-            res.status(500).json({ erro: erro });
+        .catch(erro => {
+            console.log(erro);
+            res.status(500).json(erro.sqlMessage);
         });
 }
- 
+
 function mediaLuzMensal(req, res) {
-    dashboardModel.mediaLuzMensal()
-        .then(function(resultado) {
-            res.status(200).json(resultado.length > 0 ? resultado[0] : { mediaLuz: 0 });
+    var fkEmpresa = req.params.fkEmpresa;
+
+    dashboardModel.mediaLuzMensal(fkEmpresa)
+        .then(resultado => {
+            res.status(200).json(resultado[0]);
         })
-        .catch(function(erro) {
-            console.log("\nHouve um erro ao buscar a média mensal! Erro: ", erro.sqlMessage);
-            res.status(500).json({ erro: erro });
+        .catch(erro => {
+            console.log(erro);
+            res.status(500).json(erro.sqlMessage);
         });
 }
- 
+
 function contagemStatus(req, res) {
-    dashboardModel.contagemStatus()
-        .then(function(resultado) {
+    var fkEmpresa = req.params.fkEmpresa;
+
+    dashboardModel.contagemStatus(fkEmpresa)
+        .then(resultado => {
             res.status(200).json(resultado);
         })
-        .catch(function(erro) {
-            console.log("\nHouve um erro na contagem de status! Erro: ", erro.sqlMessage);
-            res.status(500).json({ erro: erro });
+        .catch(erro => {
+            console.log(erro);
+            res.status(500).json(erro.sqlMessage);
         });
 }
- 
+
 function mediaMensalPorMes(req, res) {
-    dashboardModel.mediaMensalPorMes()
-        .then(function(resultado) {
+    var fkEmpresa = req.params.fkEmpresa;
+
+    dashboardModel.mediaMensalPorMes(fkEmpresa)
+        .then(resultado => {
             res.status(200).json(resultado);
         })
-        .catch(function(erro) {
-            console.log("\nHouve um erro na média mensal por mês! Erro: ", erro.sqlMessage);
-            res.status(500).json({ erro: erro });
+        .catch(erro => {
+            console.log(erro);
+            res.status(500).json(erro.sqlMessage);
         });
 }
- 
+
 function sensoresEmAlertaPorEstufa(req, res) {
-    dashboardModel.sensoresEmAlertaPorEstufa()
-        .then(function(resultado) {
+    var fkEmpresa = req.params.fkEmpresa;
+
+    dashboardModel.sensoresEmAlertaPorEstufa(fkEmpresa)
+        .then(resultado => {
             res.status(200).json(resultado);
         })
-        .catch(function(erro) {
-            console.log("\nHouve um erro nos alertas por estufa! Erro: ", erro.sqlMessage);
-            res.status(500).json({ erro: erro });
+        .catch(erro => {
+            console.log(erro);
+            res.status(500).json(erro.sqlMessage);
         });
 }
- 
+
 function totalSensores(req, res) {
-    dashboardModel.totalSensores()
-        .then(function(resultado) {
-            res.status(200).json(resultado.length > 0 ? resultado[0] : { total: 0 });
+    var fkEmpresa = req.params.fkEmpresa;
+
+    dashboardModel.totalSensores(fkEmpresa)
+        .then(resultado => {
+            res.status(200).json(resultado[0]);
         })
-        .catch(function(erro) {
-            console.log("\nHouve um erro ao buscar o total de sensores! Erro: ", erro.sqlMessage);
-            res.status(500).json({ erro: erro });
+        .catch(erro => {
+            console.log(erro);
+            res.status(500).json(erro.sqlMessage);
         });
 }
- 
+
 module.exports = {
     listarRegistros,
     maiorPico,

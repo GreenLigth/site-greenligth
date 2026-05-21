@@ -1,9 +1,7 @@
 var database = require("../database/config")
 
+function listarRegistros(fkEmpresa) {
 
-
-function listarRegistros() {
-    console.log("ACESSEI O REGISTRO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function listarRegistros()");
     var instrucaoSql = `
         SELECT 
             r.idRegistro,
@@ -16,14 +14,15 @@ function listarRegistros() {
         FROM registroLuminosidade r
         JOIN sensor s ON r.fkSensor = s.idSensor
         JOIN estufa e ON s.fkEstufa = e.idEstufa
-        ORDER BY r.dataLeitura DESC
+        WHERE e.fkEmpresa = ${fkEmpresa}
+        ORDER BY r.dataLeitura DESC;
     `
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+
     return database.executar(instrucaoSql)
 }
 
-function maiorPico() {
-    console.log("ACESSEI O REGISTRO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function maiorPico()");
+function maiorPico(fkEmpresa) {
+
     var instrucaoSql = `
         SELECT 
             e.nomeEstufa,
@@ -31,66 +30,75 @@ function maiorPico() {
         FROM registroLuminosidade r
         JOIN sensor s ON r.fkSensor = s.idSensor
         JOIN estufa e ON s.fkEstufa = e.idEstufa
-        WHERE MONTH(r.dataLeitura) = MONTH(NOW())
-          AND YEAR(r.dataLeitura) = YEAR(NOW())
+        WHERE e.fkEmpresa = ${fkEmpresa}
+        AND MONTH(r.dataLeitura) = MONTH(NOW())
+        AND YEAR(r.dataLeitura) = YEAR(NOW())
         GROUP BY e.nomeEstufa
         ORDER BY maiorLuz DESC
-        LIMIT 1
+        LIMIT 1;
     `
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+
     return database.executar(instrucaoSql)
 }
 
-function mediaLuzMensal() {
-    console.log("ACESSEI O REGISTRO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function mediaLuzMensal()");
+function mediaLuzMensal(fkEmpresa) {
+
     var instrucaoSql = `
         SELECT 
             ROUND(AVG(r.luminosidade), 0) AS mediaLuz
         FROM registroLuminosidade r
-        WHERE MONTH(r.dataLeitura) = MONTH(NOW())
-          AND YEAR(r.dataLeitura) = YEAR(NOW())
+        JOIN sensor s ON r.fkSensor = s.idSensor
+        JOIN estufa e ON s.fkEstufa = e.idEstufa
+        WHERE e.fkEmpresa = ${fkEmpresa}
+        AND MONTH(r.dataLeitura) = MONTH(NOW())
+        AND YEAR(r.dataLeitura) = YEAR(NOW());
     `
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+
     return database.executar(instrucaoSql)
 }
 
-function contagemStatus() {
-    console.log("ACESSEI O REGISTRO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function contagemStatus()");
+function contagemStatus(fkEmpresa) {
     var instrucaoSql = `
         SELECT 
-        CASE
-            WHEN r.luminosidade > 30000 THEN 'muito-alta'
-            WHEN r.luminosidade BETWEEN 20000 AND 30000 THEN 'alta'
-            WHEN r.luminosidade BETWEEN 8000 AND 20000 THEN 'ideal'
-            ELSE 'baixa'
-        END AS status,
-        COUNT(*) AS quantidade
+            CASE
+                WHEN r.luminosidade > 200 AND r.luminosidade <= 300 THEN 'muito-alta'
+                WHEN r.luminosidade > 170 AND r.luminosidade <= 200 THEN 'alta'
+                WHEN r.luminosidade > 140 AND r.luminosidade <= 170 THEN 'ideal'
+                ELSE 'baixa'
+            END AS status,
+            COUNT(*) AS quantidade
         FROM registroLuminosidade r
-        WHERE MONTH(r.dataLeitura) = MONTH(NOW())
-          AND YEAR(r.dataLeitura) = YEAR(NOW())
-        GROUP BY status
+        JOIN sensor s ON r.fkSensor = s.idSensor
+        JOIN estufa e ON s.fkEstufa = e.idEstufa
+        WHERE e.fkEmpresa = ${fkEmpresa}
+        AND MONTH(r.dataLeitura) = MONTH(NOW())
+        AND YEAR(r.dataLeitura) = YEAR(NOW())
+        GROUP BY status;
     `
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+
     return database.executar(instrucaoSql)
 }
 
-function mediaMensalPorMes() {
-    console.log("ACESSEI O REGISTRO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function mediaMensalPorMes()");
+function mediaMensalPorMes(fkEmpresa) {
+
     var instrucaoSql = `
         SELECT 
             MONTH(r.dataLeitura) AS mes,
             ROUND(AVG(r.luminosidade), 0) AS mediaLuz
         FROM registroLuminosidade r
-        WHERE YEAR(r.dataLeitura) = YEAR(NOW())
+        JOIN sensor s ON r.fkSensor = s.idSensor
+        JOIN estufa e ON s.fkEstufa = e.idEstufa
+        WHERE e.fkEmpresa = ${fkEmpresa}
+        AND YEAR(r.dataLeitura) = YEAR(NOW())
         GROUP BY mes
-        ORDER BY mes
+        ORDER BY mes;
     `
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+
     return database.executar(instrucaoSql)
 }
 
-function sensoresEmAlertaPorEstufa() {
-    console.log("ACESSEI O REGISTRO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function sensoresEmAlertaPorEstufa()");
+function sensoresEmAlertaPorEstufa(fkEmpresa) {
+
     var instrucaoSql = `
         SELECT 
             e.nomeEstufa,
@@ -98,21 +106,23 @@ function sensoresEmAlertaPorEstufa() {
         FROM registroLuminosidade r
         JOIN sensor s ON r.fkSensor = s.idSensor
         JOIN estufa e ON s.fkEstufa = e.idEstufa
-        WHERE r.luminosidade > 30000
-          AND MONTH(r.dataLeitura) = MONTH(NOW())
-          AND YEAR(r.dataLeitura) = YEAR(NOW())
-        GROUP BY e.nomeEstufa
+        WHERE e.fkEmpresa = ${fkEmpresa}
+        AND r.luminosidade > 200
+        AND MONTH(r.dataLeitura) = MONTH(NOW())
+        AND YEAR(r.dataLeitura) = YEAR(NOW())
+        GROUP BY e.nomeEstufa;
     `
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+
     return database.executar(instrucaoSql)
 }
+function totalSensores(fkEmpresa) {
 
-function totalSensores() {
-    console.log("ACESSEI O REGISTRO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function totalSensores()");
     var instrucaoSql = `
-        SELECT COUNT(*) AS total FROM sensor
+        SELECT COUNT(*) AS total
+        FROM sensor s
+        JOIN estufa e ON s.fkEstufa = e.idEstufa
+        WHERE e.fkEmpresa = ${fkEmpresa};
     `
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql)
 }
 

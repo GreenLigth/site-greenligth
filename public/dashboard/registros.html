@@ -128,10 +128,15 @@
     }
 
     function calcularStatus(luminosidade) {
-        if (luminosidade >= 173) return "muito-alta";
-        if (luminosidade >= 168) return "alta";
-        if (luminosidade >= 164) return "ideal";
-        return "baixa";
+        if(luminosidade > 200 && luminosidade <= 300){
+            return "muito-alta"
+        }else if(luminosidade > 170 && luminosidade <= 200){
+            return "alta"
+        }else if(luminosidade > 140 && luminosidade <= 170){
+            return "ideal"
+        }else {
+            return "baixa"
+        }
     }
 
     function filtrar() {

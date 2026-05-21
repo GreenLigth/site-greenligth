@@ -20,7 +20,7 @@ function cadastrarUsuario(nome, email, nivelAcesso, nomeEstufa,senha, fkEmpresa,
             var fkEstufa = resultadoEstufa[0].idEstufa // id da estufa buscada no select
 
             var instrucaoUsuario = `
-            INSERT INTO usuario (nome,email,nivelAcesso,senha,fkEmpresa,fkEstufa,fkSuperior) VALUES
+            INSERT INTO usuario (nome, email, nivelAcesso, senha, fkEmpresa, fkEstufa, fkSuperior) VALUES
              ('${nome}', '${email}', ${nivelAcesso}, '${senha}', '${fkEmpresa}', '${fkEstufa}', ${fkSuperior});`;
 
             return database.executar(instrucaoUsuario);
@@ -29,7 +29,8 @@ function cadastrarUsuario(nome, email, nivelAcesso, nomeEstufa,senha, fkEmpresa,
 
 }
 
-function buscarUsuarios(idEmpresa) {
+function buscarUsuarios(idEmpresa, idUsuario) {
+
     var instrucaoSql = `
         SELECT 
             u.idUsuario,
@@ -39,7 +40,7 @@ function buscarUsuarios(idEmpresa) {
                 WHEN u.nivelAcesso = 1 THEN 'Gerente'
                 WHEN u.nivelAcesso = 2 THEN 'Operador'
                 WHEN u.nivelAcesso = 3 THEN 'Funcionário'
-                ELSE 'Adm Principal' -- Caso o primeiro cadastro venha nulo
+                ELSE 'Adm Principal' 
             END AS nivelAcesso,
             CASE 
                 WHEN u.statusPerfil = 1 THEN 'Ativo'
@@ -47,11 +48,15 @@ function buscarUsuarios(idEmpresa) {
             END AS statusPerfil,
             IFNULL(e.nomeEstufa, 'Sem Estufa') AS nomeEstufa
         FROM usuario u
-        LEFT JOIN estufa e ON u.fkEstufa = e.idEstufa -- Relacionamento direto do banco novo!
+        LEFT JOIN estufa e 
+            ON u.fkEstufa = e.idEstufa 
         WHERE u.fkEmpresa = ${idEmpresa}
+        AND u.idUsuario = ${idUsuario}
         ORDER BY u.nome ASC;
     `;
-    console.log("Executando a instrução SQL de Busca: \n" + instrucaoSql);
+
+    console.log(instrucaoSql);
+
     return database.executar(instrucaoSql);
 }
 

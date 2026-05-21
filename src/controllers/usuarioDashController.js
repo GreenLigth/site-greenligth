@@ -1,8 +1,5 @@
 var usuarioModel = require("../models/usuarioDashModel");
 
-
-
-
 function cadastrarUsuario(req, res) {
     // Crie uma variável que vá recuperar os valores do arquivo cadastroUsuario.html
     var nome = req.body.nome;
