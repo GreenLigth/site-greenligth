@@ -1,21 +1,25 @@
 var registrosModel = require("../models/registrosModel");
 
 function buscarRegistros(req, res) {
-    var idEmpresa = req.params.idEmpresa;
 
-    if (idEmpresa == undefined) {
-        res.status(400).send("O idEmpresa está indefinido no Controller!");
+    var fkEmpresa = req.params.fkEmpresa;
+
+    if (fkEmpresa == undefined) {
+        res.status(400).send("A fkEmpresa está indefinida!");
     } else {
-        registrosModel.buscarRegistros(idEmpresa)
-            .then(function (resultado) {
+
+        registrosModel.buscarRegistros(fkEmpresa)
+            .then(function(resultado) {
                 if (resultado.length > 0) {
                     res.status(200).json(resultado);
                 } else {
-                    res.status(204).send("Nenhum registro encontrado para esta empresa.");
+                    res.status(204).send("Nenhum registro encontrado");
                 }
-            }).catch(function (erro) {
+
+            }).catch(function(erro) {
                 console.log(erro);
-                console.log("\nHouve um erro ao buscar os registros! Erro: ", erro.sqlMessage);
+                console.log("Erro ao buscar registros:", erro.sqlMessage);
+
                 res.status(500).json(erro.sqlMessage);
             });
     }
@@ -23,4 +27,4 @@ function buscarRegistros(req, res) {
 
 module.exports = {
     buscarRegistros
-};
+}

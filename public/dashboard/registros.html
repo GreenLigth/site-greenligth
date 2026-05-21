@@ -104,10 +104,10 @@
 </html>
 <script>
     let listaRegistros = [];
-    const idEmpresaLogada = sessionStorage.ID_EMPRESA || 1;
+    const fkEmpresa = sessionStorage.getItem("fkEmpresa");
 
     function obterDadosBanco() {
-        fetch(`/registros/buscarRegistros/${idEmpresaLogada}`)
+        fetch(`/registros/buscarRegistros/${fkEmpresa}`)
             .then(function (resposta) {
                 if (resposta.status == 204) {
                     document.getElementById("tabelaCorpo").innerHTML = "<tr><td colspan='7' style='text-align:center;'>Nenhum registro encontrado no banco de dados.</td></tr>";
@@ -153,7 +153,7 @@
 
         for (let i = 0; i < listaRegistros.length; i++) {
             let registro = listaRegistros[i];
-            let statusCalculado = calcularStatus(registro.luminosidade);
+            let statusCalculado = registro.status;
 
             // Converte para brasill 
             let dataFormatada = new Date(registro.dataLeitura).toLocaleString('pt-BR');

@@ -3,8 +3,8 @@ var router = express.Router();
 
 var registrosController = require("../controllers/registrosController");
 
-router.get("/buscarRegistros/:idEmpresa", function (req, res) {
+router.get("/buscarRegistros/:fkEmpresa", function (req, res) {
     registrosController.buscarRegistros(req, res);
 });
 
-module.exports = router;
+module.exports = router;    
