@@ -55,7 +55,7 @@
             <div id="coluna-esquerda">
                 <div class="cards">
                     <div class="card atencao">
-                        <p style="font-size: 15px; font-weight: bolder;">Estufa com maior pico de luz mensal - <span
+                        <p style="font-size: 15px; font-weight: bolder;">Estufa com maior pico de luz durante o dia- <span
                                 id="nomeEstufaPico"></span> </p>
                         <strong id="valorPico"></strong>
                         <p style="font-size: 15px; margin-top: 5px; opacity: 0.8; font-weight: bolder;">
@@ -64,21 +64,20 @@
                     </div>
 
                     <div class="card">
-                        <p style="font-size: 15px; font-weight: bolder;">Média de Luz<b> acumulada mensalmente por
-                                estufa</b></p>
-                        <strong id="valorMedia"></strong>
-                        <p style="font-size: 15px; margin-top: 5px; opacity: 0.8; font-weight: bolder;">
-                            O nível de luz está dentro do esperado para <br>um crescimento saudável.
+                        <p style="font-size: 15px; font-weight: bolder;">Estufa com menor pico de luz durante o dia- <span id="estufaPico"></span></p>
+                        <strong id="menorPico"></strong>
+                        <p style="font-size: 15px; margin-top: 5px; opacity: 0.9; font-weight: bolder;">
+                            Atenção! <br>Esta estufa está recebendo luz <br>abaixo do limite esperado.
                         </p>
                     </div>
                 </div>
 
                 <div class="grafico-linha">
-                    <h3>Média mensal de luminosidade</h3>
+                    <h3>Picos de luminosidade durante o dia</h3>
                     <div class="chart-wrap">
                         <canvas id="graficoLinha"></canvas>
                     </div>
-                    <p>Luminosidade ideal para plantio (15.000) </p>
+                    <p>Luminosidade ideal para plantio (200) </p>
                 </div>
 
             </div>
@@ -86,7 +85,7 @@
             <div class="coluna-meio">
 
                 <div class="grafico-barras">
-                    <h3> Variação do estado (STATUS) dos sensores nas estufas durante o mês</h3>
+                    <h3> Variação do estado (STATUS) das estufas durante o dia</h3>
                     <div class="chart-wrap">
                         <canvas id="graficoBarra"></canvas>
                     </div>
@@ -96,12 +95,12 @@
 
             <div class="coluna-direita">
                 <div class="grafico-rosca">
-                    <h3>Quantidade de estufas com sensores em alerta no mês<h3>
+                    <h3>Quantidade de estufas em alerta no dia<h3>
                             <div class="chart-wrap">
                                 <canvas id="graficoRosca"></canvas>
                             </div>
                             <p>Quantidade total de estufas com sensores : <b id="totalSensores"></b></p>
-                            <p class="p-alerta">Quantidade de estufas com sensores em ALERTA: <b id="totalAlerta"></b>
+                            <p class="p-alerta">Quantidade de estufas com sensores em ALERTA: <b id="totalAlerta">0</b>
                             </p>
                 </div>
             </div>
@@ -123,14 +122,6 @@
         carregarTotalSensores()
     }
 
-    function carregarTabela() {
-        fetch(`/dashboard/registros/${fkEmpresa}`)
-            .then(function (res) { return res.json() })
-            .then(function (dados) {
-                todosRegistros = dados
-            })
-    }
-
     function carregarCards() {
         fetch(`/dashboard/maior-pico/${fkEmpresa}`)
             .then(function (res) { return res.json() })
@@ -139,10 +130,11 @@
                 document.getElementById(`valorPico`).innerHTML = dados.maiorLuz.toLocaleString(`pt-BR`)
             })
 
-        fetch(`/dashboard/media-mensal/${fkEmpresa}`)
+        fetch(`/dashboard/menor-pico/${fkEmpresa}`)
             .then(function (res) { return res.json() })
             .then(function (dados) {
-                document.getElementById(`valorMedia`).innerHTML = dados.mediaLuz.toLocaleString(`pt-BR`)
+                document.getElementById(`estufaPico`).innerHTML = dados.nomeEstufa
+                document.getElementById(`menorPico`).innerHTML = dados.menorPico
             })
     }
 
@@ -168,7 +160,7 @@
                         datasets: [{
                             label: `STATUS`,
                             data: valores,
-                            backgroundColor: [`#3097a3`, `#065f46`, `#92400e`, `#991b1b`],
+                            backgroundColor: [`#e1a100`, `#069239`, `#92400e`, `#991b1b`],
                             barPercentage: 0.5
                         }]
                     },
@@ -189,7 +181,7 @@
         fetch(`/dashboard/media-por-mes/${fkEmpresa}`)
             .then(function (res) { return res.json() })
             .then(function (dados) {
-                let mesesNomes = [`Janeiro`, `Fevereiro`, `Março`, `Abril`, `Maio`, `Junho`, `Julho`, `Agosto`, `Setembro`, `Outubro`, `Novembro`, `Dezembro`]
+                let horarios = [`0h`, `01h`, `02h`, `03h`, `04h`, `05h`, `06h`, `07h`, `08h`, `09h`, `10h`, `11h`, `12h`, `13h`,`14h`,`15h`,`16h`,`17h`]
                 let mediasPorMes = [null, null, null, null, null, null, null, null, null, null, null, null]
 
                 for (let i = 0; i < dados.length; i++) {
@@ -200,10 +192,10 @@
                 new Chart(ctxLinha, {
                     type: `line`,
                     data: {
-                        labels: mesesNomes,
+                        labels: horarios,
                         datasets: [
                             {
-                                label: `Luminosidade Média`,
+                                label: `Luminosidade capturada`,
                                 data: mediasPorMes,
                                 borderColor: `white`
                             },
@@ -216,7 +208,7 @@
                             {
                                 label: `Luminosidade Mínima`,
                                 data: [140, 140, 140, 140, 140, 140, 140, 140, 140, 140, 140, 140],
-                                borderColor: `#3097a3`,
+                                borderColor: `#e1a100`,
                                 pointRadius: 0
                             }
                         ]
@@ -228,7 +220,7 @@
                             x: {
                                 title: {
                                     display: true,
-                                    text: 'Meses',
+                                    text: 'Horarios',
                                     font: { size: 12, weight: 'bold' }
                                 }
                             },
@@ -236,7 +228,7 @@
                                 beginAtZero: true,
                                 title: {
                                     display: true,
-                                    text: 'Parâmetro de Luminosidade',
+                                    text: 'Quantidade de luz(em lux)',
                                     font: { size: 12, weight: 'bold' }
                                 }
                             }

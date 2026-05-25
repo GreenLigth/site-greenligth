@@ -31,7 +31,7 @@ function maiorPico(fkEmpresa) {
         JOIN sensor s ON r.fkSensor = s.idSensor
         JOIN estufa e ON s.fkEstufa = e.idEstufa
         WHERE e.fkEmpresa = ${fkEmpresa}
-        AND MONTH(r.dataLeitura) = MONTH(NOW())
+        AND DAY(r.dataLeitura) = DAY(NOW())
         AND YEAR(r.dataLeitura) = YEAR(NOW())
         GROUP BY e.nomeEstufa
         ORDER BY maiorLuz DESC
@@ -41,17 +41,21 @@ function maiorPico(fkEmpresa) {
     return database.executar(instrucaoSql)
 }
 
-function mediaLuzMensal(fkEmpresa) {
+function menorPico(fkEmpresa) {
 
     var instrucaoSql = `
         SELECT 
-            ROUND(AVG(r.luminosidade), 0) AS mediaLuz
+            e.nomeEstufa,
+            MIN(r.luminosidade) AS menorLuz
         FROM registroLuminosidade r
         JOIN sensor s ON r.fkSensor = s.idSensor
         JOIN estufa e ON s.fkEstufa = e.idEstufa
         WHERE e.fkEmpresa = ${fkEmpresa}
-        AND MONTH(r.dataLeitura) = MONTH(NOW())
-        AND YEAR(r.dataLeitura) = YEAR(NOW());
+        AND DAY(r.dataLeitura) = DAY(NOW())
+        AND YEAR(r.dataLeitura) = YEAR(NOW())
+        GROUP BY e.nomeEstufa
+        ORDER BY menorLuz DESC
+        LIMIT 1;
     `
 
     return database.executar(instrucaoSql)
@@ -71,7 +75,7 @@ function contagemStatus(fkEmpresa) {
         JOIN sensor s ON r.fkSensor = s.idSensor
         JOIN estufa e ON s.fkEstufa = e.idEstufa
         WHERE e.fkEmpresa = ${fkEmpresa}
-        AND MONTH(r.dataLeitura) = MONTH(NOW())
+        AND DAY(r.dataLeitura) = DAY(NOW())
         AND YEAR(r.dataLeitura) = YEAR(NOW())
         GROUP BY status;
     `
@@ -83,15 +87,14 @@ function mediaMensalPorMes(fkEmpresa) {
 
     var instrucaoSql = `
         SELECT 
-            MONTH(r.dataLeitura) AS mes,
-            ROUND(AVG(r.luminosidade), 0) AS mediaLuz
+            MINUTE(r.dataLeitura) AS minuto
         FROM registroLuminosidade r
         JOIN sensor s ON r.fkSensor = s.idSensor
         JOIN estufa e ON s.fkEstufa = e.idEstufa
         WHERE e.fkEmpresa = ${fkEmpresa}
         AND YEAR(r.dataLeitura) = YEAR(NOW())
-        GROUP BY mes
-        ORDER BY mes;
+        GROUP BY minuto
+        ORDER BY minuto;
     `
 
     return database.executar(instrucaoSql)
@@ -102,13 +105,13 @@ function sensoresEmAlertaPorEstufa(fkEmpresa) {
     var instrucaoSql = `
         SELECT 
             e.nomeEstufa,
-            COUNT(DISTINCT s.idSensor) AS qtdAlerta
+        COUNT(DISTINCT s.idSensor) AS qtdAlerta
         FROM registroLuminosidade r
         JOIN sensor s ON r.fkSensor = s.idSensor
         JOIN estufa e ON s.fkEstufa = e.idEstufa
         WHERE e.fkEmpresa = ${fkEmpresa}
         AND r.luminosidade > 200
-        AND MONTH(r.dataLeitura) = MONTH(NOW())
+        AND DAY(r.dataLeitura) = DAY(NOW())
         AND YEAR(r.dataLeitura) = YEAR(NOW())
         GROUP BY e.nomeEstufa;
     `
@@ -129,7 +132,7 @@ function totalSensores(fkEmpresa) {
 module.exports = {
     listarRegistros,
     maiorPico,
-    mediaLuzMensal,
+    menorPico,
     contagemStatus,
     mediaMensalPorMes,
     sensoresEmAlertaPorEstufa,

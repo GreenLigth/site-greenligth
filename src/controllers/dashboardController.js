@@ -24,10 +24,10 @@ function maiorPico(req, res) {
         });
 }
 
-function mediaLuzMensal(req, res) {
+function menorPico(req, res) {
     var fkEmpresa = req.params.fkEmpresa;
 
-    dashboardModel.mediaLuzMensal(fkEmpresa)
+    dashboardModel.menorPico(fkEmpresa)
         .then(resultado => {
             res.status(200).json(resultado[0]);
         })
@@ -92,7 +92,7 @@ function totalSensores(req, res) {
 module.exports = {
     listarRegistros,
     maiorPico,
-    mediaLuzMensal,
+    menorPico,
     contagemStatus,
     mediaMensalPorMes,
     sensoresEmAlertaPorEstufa,

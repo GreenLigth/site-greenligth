@@ -10,8 +10,8 @@ router.get("/maior-pico/:fkEmpresa", function(req, res) {
     dashboardController.maiorPico(req, res)
 })
 
-router.get("/media-mensal/:fkEmpresa", function(req, res) {
-    dashboardController.mediaLuzMensal(req, res)
+router.get("/menor-pico/:fkEmpresa", function(req, res) {
+    dashboardController.menorPico(req, res)
 })
 
 router.get("/contagem-status/:fkEmpresa", function(req, res) {
