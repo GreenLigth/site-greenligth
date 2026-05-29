@@ -77,7 +77,8 @@ function contagemStatus(fkEmpresa) {
         WHERE e.fkEmpresa = ${fkEmpresa}
         AND DAY(r.dataLeitura) = DAY(NOW())
         AND YEAR(r.dataLeitura) = YEAR(NOW())
-        GROUP BY status;
+        GROUP BY status
+        LIMIT 10;
     `
 
     return database.executar(instrucaoSql)
@@ -95,6 +96,7 @@ function mediaMensalPorMes(fkEmpresa) {
         AND YEAR(r.dataLeitura) = YEAR(NOW())
         GROUP BY minuto
         ORDER BY minuto;
+        LIMIT 10
     `
 
     return database.executar(instrucaoSql)
