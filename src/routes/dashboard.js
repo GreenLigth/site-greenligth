@@ -1,6 +1,8 @@
 var express = require("express");
 var router = express.Router();
-var dashboardController = require("../controllers/dashboardController")
+var dashboardController = require("../controllers/dashboardController");
+var suporteController = require("../controllers/suporteController");
+
 
 router.get("/registros/:fkEmpresa", function(req, res) {
     dashboardController.listarRegistros(req, res)
@@ -29,5 +31,9 @@ router.get("/alerta-por-estufa/:fkEmpresa", function(req, res) {
 router.get("/total-sensores/:fkEmpresa", function(req, res) {
     dashboardController.totalSensores(req, res)
 })
+
+router.post("/perguntar", function(req, res) {
+    suporteController.perguntar(req, res);
+});
 
 module.exports = router;
