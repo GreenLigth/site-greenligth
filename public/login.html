@@ -67,12 +67,24 @@
 
 <script>
     function login() {
+
         let email = ipt_email.value;
+        
         let senha = ipt_senha.value;
 
+        let emailSuporte = "atendimento@greenlight.com.br";
+
+        let senhaSuporte = "Greenlight04!";
+
         if (email == "" || senha == "") {
+
             alert("Insira dados válidos nos campos!")
-        } else {
+
+        } else if (email == emailSuporte && senha == senhaSuporte){
+
+            window.location.href = "../public/suporte.html";
+
+        }else {
 
             let dados = {
                 email: email,
@@ -86,6 +98,7 @@
                 },
                 body: JSON.stringify(dados)
             })
+            
                 .then(res => res.json())
                 .then(data => {
                     // Guarda os dados no sessionStorage
@@ -108,12 +121,18 @@
     }
 
     function visualizar() {
+
         if (ipt_senha.type == 'password') {
-            ipt_senha.type = 'text'
+
+            ipt_senha.type = 'text';
+
         } else {
-            ipt_senha.type = 'password'
+
+            ipt_senha.type = 'password';
+
         }
     }
+
 </script>
 
 </html>
