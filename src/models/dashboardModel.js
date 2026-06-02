@@ -1,25 +1,5 @@
 var database = require("../database/config")
 
-function listarRegistros(fkEmpresa) {
-
-    var instrucaoSql = `
-        SELECT 
-            r.idRegistro,
-            r.luminosidade,
-            r.dataLeitura,
-            s.codigoSensor,
-            s.corredor,
-            s.bloco,
-            e.nomeEstufa
-        FROM registroLuminosidade r
-        JOIN sensor s ON r.fkSensor = s.idSensor
-        JOIN estufa e ON s.fkEstufa = e.idEstufa
-        WHERE e.fkEmpresa = ${fkEmpresa}
-        ORDER BY r.dataLeitura DESC;
-    `
-
-    return database.executar(instrucaoSql)
-}
 
 function maiorPico(fkEmpresa) {
 
@@ -32,6 +12,7 @@ function maiorPico(fkEmpresa) {
         JOIN estufa e ON s.fkEstufa = e.idEstufa
         WHERE e.fkEmpresa = ${fkEmpresa}
         AND DAY(r.dataLeitura) = DAY(NOW())
+        AND MONTH(r.dataLeitura) = MONTH(NOW())
         AND YEAR(r.dataLeitura) = YEAR(NOW())
         GROUP BY e.nomeEstufa
         ORDER BY maiorLuz DESC
@@ -44,7 +25,7 @@ function maiorPico(fkEmpresa) {
 function menorPico(fkEmpresa) {
 
     var instrucaoSql = `
-        SELECT 
+       SELECT 
             e.nomeEstufa,
             MIN(r.luminosidade) AS menorLuz
         FROM registroLuminosidade r
@@ -52,9 +33,10 @@ function menorPico(fkEmpresa) {
         JOIN estufa e ON s.fkEstufa = e.idEstufa
         WHERE e.fkEmpresa = ${fkEmpresa}
         AND DAY(r.dataLeitura) = DAY(NOW())
+        AND MONTH(r.dataLeitura) = MONTH(NOW())
         AND YEAR(r.dataLeitura) = YEAR(NOW())
         GROUP BY e.nomeEstufa
-        ORDER BY menorLuz DESC
+        ORDER BY menorLuz ASC
         LIMIT 1;
     `
 
@@ -76,6 +58,7 @@ function contagemStatus(fkEmpresa) {
         JOIN estufa e ON s.fkEstufa = e.idEstufa
         WHERE e.fkEmpresa = ${fkEmpresa}
         AND DAY(r.dataLeitura) = DAY(NOW())
+        AND MONTH(r.dataLeitura) = MONTH(NOW())
         AND YEAR(r.dataLeitura) = YEAR(NOW())
         GROUP BY status
         LIMIT 10;
@@ -84,19 +67,21 @@ function contagemStatus(fkEmpresa) {
     return database.executar(instrucaoSql)
 }
 
-function mediaMensalPorMes(fkEmpresa) {
+function registroLeituraHoras(fkEmpresa) {
 
     var instrucaoSql = `
-        SELECT 
-            MINUTE(r.dataLeitura) AS minuto
+      SELECT 
+            HOUR(r.dataLeitura) AS hora,
+            r.luminosidade AS luminosidade
         FROM registroLuminosidade r
         JOIN sensor s ON r.fkSensor = s.idSensor
         JOIN estufa e ON s.fkEstufa = e.idEstufa
         WHERE e.fkEmpresa = ${fkEmpresa}
+        AND DAY(r.dataLeitura) = DAY(NOW())
+        AND MONTH(r.dataLeitura) = MONTH(NOW())
         AND YEAR(r.dataLeitura) = YEAR(NOW())
-        GROUP BY minuto
-        ORDER BY minuto;
-        LIMIT 10
+        ORDER BY r.dataLeitura
+        LIMIT 24;
     `
 
     return database.executar(instrucaoSql)
@@ -107,13 +92,14 @@ function sensoresEmAlertaPorEstufa(fkEmpresa) {
     var instrucaoSql = `
         SELECT 
             e.nomeEstufa,
-        COUNT(DISTINCT s.idSensor) AS qtdAlerta
+            COUNT(DISTINCT s.idSensor) AS qtdAlerta
         FROM registroLuminosidade r
         JOIN sensor s ON r.fkSensor = s.idSensor
         JOIN estufa e ON s.fkEstufa = e.idEstufa
         WHERE e.fkEmpresa = ${fkEmpresa}
         AND r.luminosidade > 200
         AND DAY(r.dataLeitura) = DAY(NOW())
+        AND MONTH(r.dataLeitura) = MONTH(NOW())
         AND YEAR(r.dataLeitura) = YEAR(NOW())
         GROUP BY e.nomeEstufa;
     `
@@ -132,11 +118,10 @@ function totalSensores(fkEmpresa) {
 }
 
 module.exports = {
-    listarRegistros,
     maiorPico,
     menorPico,
     contagemStatus,
-    mediaMensalPorMes,
+    registroLeituraHoras,
     sensoresEmAlertaPorEstufa,
     totalSensores
 }
