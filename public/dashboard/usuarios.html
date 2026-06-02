@@ -97,6 +97,7 @@
                             <th>Nível de acesso</th>
                             <th>Status</th>
                             <th>Estufa vinculada</th>
+                            <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody id="tabelaBody"></tbody>
@@ -111,36 +112,36 @@
 <script>
     let listaUsuarios = [];
 
-const idEmpresaLogada = sessionStorage.getItem("fkEmpresa") || 1; 
+    const idEmpresaLogada = sessionStorage.getItem("fkEmpresa") || 1;
 
-function obterDadosBanco() {
-   
-    fetch(`/usuariosAdm/buscarUsuarios/${idEmpresaLogada}`)
-        .then(function (resposta) {
-            if (resposta.status == 204) {
-                document.getElementById("tabelaBody").innerHTML = "<tr><td colspan='4' style='text-align:center;'>Nenhum usuário cadastrado.</td></tr>";
-                return;
-            }
-            if (resposta.ok) {
-                resposta.json().then(function (dadosDoBanco) {
-                    listaUsuarios = dadosDoBanco;
-                    filtrar(); 
-                });
-            } else {
-                console.error("Erro na resposta da API.");
-            }
-        })
-        .catch(function (erro) {
-            console.log("Erro ao efetuar o Fetch dos usuários: ", erro);
-        });
-    }   
+    function obterDadosBanco() {
+
+        fetch(`/usuariosAdm/buscarUsuarios/${idEmpresaLogada}`)
+            .then(function (resposta) {
+                if (resposta.status == 204) {
+                    document.getElementById("tabelaBody").innerHTML = "<tr><td colspan='4' style='text-align:center;'>Nenhum usuário cadastrado.</td></tr>";
+                    return;
+                }
+                if (resposta.ok) {
+                    resposta.json().then(function (dadosDoBanco) {
+                        listaUsuarios = dadosDoBanco;
+                        filtrar();
+                    });
+                } else {
+                    console.error("Erro na resposta da API.");
+                }
+            })
+            .catch(function (erro) {
+                console.log("Erro ao efetuar o Fetch dos usuários: ", erro);
+            });
+    }
 
     function filtrar() {
         let busca = campoBusca.value.toLowerCase();
         let filtroPerfil = document.getElementById("filtroPerfil").value;
         let filtroSt = filtroStatus.value;
         let filtroEst = filtroEstufa.value;
-        
+
         let html = "";
         let total = 0;
         let ativos = 0;
@@ -157,7 +158,7 @@ function obterDadosBanco() {
             let passouEstufa = filtroEst == "" || usuario.nomeEstufa == filtroEst;
 
             if (passouBusca && passouPerfil && passouStatus && passouEstufa) {
-                
+
                 // Define a cor conforme o status vindo do banco ('Ativo' ou 'Inativo')
                 let classeStatus = (usuario.statusPerfil == "Ativo") ? "ideal" : "muito-alta";
 
@@ -167,6 +168,11 @@ function obterDadosBanco() {
                     <td>${usuario.nivelAcesso}</td>
                     <td><span class="status ${classeStatus}">${usuario.statusPerfil}</span></td>
                     <td>${usuario.nomeEstufa}</td>
+                    <td>
+                <button class="btn-status" onclick="alterarStatus(${usuario.idUsuario}, '${usuario.statusPerfil}')">
+                    ${usuario.statusPerfil == "Ativo" ? "Desativar" : "Ativar"}
+                </button>
+                    </td>
                 </tr>`;
 
                 // Contador dos KPIs baseado 
@@ -182,6 +188,38 @@ function obterDadosBanco() {
         cardTotal.innerHTML = total;
         cardAtivos.innerHTML = ativos;
         cardInativos.innerHTML = inativos;
+    }
+
+    function alterarStatus(idUsuario, statusAtual) {
+
+    let novoStatus;
+
+    if(statusAtual == "Ativo"){
+        novoStatus = 0;
+    } else {
+        novoStatus = 1;
+    }
+
+    fetch(`/usuariosAdm/alterarStatus/${idUsuario}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            statusPerfil: novoStatus
+        })
+    })
+    .then(resposta => {
+        if(resposta.ok){
+            obterDadosBanco();
+        } else {
+            console.log("Erro ao alterar status");
+        }
+    })
+    .catch(erro => {
+        console.log(erro);
+    });
+
     }
 
     // Quando a página carregar puxa do banco automaticamente

@@ -85,9 +85,25 @@ function listar(req, res) {
 
 }
 
+function alterarStatus(req, res) {
+
+    var idUsuario = req.params.idUsuario;
+    var statusPerfil = req.body.statusPerfil;
+
+    usuarioModel.alterarStatus(idUsuario, statusPerfil)
+        .then(function(resultado){
+            res.status(200).json(resultado);
+        })
+        .catch(function(erro){
+            console.log(erro);
+            res.status(500).json(erro.sqlMessage);
+        });
+}
+
 module.exports = {
     cadastrarUsuario,
     buscarUsuarios,
-    listar
+    listar,
+    alterarStatus
 };
 

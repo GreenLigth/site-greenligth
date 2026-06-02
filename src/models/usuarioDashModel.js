@@ -20,8 +20,9 @@ function cadastrarUsuario(nome, nivelAcesso, nomeEstufa,fkEmpresa, fkSuperior,) 
             var fkEstufa = resultadoEstufa[0].idEstufa // id da estufa buscada no select
 
             var instrucaoUsuario = `
-            INSERT INTO usuario (nome, nivelAcesso, fkEmpresa, fkEstufa, fkSuperior) VALUES
-             ('${nome}', ${nivelAcesso}, '${fkEmpresa}', '${fkEstufa}', ${fkSuperior});`;
+            INSERT INTO usuario (nome, nivelAcesso, fkEmpresa, fkEstufa, fkSuperior, statusPerfil) VALUES
+            ('${nome}', ${nivelAcesso}, '${fkEmpresa}', '${fkEstufa}', ${fkSuperior}, 1);
+        `;
 
             return database.executar(instrucaoUsuario);
 
@@ -75,11 +76,25 @@ function listar(fkEmpresa) {
     return database.executar(instrucaoSql);
 }
 
+function alterarStatus(idUsuario, statusPerfil) {
+
+    var instrucaoSql = `
+        UPDATE usuario
+        SET statusPerfil = ${statusPerfil}
+        WHERE idUsuario = ${idUsuario};
+    `;
+
+    console.log(instrucaoSql);
+
+    return database.executar(instrucaoSql);
+}
+
 
 module.exports = {
     cadastrarUsuario,
     buscarUsuarios,
-    listar 
+    listar,
+    alterarStatus
 };
 
 

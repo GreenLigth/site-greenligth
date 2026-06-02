@@ -14,4 +14,8 @@ router.get("/listar/:fkEmpresa", function (req, res) {
     estufaController.listar(req, res);
 });
 
+router.put("/alterarStatus/:idUsuario", function(req, res){
+    usuarioController.alterarStatus(req, res);
+});
+
 module.exports = router;

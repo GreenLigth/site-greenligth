@@ -68,7 +68,7 @@
                     <option value="3">Operador (Nenhum)</option>
                 </select>
             </div>
-            <button type="submit" class="btn-salvar" onclick="cadastrarUsuario()">Salvar alterações</button>
+            <button type="submit" class="btn-salvar" id="div_botao" onclick="cadastrarUsuario()">Salvar alterações</button>
         </div>
     </div>
     </div>
@@ -81,7 +81,7 @@
 
             let nome = ipt_nome.value;
 
-            let nomeEstufa = ipt_estufa.value;
+            let nomeEstufa = select_estufa.value;
 
             let cargo = select_cargo.value;
 
@@ -102,13 +102,13 @@
                 cargo = Number(cargo)
                 mensagem = "Cadastro realizado com sucesso!"
 
-             let dados = {
-                nome: nome,
-                cargo: cargo,
-                fkEmpresa: fkEmpresa,
-                fkSuperior: fkSuperior,
-                fkEstufa: fkEstufa
-            }
+                let dados = {
+                    nome: nome,
+                    cargo: cargo,
+                    nomeEstufa: nomeEstufa,
+                    fkEmpresa: fkEmpresa,
+                    fkSuperior: fkSuperior
+                }
 
                 fetch('http://localhost:3333/usuarios/cadastrarUsuario', {
                     method: 'POST',
@@ -147,12 +147,13 @@
                 .then(res => res.json())
                 .then(estufas => {
 
+                    console.log(estufas);
                     let select = document.getElementById("select_estufa");
 
                     for (let i = 0; i < estufas.length; i++) {
 
                         select.innerHTML += `
-                    <option value="${estufas[i].idEstufa}">
+                    <option value="${estufas[i].nomeEstufa}">
                         ${estufas[i].nomeEstufa}
                     </option>
                 `;
@@ -161,7 +162,13 @@
 
                 })
                 .catch(err => console.log(err));
+
+            console.log("fkEmpresa:", sessionStorage.getItem("fkEmpresa"));
+            console.log("idUsuario:", sessionStorage.getItem("idUsuario"));
+            
         }
+
+
 
     </script>
 
