@@ -52,7 +52,7 @@ function buscarUsuarios(idEmpresa, idUsuario) {
             ON u.fkEstufa = e.idEstufa 
         WHERE u.fkEmpresa = ${idEmpresa}
         AND u.idUsuario = ${idUsuario}
-        ORDER BY u.nome ASC;
+        ORDER BY u.nome ASC
     `;
 
     console.log(instrucaoSql);
