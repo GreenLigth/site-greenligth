@@ -1,15 +1,5 @@
 var dashboardModel = require("../models/dashboardModel");
 
-function listarRegistros(req, res) {
-    var fkEmpresa = req.params.fkEmpresa;
-
-    dashboardModel.listarRegistros(fkEmpresa)
-        .then(resultado => res.status(200).json(resultado))
-        .catch(erro => {
-            console.log(erro);
-            res.status(500).json(erro.sqlMessage);
-        });
-}
 
 function maiorPico(req, res) {
     var fkEmpresa = req.params.fkEmpresa;
@@ -50,10 +40,10 @@ function contagemStatus(req, res) {
         });
 }
 
-function mediaMensalPorMes(req, res) {
+function registroLeituraHoras(req, res) {
     var fkEmpresa = req.params.fkEmpresa;
 
-    dashboardModel.mediaMensalPorMes(fkEmpresa)
+    dashboardModel.registroLeituraHoras(fkEmpresa)
         .then(resultado => {
             res.status(200).json(resultado);
         })
@@ -90,11 +80,10 @@ function totalSensores(req, res) {
 }
 
 module.exports = {
-    listarRegistros,
     maiorPico,
     menorPico,
     contagemStatus,
-    mediaMensalPorMes,
+    registroLeituraHoras,
     sensoresEmAlertaPorEstufa,
     totalSensores
 }

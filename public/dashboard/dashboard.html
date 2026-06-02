@@ -55,8 +55,8 @@
             <div id="coluna-esquerda">
                 <div class="cards">
                     <div class="card atencao">
-                        <p style="font-size: 15px; font-weight: bolder;">Estufa com maior pico de luz durante o dia- <span
-                                id="nomeEstufaPico"></span> </p>
+                        <p style="font-size: 15px; font-weight: bolder;">Estufa com maior pico de luz durante o dia-
+                            <span id="nomeEstufaPico"></span> </p>
                         <strong id="valorPico"></strong>
                         <p style="font-size: 15px; margin-top: 5px; opacity: 0.8; font-weight: bolder;">
                             Atenção! <br>Esta estufa está recebendo luz <br>acima do limite máximo.
@@ -64,7 +64,8 @@
                     </div>
 
                     <div class="card">
-                        <p style="font-size: 15px; font-weight: bolder;">Estufa com menor pico de luz durante o dia- <span id="estufaPico"></span></p>
+                        <p style="font-size: 15px; font-weight: bolder;">Estufa com menor pico de luz durante o dia-
+                            <span id="estufaPico"></span></p>
                         <strong id="menorPico"></strong>
                         <p style="font-size: 15px; margin-top: 5px; opacity: 0.9; font-weight: bolder;">
                             Atenção! <br>Esta estufa está recebendo luz <br>abaixo do limite esperado.
@@ -73,7 +74,7 @@
                 </div>
 
                 <div class="grafico-linha">
-                    <h3>Picos de luminosidade durante o dia</h3>
+                    <h3>Luminosidade capturada por hora durante o dia</h3>
                     <div class="chart-wrap">
                         <canvas id="graficoLinha"></canvas>
                     </div>
@@ -112,7 +113,7 @@
 </body>
 
 <script>
-    const fkEmpresa = sessionStorage.getItem("fkEmpresa")
+    let fkEmpresa = sessionStorage.getItem("fkEmpresa")
 
     function carregarDashboard() {
         carregarCards()
@@ -126,15 +127,25 @@
         fetch(`/dashboard/maior-pico/${fkEmpresa}`)
             .then(function (res) { return res.json() })
             .then(function (dados) {
+                if (dados && dados.nomeEstufa) {
                 document.getElementById(`nomeEstufaPico`).innerHTML = dados.nomeEstufa
                 document.getElementById(`valorPico`).innerHTML = dados.maiorLuz.toLocaleString(`pt-BR`)
+            } else {
+                document.getElementById(`nomeEstufaPico`).innerHTML = `Sem dados hoje`
+                document.getElementById(`valorPico`).innerHTML = `-`
+            }
             })
 
         fetch(`/dashboard/menor-pico/${fkEmpresa}`)
             .then(function (res) { return res.json() })
             .then(function (dados) {
+             if (dados && dados.nomeEstufa) {
                 document.getElementById(`estufaPico`).innerHTML = dados.nomeEstufa
-                document.getElementById(`menorPico`).innerHTML = dados.menorPico
+                document.getElementById(`menorPico`).innerHTML = dados.menorLuz.toLocaleString(`pt-BR`)
+            } else {
+                document.getElementById(`estufaPico`).innerHTML = `Sem dados hoje`
+                document.getElementById(`menorPico`).innerHTML = `-`
+            }
             })
     }
 
@@ -178,14 +189,17 @@
     }
 
     function carregarGraficoLinha() {
-        fetch(`/dashboard/media-por-mes/${fkEmpresa}`)
+        fetch(`/dashboard/registroHoras/${fkEmpresa}`)
             .then(function (res) { return res.json() })
             .then(function (dados) {
-                let horarios = [`0h`, `01h`, `02h`, `03h`, `04h`, `05h`, `06h`, `07h`, `08h`, `09h`, `10h`, `11h`, `12h`, `13h`,`14h`,`15h`,`16h`,`17h`]
-                let mediasPorMes = [null, null, null, null, null, null, null, null, null, null, null, null]
+                let horarios = [`00h`, `01h`, `02h`, `03h`, `04h`, `05h`, `06h`, `07h`, `08h`, `09h`, `10h`, `11h`, `12h`, `13h`, `14h`, `15h`, `16h`, `17h`, `18h`, `19h`, `20h`, `21h`, `22h`, `23h`]
 
-                for (let i = 0; i < dados.length; i++) {
-                    mediasPorMes[dados[i].mes - 1] = dados[i].mediaLuz
+                let leiturasPorHora = []
+                for (let i = 0; i < 24; i++) {
+                    leiturasPorHora[i] = null
+                }
+                for (let j = 0; j < dados.length; j++) {
+                    leiturasPorHora[dados[j].hora] = dados[j].luminosidade
                 }
 
                 let ctxLinha = document.getElementById(`graficoLinha`).getContext(`2d`)
@@ -196,12 +210,13 @@
                         datasets: [
                             {
                                 label: `Luminosidade capturada`,
-                                data: mediasPorMes,
-                                borderColor: `white`
+                                data: leiturasPorHora,
+                                borderColor: `white`,
+                                spanGaps: false
                             },
                             {
                                 label: `Luminosidade Máxima`,
-                                data: [300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300],
+                                data: [300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300],
                                 borderColor: `red`,
                                 pointRadius: 0
                             },
@@ -220,7 +235,7 @@
                             x: {
                                 title: {
                                     display: true,
-                                    text: 'Horarios',
+                                    text: 'Horário do dia',
                                     font: { size: 12, weight: 'bold' }
                                 }
                             },
