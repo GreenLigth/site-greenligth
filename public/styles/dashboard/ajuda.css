@@ -90,7 +90,6 @@ h1 {
     margin-bottom: 20px;
 }
 
-/* ================= AJUDA ================= */
 .ajuda-container {
     display: flex;
     gap: 60px;
@@ -168,3 +167,10 @@ h1 {
     font-size: 15px;
 }
 
+.manual a{
+    text-decoration: none;
+    color: black;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+}

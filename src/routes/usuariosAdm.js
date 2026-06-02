@@ -10,5 +10,8 @@ router.post("/cadastrarUsuario", function (req, res) {
 router.get("/buscarUsuarios/:idEmpresa", function (req, res) {
     usuarioController.buscarUsuarios(req, res);
 });
+router.get("/listar/:fkEmpresa", function (req, res) {
+    estufaController.listar(req, res);
+});
 
 module.exports = router;
