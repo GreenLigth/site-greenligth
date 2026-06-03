@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div id="container">
+        <h1>BobIA</h1>
+        <textarea id="pergunta" type="text" placeholder="Digite a pergunta..."></textarea>
+        <br><br>
+        <button onclick="gerarResposta()">Gerar Resposta</button>
+        <h3>Resposta da IA:</h3>
+        <div id="resposta"></div>
+    </div>
+
+</body>
+
+<script>
+
+      document.querySelectorAll('.faq-item').forEach(item => {
+        let question = item.querySelector('.faq-question');
+
+        question.addEventListener('click', () => {
+            // Fecha a pargunta aberta quando abrir outra
+            document.querySelectorAll('.faq-item').forEach(otherItem => {
+                if (otherItem !== item) {
+                    otherItem.classList.remove('active');
+                }
+            });
+            item.classList.toggle('active');
+        });
+    });
+    async function gerarResposta() {
+
+        const perguntaInput = document.getElementById('pergunta');
+        const respostaDiv = document.getElementById('resposta');
+        const pergunta = perguntaInput.value;
+
+        if (!pergunta.trim()) {
+            alert("Por favor, digite uma pergunta.");
+            return;
+        }
+
+        try {
+            const response = await fetch('/bobIA/perguntar', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ pergunta })
+            });
+
+            if (!response.ok) {
+                throw new Error(`Erro no servidor: ${response.status}`);
+            }
+
+            const data = await response.json();
+
+            respostaDiv.style.display = 'block';
+            respostaDiv.innerText = data.resultado || "Sem resposta retornada.";
+
+        } catch (error) {
+            console.error("Erro na requisição:", error);
+            respostaDiv.style.display = 'block';
+            respostaDiv.innerText = "Ops! Ocorreu um erro ao tentar obter a resposta da IA. Verifique o console.";
+        }
+    }
+</script>
+</html>
