@@ -56,25 +56,27 @@
                 <div class="cards">
                     <div class="card atencao">
                         <p style="font-size: 15px; font-weight: bolder;">Estufa com maior pico de luz durante o dia-
-                            <span id="nomeEstufaPico"></span> </p>
+                            <span id="nomeEstufaPico"></span>
+                        </p>
                         <strong id="valorPico"></strong>
                         <p style="font-size: 15px; margin-top: 5px; opacity: 0.8; font-weight: bolder;">
-                            Atenção! <br>Esta estufa está recebendo luz <br>acima do limite máximo.
+                            Atenção! <br>Esta estufa está recebendo luz acima do limite máximo.
                         </p>
                     </div>
 
                     <div class="card">
                         <p style="font-size: 15px; font-weight: bolder;">Estufa com menor pico de luz durante o dia-
-                            <span id="estufaPico"></span></p>
+                            <span id="estufaPico"></span>
+                        </p>
                         <strong id="menorPico"></strong>
                         <p style="font-size: 15px; margin-top: 5px; opacity: 0.9; font-weight: bolder;">
-                            Atenção! <br>Esta estufa está recebendo luz <br>abaixo do limite esperado.
+                            Atenção! <br>Esta estufa está recebendo luz abaixo do limite esperado.
                         </p>
                     </div>
                 </div>
 
                 <div class="grafico-linha">
-                    <h3>Luminosidade capturada por hora durante o dia</h3>
+                    <h3>Luminosidade media capturada por hora durante o dia</h3>
                     <div class="chart-wrap">
                         <canvas id="graficoLinha"></canvas>
                     </div>
@@ -86,7 +88,7 @@
             <div class="coluna-meio">
 
                 <div class="grafico-barras">
-                    <h3> Variação do estado (STATUS) das estufas durante o dia</h3>
+                    <h3>Quantidade de alertas por estufa no dia</h3>
                     <div class="chart-wrap">
                         <canvas id="graficoBarra"></canvas>
                     </div>
@@ -96,13 +98,17 @@
 
             <div class="coluna-direita">
                 <div class="grafico-rosca">
-                    <h3>Quantidade de estufas em alerta no dia<h3>
-                            <div class="chart-wrap">
-                                <canvas id="graficoRosca"></canvas>
-                            </div>
-                            <p>Quantidade total de estufas com sensores : <b id="totalSensores"></b></p>
-                            <p class="p-alerta">Quantidade de estufas com sensores em ALERTA: <b id="totalAlerta">0</b>
-                            </p>
+                    <h3>Quantidade de estufas em alerta no dia</h3>
+                    <div class="chart-wrap" style="position: relative;">
+                        <canvas id="graficoRosca"></canvas>
+                        <div id="textoCentro"
+                            style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; pointer-events: none;">
+                            <strong id="porcentagemAlerta" style="font-size: 26px; color: #ff0000;">0%</strong>
+                            <p style="font-size: 12px; color: #aaa; margin: 0;">em alerta</p>
+                        </div>
+                    </div>
+                    <div id="totalSensores" style="display:none;"></div>
+                    <div id="totalAlerta" style="display:none;">0</div>
                 </div>
             </div>
 
@@ -123,44 +129,55 @@
         carregarTotalSensores()
     }
 
+    function carregarTotalSensores() {
+    fetch(`/dashboard/total-sensores/${fkEmpresa}`)
+        .then(function (res) { return res.json() })
+        .then(function (dados) {
+            document.getElementById('totalSensores').innerHTML = dados.total
+            carregarGraficoRosca()
+        })
+}
+
     function carregarCards() {
         fetch(`/dashboard/maior-pico/${fkEmpresa}`)
             .then(function (res) { return res.json() })
             .then(function (dados) {
                 if (dados && dados.nomeEstufa) {
-                document.getElementById(`nomeEstufaPico`).innerHTML = dados.nomeEstufa
-                document.getElementById(`valorPico`).innerHTML = dados.maiorLuz.toLocaleString(`pt-BR`)
-            } else {
-                document.getElementById(`nomeEstufaPico`).innerHTML = `Sem dados hoje`
-                document.getElementById(`valorPico`).innerHTML = `-`
-            }
+                    document.getElementById(`nomeEstufaPico`).innerHTML = dados.nomeEstufa
+                    document.getElementById(`valorPico`).innerHTML = dados.maiorLuz.toLocaleString(`pt-BR`) + ' lux'
+                } else {
+                    document.getElementById(`nomeEstufaPico`).innerHTML = `Ainda não há dados capturados`
+                    document.getElementById(`valorPico`).innerHTML = `Ainda não há dados capturados`
+                }
             })
 
         fetch(`/dashboard/menor-pico/${fkEmpresa}`)
             .then(function (res) { return res.json() })
             .then(function (dados) {
-             if (dados && dados.nomeEstufa) {
-                document.getElementById(`estufaPico`).innerHTML = dados.nomeEstufa
-                document.getElementById(`menorPico`).innerHTML = dados.menorLuz.toLocaleString(`pt-BR`)
-            } else {
-                document.getElementById(`estufaPico`).innerHTML = `Sem dados hoje`
-                document.getElementById(`menorPico`).innerHTML = `-`
-            }
+                if (dados && dados.nomeEstufa) {
+                    document.getElementById(`estufaPico`).innerHTML = dados.nomeEstufa
+                    document.getElementById(`menorPico`).innerHTML = dados.menorLuz.toLocaleString(`pt-BR`) + ' lux'
+                } else {
+                    document.getElementById(`estufaPico`).innerHTML = `Ainda não há dados capturados`
+                    document.getElementById(`menorPico`).innerHTML = `Ainda não há dados capturados`
+                }
             })
     }
 
     function carregarGraficoBarras() {
-        fetch(`/dashboard/contagem-status/${fkEmpresa}`)
+        fetch(`/dashboard/alertas-por-estufa/${fkEmpresa}`)
             .then(function (res) { return res.json() })
             .then(function (dados) {
-                let labels = [`Baixa`, `Ideal`, `Alta`, `Muito Alta`]
-                let valores = [0, 0, 0, 0]
+                let labels = []
+                let valores = []
 
                 for (let i = 0; i < dados.length; i++) {
-                    if (dados[i].status == `baixa`) valores[0] = dados[i].quantidade
-                    if (dados[i].status == `ideal`) valores[1] = dados[i].quantidade
-                    if (dados[i].status == `alta`) valores[2] = dados[i].quantidade
-                    if (dados[i].status == `muito-alta`) valores[3] = dados[i].quantidade
+                    labels.push(dados[i].nomeEstufa)
+                    valores.push(dados[i].qtdAlertas)
+                }
+                if (dados.length === 0) {
+                    labels = ['Nenhum alerta']
+                    valores = [0]
                 }
 
                 let ctxBarra = document.getElementById(`graficoBarra`).getContext(`2d`)
@@ -169,7 +186,7 @@
                     data: {
                         labels: labels,
                         datasets: [{
-                            label: `STATUS`,
+                            label: `Alertas no dia`,
                             data: valores,
                             backgroundColor: [`#e1a100`, `#069239`, `#92400e`, `#991b1b`],
                             barPercentage: 0.5
@@ -181,7 +198,19 @@
                         plugins: { legend: { position: `bottom` } },
                         scales: {
                             x: { grid: { display: false } },
-                            y: { beginAtZero: true }
+                            y: {
+                                beginAtZero: true,
+                                max: 20,
+                                ticks: { stepSize: 1 },
+                                title: {
+                                    display: true,
+                                    text: 'Quantidade de alertas',
+                                    font: {
+                                        size: 12,
+                                        weight: 'bold'
+                                    }
+                                }
+                            }
                         }
                     }
                 })
@@ -209,20 +238,22 @@
                         labels: horarios,
                         datasets: [
                             {
-                                label: `Luminosidade capturada`,
+                                label: `Luminosidade media capturada`,
                                 data: leiturasPorHora,
                                 borderColor: `white`,
-                                spanGaps: false
+                                spanGaps: true,
+                                tension: 0.4,
+                                pointRadius: 3
                             },
                             {
                                 label: `Luminosidade Máxima`,
-                                data: [300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300],
+                                data: Array(24).fill(300),
                                 borderColor: `red`,
                                 pointRadius: 0
                             },
                             {
                                 label: `Luminosidade Mínima`,
-                                data: [140, 140, 140, 140, 140, 140, 140, 140, 140, 140, 140, 140],
+                                data: Array(24).fill(140),
                                 borderColor: `#e1a100`,
                                 pointRadius: 0
                             }
@@ -253,64 +284,67 @@
             })
     }
 
-    function carregarGraficoRosca() {
-        fetch(`/dashboard/alerta-por-estufa/${fkEmpresa}`)
-            .then(function (res) { return res.json() })
-            .then(function (dados) {
-                let labels = []
-                let valores = []
-                let totalAlerta = 0
+function carregarGraficoRosca() {
+    fetch(`/dashboard/alerta-por-estufa/${fkEmpresa}`)
+        .then(function (res) { return res.json() })
+        .then(function (dados) {
+            let totalAlerta = 0
+            let estufasEmAlerta = []
 
-                for (let i = 0; i < dados.length; i++) {
-                    labels.push(dados[i].nomeEstufa)
-                    valores.push(dados[i].qtdAlerta)
-                    totalAlerta += dados[i].qtdAlerta
-                }
+            for (let i = 0; i < dados.length; i++) {
+                totalAlerta += dados[i].qtdAlerta
+                estufasEmAlerta.push(dados[i].nomeEstufa)
+            }
 
-                document.getElementById(`totalAlerta`).innerHTML = totalAlerta
+            document.getElementById('totalAlerta').innerHTML = totalAlerta
 
-                if (totalAlerta === 0) {
-                    labels = ["Nenhum Alerta"]
-                    valores = [1]
-                }
+            let totalSensores = parseInt(document.getElementById('totalSensores').innerHTML) || 0
+            let naoAlerta = totalSensores - totalAlerta
+            if (naoAlerta < 0) naoAlerta = 0
 
-                let ctxRosca = document.getElementById(`graficoRosca`).getContext(`2d`)
-                new Chart(ctxRosca, {
-                    type: `doughnut`,
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            data: valores,
-                            backgroundColor: totalAlerta > 0
-                                ? [`#ff0000`, `#820c0c`, `#c97d7d`, `#1a4a32`]
-                                : [`#e0e0e0`]
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                position: `bottom`,
-                                labels: {
-                                    font: { size: 11 },
-                                    boxWidth: 12,
-                                    padding: 20
+            let porcentagem = totalSensores > 0 ? Math.round((totalAlerta / totalSensores) * 100) : 0
+            document.getElementById('porcentagemAlerta').innerHTML = porcentagem + '%'
+
+            let ctxRosca = document.getElementById('graficoRosca').getContext('2d')
+            new Chart(ctxRosca, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Em alerta', 'Sem alerta'],
+                    datasets: [{
+                        data: [totalAlerta, naoAlerta],
+                        backgroundColor: ['#ff0000', '#069239']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '65%',
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                afterBody: function(context) {
+                                    if (context[0].label === 'Em alerta') {
+                                        return estufasEmAlerta.length > 0
+                                            ? 'Estufas: ' + estufasEmAlerta.join(', ')
+                                            : 'Nenhuma estufa em alerta'
+                                    }
+                                    return ''
                                 }
+                            }
+                        },
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                font: { size: 11 },
+                                boxWidth: 12,
+                                padding: 20
                             }
                         }
                     }
-                })
+                }
             })
-    }
-
-    function carregarTotalSensores() {
-        fetch(`/dashboard/total-sensores/${fkEmpresa}`)
-            .then(function (res) { return res.json() })
-            .then(function (dados) {
-                document.getElementById(`totalSensores`).innerHTML = dados.total
-            })
-    }
+        })
+}
 </script>
 
 </html>

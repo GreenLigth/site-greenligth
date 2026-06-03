@@ -43,25 +43,21 @@ function menorPico(fkEmpresa) {
     return database.executar(instrucaoSql)
 }
 
-function contagemStatus(fkEmpresa) {
+function alertasPorEstufa(fkEmpresa) {
     var instrucaoSql = `
         SELECT 
-            CASE
-                WHEN r.luminosidade > 200 AND r.luminosidade <= 300 THEN 'muito-alta'
-                WHEN r.luminosidade > 170 AND r.luminosidade <= 200 THEN 'alta'
-                WHEN r.luminosidade > 140 AND r.luminosidade <= 170 THEN 'ideal'
-                ELSE 'baixa'
-            END AS status,
-            COUNT(*) AS quantidade
+            e.nomeEstufa,
+            COUNT(*) AS qtdAlertas
         FROM registroLuminosidade r
         JOIN sensor s ON r.fkSensor = s.idSensor
         JOIN estufa e ON s.fkEstufa = e.idEstufa
         WHERE e.fkEmpresa = ${fkEmpresa}
+        AND (r.luminosidade > 200 OR r.luminosidade < 140)
         AND DAY(r.dataLeitura) = DAY(NOW())
         AND MONTH(r.dataLeitura) = MONTH(NOW())
         AND YEAR(r.dataLeitura) = YEAR(NOW())
-        GROUP BY status
-        LIMIT 10;
+        GROUP BY e.nomeEstufa
+        ORDER BY qtdAlertas DESC;
     `
 
     return database.executar(instrucaoSql)
@@ -70,9 +66,9 @@ function contagemStatus(fkEmpresa) {
 function registroLeituraHoras(fkEmpresa) {
 
     var instrucaoSql = `
-      SELECT 
+        SELECT 
             HOUR(r.dataLeitura) AS hora,
-            r.luminosidade AS luminosidade
+            ROUND(AVG(r.luminosidade), 0) AS luminosidade
         FROM registroLuminosidade r
         JOIN sensor s ON r.fkSensor = s.idSensor
         JOIN estufa e ON s.fkEstufa = e.idEstufa
@@ -80,8 +76,8 @@ function registroLeituraHoras(fkEmpresa) {
         AND DAY(r.dataLeitura) = DAY(NOW())
         AND MONTH(r.dataLeitura) = MONTH(NOW())
         AND YEAR(r.dataLeitura) = YEAR(NOW())
-        ORDER BY r.dataLeitura
-        LIMIT 24;
+        GROUP BY HOUR(r.dataLeitura)
+        ORDER BY hora;
     `
 
     return database.executar(instrucaoSql)
@@ -120,7 +116,7 @@ function totalSensores(fkEmpresa) {
 module.exports = {
     maiorPico,
     menorPico,
-    contagemStatus,
+    alertasPorEstufa,
     registroLeituraHoras,
     sensoresEmAlertaPorEstufa,
     totalSensores
