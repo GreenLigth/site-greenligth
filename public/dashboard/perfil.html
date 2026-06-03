@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Dashboard - Perfil</title>
-     <link rel="stylesheet" href="../styles/dashboard/perfil.css">
+    <link rel="stylesheet" href="../styles/dashboard/perfil.css">
     <link rel="stylesheet" href="../styles/dashboard/dashboard.css">
     <link rel="icon" href="../assets/logo/logosite.png">
 </head>
@@ -48,141 +48,154 @@
         <h1>PERFIL</h1>
 
         <div class="container-perfil">
-                <div class="campo">
-                    <label>Nome da empresa</label>
-                    <input type="text" id="inputNomeEmpresa">
-                </div>
+            <div class="campo">
+                <label>Nome da empresa</label>
+                <input type="text" id="inputNomeEmpresa">
+            </div>
 
-                <div class="campo">
-                    <label>Nome do administrador</label>
-                    <input type="text" id="inputNomeAdmin">
-                </div>
+            <div class="campo">
+                <label>Nome do administrador</label>
+                <input type="text" id="inputNomeAdmin">
+            </div>
 
-                <div class="campo">
-                    <label>E-mail</label>
-                    <input type="email" id="inputEmail" placeholder="nome@email.com">
-                </div>
+            <div class="campo">
+                <label>E-mail</label>
+                <input type="email" id="inputEmail" placeholder="nome@email.com">
+            </div>
 
-                <div class="campo-senha-container">
-                    <div class="campo">
-                        <label>Senha</label>
-                        <div class="input-com-icone">
-                            <input type="password" id="inputSenha" placeholder="Mínimo 8 caracteres">
-                            <img src="../assets/icons/eye.png" class="icone-olho">
-                        </div>
-                    </div>
-                    <button onclick="processarMudancaSenha()" class="link-mudar-senha">Mudar senha</button>
-                </div>
-
+            <div class="campo-senha-container">
                 <div class="campo">
-                    <label>Confirmar Senha</label>
+                    <label>Senha</label>
                     <div class="input-com-icone">
-                        <input type="password" id="inputConfirmar" placeholder="Repita a senha">
-                        <img src="../assets/icons/eye.png" class="icone-olho" alt="Ver senha">
+                        <input type="password" id="inputSenha" placeholder="Mínimo 8 caracteres"
+                            oninput="validarSenhaPerfil()">
+                        <img src="../assets/icons/eye.png" class="icone-olho" onclick="visualizar()">
                     </div>
                 </div>
-                <div id="div_msg_erro" style="color: red; font-size: 12px; margin-bottom: 10px;"></div>
+            </div>
+            <div id="div_validar" class="validacao"></div>
+            <div class="campo">
+                <label>Confirmar Senha</label>
+                <div class="input-com-icone">
+                    <input type="password" id="inputConfirmar" placeholder="Repita a senha"
+                        oninput="validarSenhaPerfil()">
+                    <img src="../assets/icons/eye.png" class="icone-olho" alt="Ver senha" onclick="olhar()">
+                </div>
+            </div>
 
-                <button onclick="salvarAlteracoes()" type="submit" class="btn-salvar">Salvar alterações</button>
+            <div id="div_confirmar" class="validacao"></div>
+            <div id="div_msg_erro" style="color: red; font-size: 12px; margin-bottom: 10px;"></div>
+
+            <button onclick="salvarAlteracoes()" type="submit" class="btn-salvar">Salvar alterações</button>
         </div>
 
     </div>
 
 </body>
 
-</html> 
+</html>
 <script>
+
     function carregarPerfil() {
-    var idUsuario = sessionStorage.getItem("ID_USUARIO");
+        var idUsuario = sessionStorage.getItem("idUsuario");
 
-    fetch(`/perfil/perfil/${idUsuario}`, {
-        method: "GET",
-    }).then(function (resposta) {
-        if (resposta.ok) {
-            resposta.json().then(function (dados) {
-                document.getElementById("inputNomeEmpresa").value = dados.nomeEmpresa;
-                document.getElementById("inputNomeAdmin").value = dados.nome;
-                document.getElementById("inputEmail").value = dados.email;
-            });
+        if (!idUsuario) {
+            console.error("ID do usuário não encontrado no sessionStorage!");
+            return;
         }
-    });
-}
 
-function salvarAlteracoes() {
-    var idUsuario = sessionStorage.getItem("ID_USUARIO");
-    
-    var corpo = {
-        nome: document.getElementById("inputNomeAdmin").value,
-        email: document.getElementById("inputEmail").value,
-        idUsuario: idUsuario
-    };
+        fetch(`/perfil/${idUsuario}`, {
+            method: "GET",
+        }).then(function (resposta) {
+            if (resposta.ok) {
+                resposta.json().then(function (dados) {
+                    document.getElementById("inputNomeEmpresa").value = dados.nomeEmpresa || "";
+                    document.getElementById("inputNomeAdmin").value = dados.nome || "";
+                    document.getElementById("inputEmail").value = dados.email || "";
+                });
+            }
+        });
+    }
 
-    fetch("/perfil/editar", {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(corpo)
-    }).then(function (resposta) {
-        if (resposta.ok) {
-            alert("Dados atualizados com sucesso!");
+    function salvarAlteracoes() {
+        if (!validarSenhaPerfil()) return;
+
+        var idUsuario = sessionStorage.getItem("idUsuario");
+
+        var corpo = {
+            idUsuario: idUsuario,
+            empresa: document.getElementById("inputNomeEmpresa").value,
+            nome: document.getElementById("inputNomeAdmin").value,
+            email: document.getElementById("inputEmail").value,
+            senha: document.getElementById("inputSenha").value,
+        };
+
+        fetch("/perfil/editar", {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(corpo)
+        }).then(function (resposta) {
+            if (resposta.ok) {
+                alert("Dados atualizados com sucesso!");
+            } else {
+                alert("Erro ao atualizar perfil.");
+            }
+        });
+    }
+
+
+    function validarSenhaPerfil() {
+        let senha = document.getElementById("inputSenha").value;
+        let senhaDnv = document.getElementById("inputConfirmar").value;
+        let msgErro = document.getElementById("div_msg_erro");
+
+        let especial = ['!', '@', '#', '$', '%', '&', '*'];
+        let numero = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+        let temNumero = false;
+        let temEspecial = false;
+
+        for (let i = 0; i < numero.length; i++) if (senha.includes(numero[i])) temNumero = true;
+        for (let i = 0; i < especial.length; i++) if (senha.includes(especial[i])) temEspecial = true;
+
+        if (senha.length < 8) {
+            msgErro.innerHTML = "Mínimo 8 caracteres";
+            return false;
+        } else if (!temNumero) {
+            msgErro.innerHTML = "Insira pelo menos um número";
+            return false;
+        } else if (senha == senha.toUpperCase()) {
+            msgErro.innerHTML = "Insira pelo menos uma letra minúscula";
+            return false;
+        } else if (senha == senha.toLowerCase()) {
+            msgErro.innerHTML = "Insira pelo menos uma letra maiúscula";
+            return false;
+        } else if (!temEspecial) {
+            msgErro.innerHTML = "Insira um caractere especial (!@#$%)";
+            return false;
+        } else if (senha !== senhaDnv) {
+            msgErro.innerHTML = "As senhas não coincidem";
+            return false;
+        }
+
+        msgErro.innerHTML = "";
+        return true;
+    }
+
+    function visualizar() {
+
+        if (inputSenha.type == 'password') {
+            inputSenha.type = 'text';
         } else {
-            alert("Erro ao atualizar perfil.");
+            inputSenha.type = 'password';
         }
-    });
-}
-
-function validarSenhaPerfil() {
-    let senha = document.getElementById("inputSenha").value;
-    let senhaDnv = document.getElementById("inputConfirmar").value;
-    let msgErro = document.getElementById("div_msg_erro");
-    
-    let especial = ['!', '@', '#', '$', '%', '&', '*'];
-    let numero = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-    let temNumero = false;
-    let temEspecial = false;
-
-    for (let i = 0; i < numero.length; i++) if (senha.includes(numero[i])) temNumero = true;
-    for (let i = 0; i < especial.length; i++) if (senha.includes(especial[i])) temEspecial = true;
-
-    if (senha.length < 8) {
-        msgErro.innerHTML = "Mínimo 8 caracteres";
-        return false;
-    } else if (!temNumero) {
-        msgErro.innerHTML = "Insira pelo menos um número";
-        return false;
-    } else if (senha == senha.toUpperCase()) {
-        msgErro.innerHTML = "Insira pelo menos uma letra minúscula";
-        return false;
-    } else if (senha == senha.toLowerCase()) {
-        msgErro.innerHTML = "Insira pelo menos uma letra maiúscula";
-        return false;
-    } else if (!temEspecial) {
-        msgErro.innerHTML = "Insira um caractere especial (!@#$%)";
-        return false;
-    } else if (senha !== senhaDnv) {
-        msgErro.innerHTML = "As senhas não coincidem";
-        return false;
     }
 
-    msgErro.innerHTML = "";
-    return true;
-}
+    function olhar() {
 
-function processarMudancaSenha() {
-    if (!validarSenhaPerfil()) {
-        return;
+        if (inputConfirmar.type == 'password') {
+            inputConfirmar.type = 'text';
+        } else {
+            inputConfirmar.type = 'password';
+        }
     }
-
-    var idUsuario = sessionStorage.getItem("ID_USUARIO");
-    var novaSenha = document.getElementById("inputSenha").value;
-
-    fetch("/usuarios/mudar-senha", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ idUsuario: idUsuario, novaSenha: novaSenha })
-    }).then(resposta => {
-        if (resposta.ok) alert("Senha atualizada!");
-    });
-}
 </script>

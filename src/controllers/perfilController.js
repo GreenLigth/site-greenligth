@@ -22,13 +22,13 @@ function buscarPerfil(req, res) {
 }
 
 function editarPerfil(req, res) {
-    var { idUsuario, email, nome } = req.body;
+    var { idUsuario, email, nome, senha, empresa } = req.body;
 
-    if (idUsuario == undefined || email == undefined || nome == undefined) {
+    if (!idUsuario || !email || !nome || !senha) {
         return res.status(400).send("Dados incompletos para edição!");
     }
 
-    perfilModel.editar(idUsuario, email, nome)
+    perfilModel.editar(idUsuario, email, nome, senha)
         .then(function (resultado) {
             res.json(resultado);
         }).catch(function (erro) {
@@ -37,24 +37,8 @@ function editarPerfil(req, res) {
         });
 }
 
-function mudarSenha(req, res) {
-    var { idUsuario, novaSenha } = req.body;
-
-    if (idUsuario == undefined || novaSenha == undefined) {
-        return res.status(400).send("Dados incompletos para alterar senha!");
-    }
-
-    perfilModel.atualizarSenha(idUsuario, novaSenha)
-        .then(function (resultado) {
-            res.json(resultado);
-        }).catch(function (erro) {
-            console.log(erro);
-            res.status(500).json(erro.sqlMessage);
-        });
-}
 
 module.exports = {
     buscarPerfil,
-    editarPerfil,
-    mudarSenha
+    editarPerfil
 };
