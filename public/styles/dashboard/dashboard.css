@@ -97,9 +97,8 @@ h1 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 16px;
-    margin-top: -50px;
-    margin-bottom: 40px;
+    margin-top: -70px;
+    margin-bottom: 35px;
 }
 
 .botao-subtitulo {
@@ -126,9 +125,8 @@ h1 {
 .linha-topo {
     display: flex;
     gap: 18px;
-    margin-bottom: 18px;
     align-items: stretch;
-    min-height: 500px;
+    height: 73vh;
 }
 
 .grafico-barras {
@@ -138,7 +136,7 @@ h1 {
     background-color: #ffffff;
     display: flex;
     flex-direction: column;
-    min-height: 650px;
+    min-height: 0;
 }
 
 .grafico-barras h3 {
@@ -165,10 +163,19 @@ h1 {
     gap: 14px;
 }
 
+.coluna-esquerda, .coluna-meio, .coluna-direita {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    flex: 1;
+    min-height: 0;
+    height: 100%;
+}
+
 .cards {
     display: flex;
     gap: 14px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 .card.atencao {
@@ -218,7 +225,7 @@ h1 {
 
 .grafico-linha .chart-wrap {
     position: relative;
-    height: 400px;
+    height: 285px;
     width: 100%;
 }
 
@@ -253,12 +260,27 @@ h1 {
     padding: 18px 20px;
     flex: 1;
     height: fit-content;
-    min-height: 650px;
+    min-height: 0;
 }
 
 .grafico-rosca .chart-wrap {
     position: relative;
-    height: 420px;
+    height: 270px;
+}
+
+.grafico-barras, .grafico-rosca {
+    background-color: #ffffff;
+    border-radius: 14px;
+    padding: 15px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.chart-wrap {
+    position: relative;
+    min-height: 0;
 }
 
 .box-empresas {
