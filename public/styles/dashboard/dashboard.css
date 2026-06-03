@@ -364,3 +364,23 @@ table tr:hover td {
     background-color: #e0e7ff;
     color: #3097a3;
 }
+
+
+.usuarios-filtros {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 14px;
+    align-items: center;
+}
+
+
+#campoBusca {
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    outline: none;
+    background: #fff;
+    color: #1a4a32;
+    border: 1px solid #c8ddd0;
+    flex: 1;
+}

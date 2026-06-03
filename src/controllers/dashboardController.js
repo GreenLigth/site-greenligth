@@ -1,10 +1,11 @@
 var dashboardModel = require("../models/dashboardModel");
 
-
 function maiorPico(req, res) {
     var fkEmpresa = req.params.fkEmpresa;
+    var data = req.query.data;
+    var estufa = req.query.estufa;
 
-    dashboardModel.maiorPico(fkEmpresa)
+    dashboardModel.maiorPico(fkEmpresa, data, estufa)
         .then(resultado => {
             res.status(200).json(resultado[0]);
         })
@@ -16,8 +17,10 @@ function maiorPico(req, res) {
 
 function menorPico(req, res) {
     var fkEmpresa = req.params.fkEmpresa;
+    var data = req.query.data;
+    var estufa = req.query.estufa;
 
-    dashboardModel.menorPico(fkEmpresa)
+    dashboardModel.menorPico(fkEmpresa, data, estufa)
         .then(resultado => {
             res.status(200).json(resultado[0]);
         })
@@ -29,8 +32,10 @@ function menorPico(req, res) {
 
 function alertasPorEstufa(req, res) {
     var fkEmpresa = req.params.fkEmpresa;
+    var data = req.query.data;
+    var estufa = req.query.estufa;
 
-    dashboardModel.alertasPorEstufa(fkEmpresa)
+    dashboardModel.alertasPorEstufa(fkEmpresa, data, estufa)
         .then(resultado => {
             res.status(200).json(resultado);
         })
@@ -42,8 +47,10 @@ function alertasPorEstufa(req, res) {
 
 function registroLeituraHoras(req, res) {
     var fkEmpresa = req.params.fkEmpresa;
+    var data = req.query.data;
+    var estufa = req.query.estufa;
 
-    dashboardModel.registroLeituraHoras(fkEmpresa)
+    dashboardModel.registroLeituraHoras(fkEmpresa, data, estufa)
         .then(resultado => {
             res.status(200).json(resultado);
         })
@@ -55,8 +62,10 @@ function registroLeituraHoras(req, res) {
 
 function sensoresEmAlertaPorEstufa(req, res) {
     var fkEmpresa = req.params.fkEmpresa;
+    var data = req.query.data;
+    var estufa = req.query.estufa;
 
-    dashboardModel.sensoresEmAlertaPorEstufa(fkEmpresa)
+    dashboardModel.sensoresEmAlertaPorEstufa(fkEmpresa, data, estufa)
         .then(resultado => {
             res.status(200).json(resultado);
         })
@@ -68,8 +77,10 @@ function sensoresEmAlertaPorEstufa(req, res) {
 
 function totalSensores(req, res) {
     var fkEmpresa = req.params.fkEmpresa;
+    var data = req.query.data;
+    var estufa = req.query.estufa;
 
-    dashboardModel.totalSensores(fkEmpresa)
+    dashboardModel.totalSensores(fkEmpresa, data, estufa)
         .then(resultado => {
             res.status(200).json(resultado[0]);
         })

@@ -9,7 +9,7 @@
     <link rel="icon" href="../assets/logo/logosite.png">
 </head>
 
-<body onload="carregarDashboard()">
+<body onload="inicializarDashboard()">
     <div class="menu">
         <img class="logo" src="../assets/logo/logo-branca.png" alt="Greenlight">
         <div class="item">
@@ -43,6 +43,18 @@
         <h1>DASHBOARD</h1>
         <h2 class="titulo-dash"></h2>
         <br>
+
+        <div class="filtros-container" style="display: flex; gap: 15px; margin-bottom: 20px; align-items: center;">
+            <div style="flex: 1; display: flex; flex-direction: column;">
+                <label for="campoData" style="font-size: 12px; font-weight: bold; color: #1a2e22; margin-bottom: 4px;">Filtrar por Data:</label>
+                <input type="date" id="campoData" onchange="filtrar()" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+            </div>
+            <div style="flex: 2; display: flex; flex-direction: column;">
+                <label for="campoBusca" style="font-size: 12px; font-weight: bold; color: #1a2e22; margin-bottom: 4px;">Buscar por Estufa:</label>
+                <input type="text" id="campoBusca" placeholder="Digite o nome da estufa..." oninput="filtrar()" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+            </div>
+        </div>
+
         <div class="botao-header">
             <p class="botao-subtitulo"></p>
             <a href="cadastrarEstufa.html">
@@ -51,7 +63,6 @@
         </div>
 
         <div class="linha-topo">
-
             <div id="coluna-esquerda">
                 <div class="cards">
                     <div class="card atencao">
@@ -60,7 +71,7 @@
                         </p>
                         <strong id="valorPico"></strong>
                         <p style="font-size: 15px; margin-top: 5px; opacity: 0.8; font-weight: bolder;">
-                            Atenção! <br>Esta estufa está recebendo luz acima do limite máximo.
+                            Atenção! <br>Esta estufa está receiving luz acima do limite máximo.
                         </p>
                     </div>
 
@@ -70,7 +81,7 @@
                         </p>
                         <strong id="menorPico"></strong>
                         <p style="font-size: 15px; margin-top: 5px; opacity: 0.9; font-weight: bolder;">
-                            Atenção! <br>Esta estufa está recebendo luz abaixo do limite esperado.
+                            Atenção! <br>Esta estufa está receiving luz abaixo do limite esperado.
                         </p>
                     </div>
                 </div>
@@ -82,18 +93,15 @@
                     </div>
                     <p>Luminosidade ideal para plantio (200) </p>
                 </div>
-
             </div>
 
             <div class="coluna-meio">
-
                 <div class="grafico-barras">
                     <h3>Quantidade de alertas por estufa no dia</h3>
                     <div class="chart-wrap">
                         <canvas id="graficoBarra"></canvas>
                     </div>
                 </div>
-
             </div>
 
             <div class="coluna-direita">
@@ -101,8 +109,7 @@
                     <h3>Quantidade de estufas em alerta no dia</h3>
                     <div class="chart-wrap" style="position: relative;">
                         <canvas id="graficoRosca"></canvas>
-                        <div id="textoCentro"
-                            style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; pointer-events: none;">
+                        <div id="textoCentro" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; pointer-events: none;">
                             <strong id="porcentagemAlerta" style="font-size: 26px; color: #ff0000;">0%</strong>
                             <p style="font-size: 12px; color: #aaa; margin: 0;">em alerta</p>
                         </div>
@@ -111,77 +118,122 @@
                     <div id="totalAlerta" style="display:none;">0</div>
                 </div>
             </div>
-
         </div>
-
-
     </div>
 </body>
 
+</html>
+
 <script>
-    let fkEmpresa = sessionStorage.getItem("fkEmpresa")
+    let fkEmpresa = sessionStorage.getItem("fkEmpresa");
+    
+    // Variáveis globais para armazenar e destruir os gráficos do Chart.js
+    let meuGraficoBarra = null;
+    let meuGraficoLinha = null;
+    let meuGraficoRosca = null;
+
+    // Define o dia atual no calendário ao abrir a página
+    function inicializarDashboard() {
+        let hoje = new Date().toISOString().split('T')[0];
+        document.getElementById("campoData").value = hoje;
+        carregarDashboard();
+    }
 
     function carregarDashboard() {
-        carregarCards()
-        carregarGraficoBarras()
-        carregarGraficoLinha()
-        carregarGraficoRosca()
-        carregarTotalSensores()
+        carregarCards();
+        carregarGraficoBarras();
+        carregarGraficoLinha();
+        carregarTotalSensores(); 
+    }
+
+    function filtrar() {
+        if (typeof event !== 'undefined' && event) {
+            event.preventDefault();
+        }
+        carregarDashboard();
     }
 
     function carregarTotalSensores() {
-    fetch(`/dashboard/total-sensores/${fkEmpresa}`)
-        .then(function (res) { return res.json() })
-        .then(function (dados) {
-            document.getElementById('totalSensores').innerHTML = dados.total
-            carregarGraficoRosca()
-        })
-}
+        let dataFiltro = document.getElementById("campoData").value;
+        let buscaFiltro = document.getElementById("campoBusca").value;
+
+        fetch(`/dashboard/total-sensores/${fkEmpresa}?data=${dataFiltro}&estufa=${buscaFiltro}`)
+            .then(function (res) { return res.json() })
+            .then(function (dados) {
+                // Tratamento caso venha vazio ou nulo do back-end
+                let total = (dados && dados.total !== undefined) ? dados.total : 0;
+                document.getElementById('totalSensores').innerHTML = total;
+                carregarGraficoRosca();
+            })
+            .catch(err => console.error("Erro ao carregar total de sensores:", err));
+    }
 
     function carregarCards() {
-        fetch(`/dashboard/maior-pico/${fkEmpresa}`)
-            .then(function (res) { return res.json() })
-            .then(function (dados) {
-                if (dados && dados.nomeEstufa) {
-                    document.getElementById(`nomeEstufaPico`).innerHTML = dados.nomeEstufa
-                    document.getElementById(`valorPico`).innerHTML = dados.maiorLuz.toLocaleString(`pt-BR`) + ' lux'
-                } else {
-                    document.getElementById(`nomeEstufaPico`).innerHTML = `Ainda não há dados capturados`
-                    document.getElementById(`valorPico`).innerHTML = `Ainda não há dados capturados`
-                }
-            })
+        let dataFiltro = document.getElementById("campoData").value;
+        let buscaFiltro = document.getElementById("campoBusca").value;
 
-        fetch(`/dashboard/menor-pico/${fkEmpresa}`)
-            .then(function (res) { return res.json() })
+        fetch(`/dashboard/maior-pico/${fkEmpresa}?data=${dataFiltro}&estufa=${buscaFiltro}`)
+            .then(function (res) { 
+                if (res.status === 204 || res.status === 404) return null;
+                return res.text().then(text => text ? JSON.parse(text) : null);
+            })
             .then(function (dados) {
                 if (dados && dados.nomeEstufa) {
-                    document.getElementById(`estufaPico`).innerHTML = dados.nomeEstufa
-                    document.getElementById(`menorPico`).innerHTML = dados.menorLuz.toLocaleString(`pt-BR`) + ' lux'
+                    document.getElementById(`nomeEstufaPico`).innerHTML = dados.nomeEstufa;
+                    document.getElementById(`valorPico`).innerHTML = dados.maiorLuz.toLocaleString(`pt-BR`) + ' lux';
                 } else {
-                    document.getElementById(`estufaPico`).innerHTML = `Ainda não há dados capturados`
-                    document.getElementById(`menorPico`).innerHTML = `Ainda não há dados capturados`
+                    document.getElementById(`nomeEstufaPico`).innerHTML = `Ainda não há dados capturados`;
+                    document.getElementById(`valorPico`).innerHTML = `Ainda não há dados capturados`;
                 }
             })
+            .catch(err => console.error("Erro ao carregar card maior pico:", err));
+
+        fetch(`/dashboard/menor-pico/${fkEmpresa}?data=${dataFiltro}&estufa=${buscaFiltro}`)
+            .then(function (res) { 
+                if (res.status === 204 || res.status === 404) return null;
+                return res.text().then(text => text ? JSON.parse(text) : null);
+            })
+            .then(function (dados) {
+                if (dados && dados.nomeEstufa) {
+                    document.getElementById(`estufaPico`).innerHTML = dados.nomeEstufa;
+                    document.getElementById(`menorPico`).innerHTML = dados.menorLuz.toLocaleString(`pt-BR`) + ' lux';
+                } else {
+                    document.getElementById(`estufaPico`).innerHTML = `Ainda não há dados capturados`;
+                    document.getElementById(`menorPico`).innerHTML = `Ainda não há dados capturados`;
+                }
+            })
+            .catch(err => console.error("Erro ao carregar card menor pico:", err));
     }
 
     function carregarGraficoBarras() {
-        fetch(`/dashboard/alertas-por-estufa/${fkEmpresa}`)
+        let dataFiltro = document.getElementById("campoData").value;
+        let buscaFiltro = document.getElementById("campoBusca").value;
+
+        fetch(`/dashboard/alertas-por-estufa/${fkEmpresa}?data=${dataFiltro}&estufa=${buscaFiltro}`)
             .then(function (res) { return res.json() })
             .then(function (dados) {
-                let labels = []
-                let valores = []
+                let labels = [];
+                let valores = [];
 
-                for (let i = 0; i < dados.length; i++) {
-                    labels.push(dados[i].nomeEstufa)
-                    valores.push(dados[i].qtdAlertas)
+                if (dados && dados.length > 0) {
+                    for (let i = 0; i < dados.length; i++) {
+                        labels.push(dados[i].nomeEstufa);
+                        valores.push(dados[i].qtdAlertas);
+                    }
                 }
-                if (dados.length === 0) {
-                    labels = ['Nenhum alerta']
-                    valores = [0]
+                
+                if (labels.length === 0) {
+                    labels = ['Nenhum alerta'];
+                    valores = [0];
                 }
 
-                let ctxBarra = document.getElementById(`graficoBarra`).getContext(`2d`)
-                new Chart(ctxBarra, {
+                // Destrói gráfico antigo se existir para evitar bugs visuais
+                if (meuGraficoBarra) {
+                    meuGraficoBarra.destroy();
+                }
+
+                let ctxBarra = document.getElementById(`graficoBarra`).getContext(`2d`);
+                meuGraficoBarra = new Chart(ctxBarra, {
                     type: `bar`,
                     data: {
                         labels: labels,
@@ -205,34 +257,43 @@
                                 title: {
                                     display: true,
                                     text: 'Quantidade de alertas',
-                                    font: {
-                                        size: 12,
-                                        weight: 'bold'
-                                    }
+                                    font: { size: 12, weight: 'bold' }
                                 }
                             }
                         }
                     }
-                })
+                });
             })
+            .catch(err => console.error("Erro ao carregar gráfico de barras:", err));
     }
 
     function carregarGraficoLinha() {
-        fetch(`/dashboard/registroHoras/${fkEmpresa}`)
+        let dataFiltro = document.getElementById("campoData").value;
+        let buscaFiltro = document.getElementById("campoBusca").value;
+
+        fetch(`/dashboard/registroHoras/${fkEmpresa}?data=${dataFiltro}&estufa=${buscaFiltro}`)
             .then(function (res) { return res.json() })
             .then(function (dados) {
-                let horarios = [`00h`, `01h`, `02h`, `03h`, `04h`, `05h`, `06h`, `07h`, `08h`, `09h`, `10h`, `11h`, `12h`, `13h`, `14h`, `15h`, `16h`, `17h`, `18h`, `19h`, `20h`, `21h`, `22h`, `23h`]
+                let horarios = [`00h`, `01h`, `02h`, `03h`, `04h`, `05h`, `06h`, `07h`, `08h`, `09h`, `10h`, `11h`, `12h`, `13h`, `14h`, `15h`, `16h`, `17h`, `18h`, `19h`, `20h`, `21h`, `22h`, `23h`];
 
-                let leiturasPorHora = []
+                let leiturasPorHora = [];
                 for (let i = 0; i < 24; i++) {
-                    leiturasPorHora[i] = null
+                    leiturasPorHora[i] = null;
                 }
-                for (let j = 0; j < dados.length; j++) {
-                    leiturasPorHora[dados[j].hora] = dados[j].luminosidade
+                
+                if (dados && dados.length > 0) {
+                    for (let j = 0; j < dados.length; j++) {
+                        leiturasPorHora[dados[j].hora] = dados[j].luminosidade;
+                    }
                 }
 
-                let ctxLinha = document.getElementById(`graficoLinha`).getContext(`2d`)
-                new Chart(ctxLinha, {
+                // Destrói gráfico antigo se existir
+                if (meuGraficoLinha) {
+                    meuGraficoLinha.destroy();
+                }
+
+                let ctxLinha = document.getElementById(`graficoLinha`).getContext(`2d`);
+                meuGraficoLinha = new Chart(ctxLinha, {
                     type: `line`,
                     data: {
                         labels: horarios,
@@ -263,88 +324,82 @@
                         responsive: true,
                         maintainAspectRatio: false,
                         scales: {
-                            x: {
-                                title: {
-                                    display: true,
-                                    text: 'Horário do dia',
-                                    font: { size: 12, weight: 'bold' }
-                                }
-                            },
-                            y: {
-                                beginAtZero: true,
-                                title: {
-                                    display: true,
-                                    text: 'Quantidade de luz(em lux)',
-                                    font: { size: 12, weight: 'bold' }
-                                }
-                            }
+                            x: { title: { display: true, text: 'Horário do dia', font: { size: 12, weight: 'bold' } } },
+                            y: { beginAtZero: true, title: { display: true, text: 'Quantidade de luz(em lux)', font: { size: 12, weight: 'bold' } } }
                         }
                     }
-                })
+                });
             })
+            .catch(err => console.error("Erro ao carregar gráfico de linha:", err));
     }
 
-function carregarGraficoRosca() {
-    fetch(`/dashboard/alerta-por-estufa/${fkEmpresa}`)
-        .then(function (res) { return res.json() })
-        .then(function (dados) {
-            let totalAlerta = 0
-            let estufasEmAlerta = []
+    function carregarGraficoRosca() {
+        let dataFiltro = document.getElementById("campoData").value;
+        let buscaFiltro = document.getElementById("campoBusca").value;
 
-            for (let i = 0; i < dados.length; i++) {
-                totalAlerta += dados[i].qtdAlerta
-                estufasEmAlerta.push(dados[i].nomeEstufa)
-            }
+        fetch(`/dashboard/alerta-por-estufa/${fkEmpresa}?data=${dataFiltro}&estufa=${buscaFiltro}`)
+            .then(function (res) { return res.json() })
+            .then(function (dados) {
+                let totalAlerta = 0;
+                let estufasEmAlerta = [];
 
-            document.getElementById('totalAlerta').innerHTML = totalAlerta
+                if (dados && dados.length > 0) {
+                    for (let i = 0; i < dados.length; i++) {
+                        totalAlerta += dados[i].qtdAlerta;
+                        estufasEmAlerta.push(dados[i].nomeEstufa);
+                    }
+                }
 
-            let totalSensores = parseInt(document.getElementById('totalSensores').innerHTML) || 0
-            let naoAlerta = totalSensores - totalAlerta
-            if (naoAlerta < 0) naoAlerta = 0
+                document.getElementById('totalAlerta').innerHTML = totalAlerta;
 
-            let porcentagem = totalSensores > 0 ? Math.round((totalAlerta / totalSensores) * 100) : 0
-            document.getElementById('porcentagemAlerta').innerHTML = porcentagem + '%'
+                let totalSensores = parseInt(document.getElementById('totalSensores').innerHTML) || 0;
+                let naoAlerta = totalSensores - totalAlerta;
+                if (naoAlerta < 0) naoAlerta = 0;
 
-            let ctxRosca = document.getElementById('graficoRosca').getContext('2d')
-            new Chart(ctxRosca, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Em alerta', 'Sem alerta'],
-                    datasets: [{
-                        data: [totalAlerta, naoAlerta],
-                        backgroundColor: ['#ff0000', '#069239']
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    cutout: '65%',
-                    plugins: {
-                        tooltip: {
-                            callbacks: {
-                                afterBody: function(context) {
-                                    if (context[0].label === 'Em alerta') {
-                                        return estufasEmAlerta.length > 0
-                                            ? 'Estufas: ' + estufasEmAlerta.join(', ')
-                                            : 'Nenhuma estufa em alerta'
+                let porcentagem = totalSensores > 0 ? Math.round((totalAlerta / totalSensores) * 100) : 0;
+                document.getElementById('porcentagemAlerta').innerHTML = porcentagem + '%';
+
+                // Destrói gráfico antigo se existir
+                if (meuGraficoRosca) {
+                    meuGraficoRosca.destroy();
+                }
+
+                let ctxRosca = document.getElementById('graficoRosca').getContext('2d');
+                meuGraficoRosca = new Chart(ctxRosca, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Em alerta', 'Sem alerta'],
+                        datasets: [{
+                            data: [totalAlerta, naoAlerta],
+                            backgroundColor: ['#ff0000', '#069239']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        cutout: '65%',
+                        plugins: {
+                            tooltip: {
+                                callbacks: {
+                                    afterBody: function (context) {
+                                        if (context[0].label === 'Em alerta') {
+                                            return estufasEmAlerta.length > 0
+                                                ? 'Estufas: ' + estufasEmAlerta.join(', ')
+                                                : 'Nenhuma estufa em alerta';
+                                        }
+                                        return '';
                                     }
-                                    return ''
                                 }
-                            }
-                        },
-                        legend: {
-                            position: 'bottom',
-                            labels: {
-                                font: { size: 11 },
-                                boxWidth: 12,
-                                padding: 20
+                            },
+                            legend: {
+                                position: 'bottom',
+                                labels: { font: { size: 11 }, boxWidth: 12, padding: 20 }
                             }
                         }
                     }
-                }
+                });
             })
-        })
-}
+            .catch(err => console.error("Erro ao carregar gráfico de rosca:", err));
+    }
 </script>
 
-</html>
