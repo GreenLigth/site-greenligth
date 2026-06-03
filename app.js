@@ -26,6 +26,7 @@ var usuarioDashRouter = require("./src/routes/usuarioDash");
 var usuariosAdmRouter = require("./src/routes/usuariosAdm");
 var dashboardRouter = require("./src/routes/dashboard");
 var estufaRouter = require("./src/routes/estufas");
+var perfilRouter = require("./src/routes/perfil");
 var bobRouter = require("./src/routes/bobIA")
 
 app.use(express.json());
@@ -41,6 +42,8 @@ app.use("/usuarios", usuarioDashRouter);
 app.use("/usuariosAdm", usuariosAdmRouter);
 app.use("/dashboard", dashboardRouter);
 app.use("/estufas", estufaRouter);
+app.use("/perfil", perfilRouter);
+
 app.use("/bobIA", bobRouter);
 
 app.listen(PORTA_APP, function () {
