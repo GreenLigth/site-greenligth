@@ -28,8 +28,6 @@ router.get("/total-sensores/:fkEmpresa", function(req, res) {
     dashboardController.totalSensores(req, res)
 })
 
-router.post("/perguntar", function(req, res) {
-    suporteController.perguntar(req, res);
-});
+
 
 module.exports = router;
