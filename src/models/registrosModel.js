@@ -8,7 +8,7 @@ function buscarRegistros(fkEmpresa) {
             r.luminosidade,
 
             CASE
-                WHEN r.luminosidade > 200 AND r.luminosidade <= 300 THEN 'muito-alta'
+                WHEN r.luminosidade > 200 AND r.luminosidade >= 300 THEN 'muito-alta'
                 WHEN r.luminosidade > 170 AND r.luminosidade <= 200 THEN 'alta'
                 WHEN r.luminosidade > 140 AND r.luminosidade <= 170 THEN 'ideal'
                 ELSE 'baixa'

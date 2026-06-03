@@ -27,10 +27,10 @@ function menorPico(req, res) {
         });
 }
 
-function contagemStatus(req, res) {
+function alertasPorEstufa(req, res) {
     var fkEmpresa = req.params.fkEmpresa;
 
-    dashboardModel.contagemStatus(fkEmpresa)
+    dashboardModel.alertasPorEstufa(fkEmpresa)
         .then(resultado => {
             res.status(200).json(resultado);
         })
@@ -82,7 +82,7 @@ function totalSensores(req, res) {
 module.exports = {
     maiorPico,
     menorPico,
-    contagemStatus,
+    alertasPorEstufa,
     registroLeituraHoras,
     sensoresEmAlertaPorEstufa,
     totalSensores

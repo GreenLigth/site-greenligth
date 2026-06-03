@@ -12,8 +12,8 @@ router.get("/menor-pico/:fkEmpresa", function(req, res) {
     dashboardController.menorPico(req, res)
 })
 
-router.get("/contagem-status/:fkEmpresa", function(req, res) {
-    dashboardController.contagemStatus(req, res)
+router.get("/alertas-por-estufa/:fkEmpresa", function(req, res) {
+    dashboardController.alertasPorEstufa(req, res)
 })
 
 router.get("/registroHoras/:fkEmpresa", function(req, res) {

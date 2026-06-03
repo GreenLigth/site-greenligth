@@ -94,3 +94,16 @@
     border: 1px solid #c8ddd0;
     flex: 1;
 }
+
+.btn-status {
+    background: #206F4A;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 5px 10px;
+    font-size: 13px;
+}
+
+.btn-status:hover {
+    background: #1a4a32;
+}

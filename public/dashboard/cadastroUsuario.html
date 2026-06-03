@@ -9,12 +9,12 @@
     <link rel="icon" href="../assets/logo/logosite.png">
 </head>
 
-<body>
+<body onload="carregarEstufas()">
     <div class="menu">
         <img class="logo" src="../assets/logo/logo-branca.png" alt="Greenlight">
         <div class="item">
             <img class="icons" src="../assets/img/icons/dashboard-icon.png" alt="">
-            <a href="dashboard.html" class="ativo">Dashboard</a>
+            <a href="dashboard.html">Dashboard</a>
         </div>
         <div class="item">
             <img class="icons" src="../assets/img/icons/perfil-icon.png" alt="">
@@ -26,7 +26,7 @@
         </div>
         <div class="item">
             <img class="icons" src="../assets/img/icons/multiple-users-silhouette.png" alt="">
-            <a href="usuarios.html">Usuários</a>
+            <a href="usuarios.html" class="ativo">Usuários</a>
         </div>
         <div class="item">
             <img class="icons" src="../assets/img/icons/ajuda-icon.png" alt="">
@@ -34,7 +34,7 @@
         </div>
 
         <div class="item logout-container">
-            <a href="../home.html" class="logout">Sair</a>
+            <a href="../index.html" class="logout">Sair</a>
         </div>
     </div>
 
@@ -52,15 +52,10 @@
             </div>
 
             <div class="campo">
-                <label>E-mail</label>
-                <input type="email" id="ipt_email" oninput="fEmail()" placeholder="nome@Greenlight.com">
-            </div>
-
-            <div id="div_email" class="validacao"></div>
-
-            <div class="campo">
-                <label>Nome da Estufa</label>
-                <input type="text" id="ipt_estufa" placeholder="Ex: Estufa Principal">
+                <label>Selecione a estufa designada para o usuário</label>
+                <select id="select_estufa">
+                    <option value="">Selecione uma estufa</option>
+                </select>
             </div>
 
             <div class="campo">
@@ -73,160 +68,20 @@
                     <option value="3">Operador (Nenhum)</option>
                 </select>
             </div>
-
-            <div class="campo-senha-container">
-                <div class="campo">
-                    <label>Senha</label>
-                    <div class="campo input">
-                        <input type="password" oninput="fSenha()" placeholder="Mínimo 8 caracteres" id="ipt_senha">
-                        <span onclick="visualizar(ipt_senha)" style="cursor: pointer;">
-                            <img src="../assets/icons/eye.png"></span>
-
-                    </div>
-
-                    <div class="campo-senha-container">
-                        <div class="campo">
-                            
-                            <label>Confirme sua senha</label>
-                            <div class="password-wrapper">
-
-                                <div class="campo input">
-                                    <input type="password" oninput="fSenha()" placeholder="Mínimo 8 caracteres"
-                                    id="ipt_senha_dnv">
-                                    <span onclick="visualizar(ipt_senha_dnv)" style="cursor: pointer;">
-                                        <img src="../assets/icons/eye.png"></span>
-                                        
-                                    </div>
-                                        </div>
-
-                            <div id="div_validar" class="validacao"></div>
-
-                            <div id="div_botao" class="validacao"></div>
-                        </div>
-                        <button type="submit" class="btn-salvar" onclick="cadastrarUsuario()">Salvar alterações</button>
-                    </div>
-                </div>
-            </div>
+            <button type="submit" class="btn-salvar" id="div_botao" onclick="cadastrarUsuario()">Salvar alterações</button>
         </div>
+    </div>
+    </div>
+    </div>
     </div>
 
     <script>
-
-        function fEmail() {
-
-
-            let email = ipt_email.value;
-
-            let com = email.endsWith(".com");
-
-            let temDominio = email.includes("@Greenlight"); // verifica se o domínio obrigatório está presente
-
-            let duploPonto = email.includes(".."); // evita emails como nome@Greenlight..com
-
-            let emailOk = false;
-
-            if (!com || !temDominio || duploPonto) {
-
-                div_email.innerHTML = "Por favor, insira um email válido (@Greenlight.com)";
-
-            } else {
-
-                emailOk = true;
-
-                div_email.innerHTML = " ";
-            }
-
-            return emailOk;
-
-        }
-
-
-        function fSenha() {
-
-
-            let senha = ipt_senha.value;
-
-            let senhaDnv = ipt_senha_dnv.value;
-
-            let mensagem = "";
-
-            let senhaOk = false;
-
-            let especial = ['!', '@', '#', '$', '%', '&', '*'];
-
-            let numero = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-
-            let temNumero = false;
-
-            let temEspecial = false;
-
-            for (let i = 0; i < numero.length; i++) {
-
-                if (senha.includes(numero[i])) {
-
-                    temNumero = true;
-                };
-
-            };
-
-            for (let i = 0; i < especial.length; i++) {
-
-                if (senha.includes(especial[i])) {
-
-                    temEspecial = true;
-                };
-
-            };
-
-            if (senha.length < 8) {
-
-                mensagem = "Insira uma combinação de pelo menos oito caracteres";
-
-            } else if (!temNumero) {
-
-                mensagem = "Insira pelo menos um número";
-
-            } else if (!temEspecial) {
-
-                mensagem = "Insira pelo menos um caractere especial. Ex: '#', '!'";
-
-            } else if (senha == senha.toUpperCase()) {
-
-                mensagem = "Insira pelo menos uma letra minúscula";
-
-            } else if (senha == senha.toLowerCase()) {
-
-                mensagem = "Insira pelo menos uma letra maiúscula";
-
-            } else if (senha != senhaDnv) {
-
-                mensagem = "A senha e a senha de confirmação precisam ser iguais!";
-
-            } else {
-
-                senhaOk = true;
-
-                mensagem = " ";
-
-            }
-
-            div_validar.innerHTML = mensagem;
-
-            return senhaOk;
-
-        }
-
-
         function cadastrarUsuario() {
 
 
             let nome = ipt_nome.value;
 
-            let email = ipt_email.value;
-
-            let senha = ipt_senha.value;
-
-            let nomeEstufa = ipt_estufa.value;
+            let nomeEstufa = select_estufa.value;
 
             let cargo = select_cargo.value;
 
@@ -234,48 +89,24 @@
 
             let fkSuperior = sessionStorage.getItem("idUsuario"); // pega o valor do id no login com getItem
 
-            let confirmarSenha = fSenha();
-
-            let confirmarEmail = fEmail();
-
             let mensagem = ""
 
             console.log("Chamei a função")
 
-            if (email == "" || nome == "" || cargo == "" || senha == "" || nomeEstufa == "") {
+            if (nome == "" || cargo == "" || nomeEstufa == "") {
 
                 mensagem = "Preencha os campos corretamente";
-
-                console.log("cai no if vazio")
-
-            } else if (!confirmarEmail || !confirmarSenha) {
-
-                mensagem = "Por favor, verifique seus dados e tente novamente!";
-
-                console.log("email e senha")
 
             } else {
 
                 cargo = Number(cargo)
-
-                console.log('cadastra')
-
                 mensagem = "Cadastro realizado com sucesso!"
 
                 let dados = {
-
                     nome: nome,
-
-                    email: email,
-
                     cargo: cargo,
-
                     nomeEstufa: nomeEstufa,
-
-                    senha: senha,
-
                     fkEmpresa: fkEmpresa,
-
                     fkSuperior: fkSuperior
                 }
 
@@ -289,37 +120,54 @@
                     .then(res => {
 
                         if (res.ok)
-
                             return res.json()
-
                     }).then(resultado => {
-
                         console.log(resultado)
-
                         div_botao.innerHTML = mensagem;
-
-
                     })
                     .catch(error => console.error('Erro:', error));
             }
-
-
-
         }
 
-        function visualizar(campo) {
+        function carregarEstufas() {
+            let nome = ipt_nome.value;
+            let fkEstufa = select_estufa.value;
+            let fkEmpresa = sessionStorage.getItem("fkEmpresa");
+            let cargo = select_cargo.value;
+            let fkSuperior = sessionStorage.getItem("idUsuario"); // pega o valor do id no login com getItem
 
-
-            if (campo.type == 'password') {
-
-                campo.type = 'text'
-
-            } else {
-
-                campo.type = 'password'
-
+            let dados = {
+                nome: nome,
+                cargo: cargo,
+                fkEmpresa: fkEmpresa,
+                fkSuperior: fkSuperior,
+                fkEstufa: fkEstufa
             }
+            fetch(`http://localhost:3333/usuarios/listar/${fkEmpresa}`)
+                .then(res => res.json())
+                .then(estufas => {
+
+                    console.log(estufas);
+                    let select = document.getElementById("select_estufa");
+
+                    for (let i = 0; i < estufas.length; i++) {
+
+                        select.innerHTML += `
+                    <option value="${estufas[i].nomeEstufa}">
+                        ${estufas[i].nomeEstufa}
+                    </option>
+                `;
+
+                    }
+
+                })
+                .catch(err => console.log(err));
+
+            console.log("fkEmpresa:", sessionStorage.getItem("fkEmpresa"));
+            console.log("idUsuario:", sessionStorage.getItem("idUsuario"));
+            
         }
+
 
 
     </script>
