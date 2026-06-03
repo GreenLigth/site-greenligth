@@ -1,8 +1,6 @@
-<<<<<<< HEAD
- var ambiente_processo = 'producao';
-=======
 var ambiente_processo = 'producao';
->>>>>>> 609952455259e0f704a7dcc044e9c394655cb012
+var ambiente_processo = 'producao';
+
 //var ambiente_processo = 'desenvolvimento';
 
 var caminho_env = ambiente_processo === 'producao' ? '.env' : '.env.dev';
