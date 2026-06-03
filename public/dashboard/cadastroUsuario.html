@@ -110,7 +110,7 @@
                     fkSuperior: fkSuperior
                 }
 
-                fetch('http://localhost:3333/usuarios/cadastrarUsuario', {
+                fetch('/usuarios/cadastrarUsuario', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -143,7 +143,7 @@
                 fkSuperior: fkSuperior,
                 fkEstufa: fkEstufa
             }
-            fetch(`http://localhost:3333/usuarios/listar/${fkEmpresa}`)
+            fetch(`/usuarios/listar/${fkEmpresa}`)
                 .then(res => res.json())
                 .then(estufas => {
 
