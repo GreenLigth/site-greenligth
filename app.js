@@ -26,11 +26,8 @@ var usuarioDashRouter = require("./src/routes/usuarioDash");
 var usuariosAdmRouter = require("./src/routes/usuariosAdm");
 var dashboardRouter = require("./src/routes/dashboard");
 var estufaRouter = require("./src/routes/estufas");
-<<<<<<< HEAD
 var perfilRouter = require("./src/routes/perfil");
-=======
 var bobRouter = require("./src/routes/bobIA")
->>>>>>> db4235ae0ee4de3788cc34ee771ea028eb865ca5
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -45,12 +42,9 @@ app.use("/usuarios", usuarioDashRouter);
 app.use("/usuariosAdm", usuariosAdmRouter);
 app.use("/dashboard", dashboardRouter);
 app.use("/estufas", estufaRouter);
-<<<<<<< HEAD
 app.use("/perfil", perfilRouter);
 
-=======
 app.use("/bobIA", bobRouter);
->>>>>>> db4235ae0ee4de3788cc34ee771ea028eb865ca5
 
 app.listen(PORTA_APP, function () {
     console.log(`
