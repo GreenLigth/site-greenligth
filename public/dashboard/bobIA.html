@@ -4,18 +4,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Greenlight</title>
+    <link rel="stylesheet" href="../styles/dashboard/bobIA.css">
 </head>
 
 <body>
 
-    <div id="container">
-        <h1>BobIA</h1>
-        <textarea id="pergunta" type="text" placeholder="Digite a pergunta..."></textarea>
-        <br><br>
-        <button onclick="gerarResposta()">Gerar Resposta</button>
-        <h3>Resposta da IA:</h3>
-        <div id="resposta"></div>
+    <div class="bar">
+        <img class="img_logo" src="../assets/logo/logo-branca.png" alt="">
+        <button onclick="exit()" class="exit">SAIR</button>
+    </div>
+
+    <div class="container" id="container">
+        <h1>BOB IA</h1>
+        <textarea class="inserir_pergunta" id="pergunta" type="text" placeholder="Digite a pergunta..."></textarea>
+        <button class="resposta" onclick="gerarResposta()">Gerar Resposta</button>
+        
+        <div class="resposta_ia" id="resposta"></div>
     </div>
 
 </body>
@@ -62,13 +67,17 @@
             const data = await response.json();
 
             respostaDiv.style.display = 'block';
-            respostaDiv.innerText = data.resultado || "Sem resposta retornada.";
+            respostaDiv.innerText = `<h3>Resposta da IA:</h3><br>${data.resultado}` || "Sem resposta retornada.";
 
         } catch (error) {
             console.error("Erro na requisição:", error);
             respostaDiv.style.display = 'block';
             respostaDiv.innerText = "Ops! Ocorreu um erro ao tentar obter a resposta da IA. Verifique o console.";
         }
+    }
+
+    function exit(){
+        window.location.href = '../index.html'
     }
 </script>
 </html>
