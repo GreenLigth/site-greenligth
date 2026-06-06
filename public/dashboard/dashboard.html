@@ -44,23 +44,20 @@
         <h2 class="titulo-dash"></h2>
         <br>
 
-        <div class="filtros-container" style="display: flex; gap: 15px; margin-bottom: 20px; align-items: center;">
+        <div class="filtros-container" style="display: flex; gap: 14px; margin-bottom: 22px; align-items: flex-end;">
             <div style="flex: 1; display: flex; flex-direction: column;">
-                <label for="campoData" style="font-size: 12px; font-weight: bold; color: #1a2e22; margin-bottom: 4px;">Filtrar por Data:</label>
-                <input type="date" id="campoData" onchange="filtrar()" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                <label for="campoData">Filtrar por Data:</label>
+                <input type="date" id="campoData" onchange="filtrar()">
             </div>
             <div style="flex: 2; display: flex; flex-direction: column;">
-                <label for="campoBusca" style="font-size: 12px; font-weight: bold; color: #1a2e22; margin-bottom: 4px;">Buscar por Estufa:</label>
-                <input type="text" id="campoBusca" placeholder="Digite o nome da estufa..." oninput="filtrar()" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                <label for="campoBusca">Buscar por Estufa:</label>
+                <input type="text" id="campoBusca" placeholder="Digite o nome da estufa..." oninput="filtrar()">
             </div>
-        </div>
-
-        <div class="botao-header">
-            <p class="botao-subtitulo"></p>
             <a href="cadastrarEstufa.html">
                 <button class="btn-novo-usuario">+ Cadastrar estufas</button>
             </a>
         </div>
+
 
         <div class="linha-topo">
             <div id="coluna-esquerda">
@@ -109,7 +106,8 @@
                     <h3>Quantidade de estufas em alerta no dia</h3>
                     <div class="chart-wrap" style="position: relative;">
                         <canvas id="graficoRosca"></canvas>
-                        <div id="textoCentro" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; pointer-events: none;">
+                        <div id="textoCentro"
+                            style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; pointer-events: none;">
                             <strong id="porcentagemAlerta" style="font-size: 26px; color: #ff0000;">0%</strong>
                             <p style="font-size: 12px; color: #aaa; margin: 0;">em alerta</p>
                         </div>
@@ -126,7 +124,7 @@
 
 <script>
     let fkEmpresa = sessionStorage.getItem("fkEmpresa");
-    
+
     // Variáveis globais para armazenar e destruir os gráficos do Chart.js
     let meuGraficoBarra = null;
     let meuGraficoLinha = null;
@@ -143,7 +141,7 @@
         carregarCards();
         carregarGraficoBarras();
         carregarGraficoLinha();
-        carregarTotalSensores(); 
+        carregarTotalSensores();
     }
 
     function filtrar() {
@@ -173,7 +171,7 @@
         let buscaFiltro = document.getElementById("campoBusca").value;
 
         fetch(`/dashboard/maior-pico/${fkEmpresa}?data=${dataFiltro}&estufa=${buscaFiltro}`)
-            .then(function (res) { 
+            .then(function (res) {
                 if (res.status === 204 || res.status === 404) return null;
                 return res.text().then(text => text ? JSON.parse(text) : null);
             })
@@ -189,7 +187,7 @@
             .catch(err => console.error("Erro ao carregar card maior pico:", err));
 
         fetch(`/dashboard/menor-pico/${fkEmpresa}?data=${dataFiltro}&estufa=${buscaFiltro}`)
-            .then(function (res) { 
+            .then(function (res) {
                 if (res.status === 204 || res.status === 404) return null;
                 return res.text().then(text => text ? JSON.parse(text) : null);
             })
@@ -221,7 +219,7 @@
                         valores.push(dados[i].qtdAlertas);
                     }
                 }
-                
+
                 if (labels.length === 0) {
                     labels = ['Nenhum alerta'];
                     valores = [0];
@@ -280,7 +278,7 @@
                 for (let i = 0; i < 24; i++) {
                     leiturasPorHora[i] = null;
                 }
-                
+
                 if (dados && dados.length > 0) {
                     for (let j = 0; j < dados.length; j++) {
                         leiturasPorHora[dados[j].hora] = dados[j].luminosidade;
@@ -402,4 +400,3 @@
             .catch(err => console.error("Erro ao carregar gráfico de rosca:", err));
     }
 </script>
-

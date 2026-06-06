@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <title>Registros - Estufas</title>
@@ -66,9 +67,9 @@
 
                 <select id="filtroCorredor" onchange="filtrar()" class="filtro-select">
                     <option value="">Corredores (Todos)</option>
-                    <option value="A">Corredor A</option>
-                    <option value="B">Corredor B</option>
-                    <option value="C">Corredor C</option>
+                    <option value="Corredor A">Corredor A</option>
+                    <option value="Corredor B">Corredor B</option>
+                    <option value="Corredor C">Corredor C</option>
                 </select>
 
                 <select id="filtroGravidade" onchange="filtrar()" class="filtro-select">
@@ -128,13 +129,13 @@
     }
 
     function calcularStatus(luminosidade) {
-        if(luminosidade > 200 && luminosidade <= 300){
+        if (luminosidade > 200 && luminosidade <= 300) {
             return "muito-alta"
-        }else if(luminosidade > 170 && luminosidade <= 200){
+        } else if (luminosidade > 170 && luminosidade <= 200) {
             return "alta"
-        }else if(luminosidade > 140 && luminosidade <= 170){
+        } else if (luminosidade > 140 && luminosidade <= 170) {
             return "ideal"
-        }else {
+        } else {
             return "baixa"
         }
     }
