@@ -27,19 +27,30 @@
 
 <script>
 
-      document.querySelectorAll('.faq-item').forEach(item => {
-        let question = item.querySelector('.faq-question');
+    const faqItems = document.querySelectorAll('.faq-item');
 
-        question.addEventListener('click', () => {
-            // Fecha a pargunta aberta quando abrir outra
-            document.querySelectorAll('.faq-item').forEach(otherItem => {
-                if (otherItem !== item) {
-                    otherItem.classList.remove('active');
-                }
-            });
-            item.classList.toggle('active');
-        });
-    });
+    for (let i = 0; i < faqItems.length; i++) {
+        
+        let pergunta = faqItems[i].querySelector('.faq-question');
+
+        pergunta.addEventListener('click', () =>{
+
+            for (let j = 0; j < faqItems.length; j++) {
+                
+                if(faqItems[j] != faqItems[i] ) {
+
+                    faqItems[j].classList.remove('active'); // fecha itens que não foram clicados para evitar conflito
+                    //evita de algum item ficar aberto e quebrar o código.
+
+                };
+            };
+            
+            faqItems[i].classList.toggle('active') // abre e facha os itens clicados 
+
+        } );
+        
+    }
+
     async function gerarResposta() {
 
         const perguntaInput = document.getElementById('pergunta');
