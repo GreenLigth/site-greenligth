@@ -78,7 +78,7 @@
             const data = await response.json();
 
             respostaDiv.style.display = 'block';
-            respostaDiv.innerText = `<h3>Resposta da IA:</h3><br>${data.resultado}` || "Sem resposta retornada.";
+            respostaDiv.innerText = `${data.resultado}` || "Sem resposta retornada.";
 
         } catch (error) {
             console.error("Erro na requisição:", error);
