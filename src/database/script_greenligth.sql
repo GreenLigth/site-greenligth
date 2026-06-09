@@ -141,74 +141,81 @@ VALUES
 (170, NOW(), 4);
 
 
-CREATE VIEW vw_listarRegistros AS
-        SELECT 
-            r.idRegistro,
-            r.luminosidade,
-            r.dataLeitura,
-            s.codigoSensor,
-            s.corredor,
-            s.bloco,
-            e.nomeEstufa
-        FROM registroLuminosidade r
-        JOIN sensor s ON r.fkSensor = s.idSensor
-        JOIN estufa e ON s.fkEstufa = e.idEstufa
-        ORDER BY r.dataLeitura DESC;
-        
-CREATE VIEW vw_maiorPico AS
-        SELECT 
-            e.nomeEstufa,
-            MAX(r.luminosidade) AS maiorLuz
-        FROM registroLuminosidade r
-        JOIN sensor s ON r.fkSensor = s.idSensor
-        JOIN estufa e ON s.fkEstufa = e.idEstufa
-        WHERE MONTH(r.dataLeitura) = MONTH(NOW())
-          AND YEAR(r.dataLeitura) = YEAR(NOW())
-        GROUP BY e.nomeEstufa
-        ORDER BY maiorLuz DESC
-        LIMIT 1;
-        
-CREATE VIEW vw_mediaMensal AS
- SELECT 
-            ROUND(AVG(r.luminosidade), 0) AS mediaLuz
-        FROM registroLuminosidade r
-        WHERE MONTH(r.dataLeitura) = MONTH(NOW())
-          AND YEAR(r.dataLeitura) = YEAR(NOW());
-		
-CREATE VIEW vw_contagemStatus AS
-        SELECT 
-        CASE
-            WHEN r.luminosidade > 30000 THEN 'muito-alta'
-            WHEN r.luminosidade BETWEEN 20000 AND 30000 THEN 'alta'
-            WHEN r.luminosidade BETWEEN 8000 AND 20000 THEN 'ideal'
-            ELSE 'baixa'
-        END AS status,
-        COUNT(*) AS quantidade
-        FROM registroLuminosidade r
-        WHERE MONTH(r.dataLeitura) = MONTH(NOW())
-          AND YEAR(r.dataLeitura) = YEAR(NOW())
-        GROUP BY status;
-        
-CREATE VIEW vw_mediaPorMes AS
-        SELECT 
-            MONTH(r.dataLeitura) AS mes,
-            ROUND(AVG(r.luminosidade), 0) AS mediaLuz
-        FROM registroLuminosidade r
-        WHERE YEAR(r.dataLeitura) = YEAR(NOW())
-        GROUP BY mes
-        ORDER BY mes;
-        
-CREATE VIEW vw_sensoresAlerta AS
-        SELECT 
-            e.nomeEstufa,
-            COUNT(DISTINCT s.idSensor) AS qtdAlerta
-        FROM registroLuminosidade r
-        JOIN sensor s ON r.fkSensor = s.idSensor
-        JOIN estufa e ON s.fkEstufa = e.idEstufa
-        WHERE r.luminosidade > 30000
-          AND MONTH(r.dataLeitura) = MONTH(NOW())
-          AND YEAR(r.dataLeitura) = YEAR(NOW())
-        GROUP BY e.nomeEstufa;
-        
-CREATE VIEW vw_qtdTotal AS
-SELECT COUNT(*) AS total FROM sensor;
+CREATE VIEW vw_maiorPicoDia AS
+    SELECT 
+        e.nomeEstufa,
+        MAX(r.luminosidade) AS maiorLuz,
+        e.fkEmpresa
+    FROM registroLuminosidade r
+    JOIN sensor s ON r.fkSensor = s.idSensor
+    JOIN estufa e ON s.fkEstufa = e.idEstufa
+    WHERE DAY(r.dataLeitura) = DAY(NOW())
+    AND MONTH(r.dataLeitura) = MONTH(NOW())
+    AND YEAR(r.dataLeitura) = YEAR(NOW())
+    GROUP BY e.nomeEstufa, e.fkEmpresa
+    ORDER BY maiorLuz DESC;
+
+CREATE VIEW vw_menorPicoDia AS
+    SELECT 
+        e.nomeEstufa,
+        MIN(r.luminosidade) AS menorLuz,
+        e.fkEmpresa
+    FROM registroLuminosidade r
+    JOIN sensor s ON r.fkSensor = s.idSensor
+    JOIN estufa e ON s.fkEstufa = e.idEstufa
+    WHERE DAY(r.dataLeitura) = DAY(NOW())
+    AND MONTH(r.dataLeitura) = MONTH(NOW())
+    AND YEAR(r.dataLeitura) = YEAR(NOW())
+    GROUP BY e.nomeEstufa, e.fkEmpresa
+    ORDER BY menorLuz ASC;
+
+CREATE VIEW vw_alertasPorEstufaDia AS
+    SELECT 
+        e.nomeEstufa,
+        COUNT(*) AS qtdAlertas,
+        e.fkEmpresa
+    FROM registroLuminosidade r
+    JOIN sensor s ON r.fkSensor = s.idSensor
+    JOIN estufa e ON s.fkEstufa = e.idEstufa
+    WHERE (r.luminosidade > 200 OR r.luminosidade < 140)
+    AND DAY(r.dataLeitura) = DAY(NOW())
+    AND MONTH(r.dataLeitura) = MONTH(NOW())
+    AND YEAR(r.dataLeitura) = YEAR(NOW())
+    GROUP BY e.nomeEstufa, e.fkEmpresa
+    ORDER BY qtdAlertas DESC;
+
+CREATE VIEW vw_mediaPorHoraDia AS
+    SELECT 
+        HOUR(r.dataLeitura) AS hora,
+        ROUND(AVG(r.luminosidade), 0) AS luminosidade,
+        e.fkEmpresa
+    FROM registroLuminosidade r
+    JOIN sensor s ON r.fkSensor = s.idSensor
+    JOIN estufa e ON s.fkEstufa = e.idEstufa
+    WHERE DAY(r.dataLeitura) = DAY(NOW())
+    AND MONTH(r.dataLeitura) = MONTH(NOW())
+    AND YEAR(r.dataLeitura) = YEAR(NOW())
+    GROUP BY HOUR(r.dataLeitura), e.fkEmpresa
+    ORDER BY hora;
+
+CREATE VIEW vw_sensoresEmAlertaDia AS
+    SELECT 
+        e.nomeEstufa,
+        COUNT(DISTINCT s.idSensor) AS qtdAlerta,
+        e.fkEmpresa
+    FROM registroLuminosidade r
+    JOIN sensor s ON r.fkSensor = s.idSensor
+    JOIN estufa e ON s.fkEstufa = e.idEstufa
+    WHERE r.luminosidade > 200
+    AND DAY(r.dataLeitura) = DAY(NOW())
+    AND MONTH(r.dataLeitura) = MONTH(NOW())
+    AND YEAR(r.dataLeitura) = YEAR(NOW())
+    GROUP BY e.nomeEstufa, e.fkEmpresa;
+
+CREATE VIEW vw_totalSensoresPorEmpresa AS
+    SELECT 
+        COUNT(*) AS total,
+        e.fkEmpresa
+    FROM sensor s
+    JOIN estufa e ON s.fkEstufa = e.idEstufa
+    GROUP BY e.fkEmpresa;

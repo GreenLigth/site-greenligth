@@ -68,7 +68,7 @@
                         </p>
                         <strong id="valorPico"></strong>
                         <p style="font-size: 15px; margin-top: 5px; opacity: 0.8; font-weight: bolder;">
-                            Atenção! <br>Esta estufa está receiving luz acima do limite máximo.
+                            Atenção! <br>Esta estufa está recebendo luz acima do limite máximo.
                         </p>
                     </div>
 
@@ -78,7 +78,7 @@
                         </p>
                         <strong id="menorPico"></strong>
                         <p style="font-size: 15px; margin-top: 5px; opacity: 0.9; font-weight: bolder;">
-                            Atenção! <br>Esta estufa está receiving luz abaixo do limite esperado.
+                            Atenção! <br>Esta estufa está recebendo luz abaixo do limite esperado.
                         </p>
                     </div>
                 </div>
@@ -281,7 +281,7 @@
 
                 if (dados && dados.length > 0) {
                     for (let j = 0; j < dados.length; j++) {
-                        leiturasPorHora[dados[j].hora] = dados[j].luminosidade;
+                        leiturasPorHora[Number(dados[j].hora)] = dados[j].luminosidade;
                     }
                 }
 
@@ -302,7 +302,7 @@
                                 borderColor: `white`,
                                 spanGaps: true,
                                 tension: 0.4,
-                                pointRadius: 3
+                                pointRadius: 0
                             },
                             {
                                 label: `Luminosidade Máxima`,
@@ -322,7 +322,15 @@
                         responsive: true,
                         maintainAspectRatio: false,
                         scales: {
-                            x: { title: { display: true, text: 'Horário do dia', font: { size: 12, weight: 'bold' } } },
+                            x: {
+                                ticks: {
+                                    autoSkip: false,
+                                    font: { size: 9 },
+                                    maxRotation: 45,
+                                    minRotation: 45
+                                },
+                                title: { display: true, text: 'Horário do dia', font: { size: 12, weight: 'bold' } }
+                            },
                             y: { beginAtZero: true, title: { display: true, text: 'Quantidade de luz(em lux)', font: { size: 12, weight: 'bold' } } }
                         }
                     }
